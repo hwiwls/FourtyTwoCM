@@ -20,6 +20,8 @@
 		2E5C38322BCA7E0700A006FB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38312BCA7E0700A006FB /* Then */; };
 		2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38342BCA7E2400A006FB /* RxCocoa */; };
 		2E5C38372BCA7E2400A006FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38362BCA7E2400A006FB /* RxSwift */; };
+		2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */; };
+		2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		2E5C38182BCA734400A006FB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2E5C381A2BCA73E000A006FB /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		2E5C38232BCA7CDC00A006FB /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
+		2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 		2E5C38222BCA7C4A00A006FB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */,
+				2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -241,6 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
+				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignUpViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
