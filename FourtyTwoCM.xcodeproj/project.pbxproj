@@ -22,6 +22,7 @@
 		2E5C38372BCA7E2400A006FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38362BCA7E2400A006FB /* RxSwift */; };
 		2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */; };
 		2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */; };
+		2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		2E5C38232BCA7CDC00A006FB /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
 		2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
+		2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CustomColor.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 			children = (
 				2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */,
 				2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */,
+				2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignUpViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
+				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
