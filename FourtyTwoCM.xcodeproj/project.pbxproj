@@ -23,6 +23,9 @@
 		2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */; };
 		2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */; };
 		2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */; };
+		2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */; };
+		2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38402BCA7FF800A006FB /* BaseView.swift */; };
+		2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubViews.swift"; sourceTree = "<group>"; };
 		2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+addArrangedSubviews.swift"; sourceTree = "<group>"; };
 		2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CustomColor.swift"; sourceTree = "<group>"; };
+		2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		2E5C38402BCA7FF800A006FB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,9 @@
 		2E5C381E2BCA7C3400A006FB /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */,
+				2E5C38402BCA7FF800A006FB /* BaseView.swift */,
+				2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -252,10 +261,13 @@
 			files = (
 				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
+				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignUpViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
+				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
+				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
