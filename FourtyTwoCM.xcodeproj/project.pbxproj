@@ -48,6 +48,8 @@
 		2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98692BCD85F300E9A79A /* SignTextField.swift */; };
 		2E8F986C2BCD900400E9A79A /* UITextField+addLeftPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986B2BCD900400E9A79A /* UITextField+addLeftPadding.swift */; };
 		2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986D2BCD937A00E9A79A /* SignInModel.swift */; };
+		2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98702BCD940700E9A79A /* SignInViewModel.swift */; };
+		2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98722BCD946100E9A79A /* ViewModelType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,8 @@
 		2E8F98692BCD85F300E9A79A /* SignTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTextField.swift; sourceTree = "<group>"; };
 		2E8F986B2BCD900400E9A79A /* UITextField+addLeftPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+addLeftPadding.swift"; sourceTree = "<group>"; };
 		2E8F986D2BCD937A00E9A79A /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
+		2E8F98702BCD940700E9A79A /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		2E8F98722BCD946100E9A79A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +181,7 @@
 		2E5C381F2BCA7C3900A006FB /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				2E8F98722BCD946100E9A79A /* ViewModelType.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 		2E5C38252BCA7CE200A006FB /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				2E8F986F2BCD93FD00E9A79A /* ViewModel */,
 				2E5C38262BCA7D0100A006FB /* ViewController */,
 			);
 			path = SignIn;
@@ -366,6 +372,14 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
+		2E8F986F2BCD93FD00E9A79A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98702BCD940700E9A79A /* SignInViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -464,6 +478,7 @@
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
+				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
@@ -480,6 +495,7 @@
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
+				2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */,
 				2E8F985A2BCD7EDA00E9A79A /* HTTPHeader.swift in Sources */,
 				2E8F98622BCD7F1500E9A79A /* BaseURL.swift in Sources */,
 				2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */,
