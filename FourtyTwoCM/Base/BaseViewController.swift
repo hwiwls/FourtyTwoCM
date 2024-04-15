@@ -19,11 +19,31 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .backgroundBlack
         bind()
+        configView()
+        configHierarchy()
+        configLayout()
+        configNav()
     }
     
     func bind() {
+        
+    }
+    
+    func configView() {
+        
+    }
+    
+    func configHierarchy() {
+        
+    }
+    
+    func configLayout() {
+        
+    }
+    
+    func configNav() {
         
     }
     

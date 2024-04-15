@@ -28,6 +28,7 @@ extension UIFont {
         let aggroMedium16 = UIFont(name: AggroStyle.medium.name, size: 16)
         let aggroMedium18 = UIFont(name: AggroStyle.medium.name, size: 18)
         let aggroMedium20 = UIFont(name: AggroStyle.medium.name, size: 20)
+        let aggroMedium32 = UIFont(name: AggroStyle.medium.name, size: 32)
         
         // Bold
         let aggroBold12 = UIFont(name: AggroStyle.bold.name, size: 12)
