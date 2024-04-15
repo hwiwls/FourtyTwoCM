@@ -6,13 +6,26 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
-class SignUpViewController: UIViewController {
+final class SignUpViewController: UIViewController {
+    
+    let tempLabel = UILabel().then {
+        $0.text = ""
+        $0.textColor = .white
+        $0.font = .aggro.aggroLight16
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
+        view.backgroundColor = .black
+        
+        view.addSubview(tempLabel)
+        tempLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
 

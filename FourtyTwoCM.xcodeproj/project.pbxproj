@@ -26,6 +26,10 @@
 		2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */; };
 		2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38402BCA7FF800A006FB /* BaseView.swift */; };
 		2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */; };
+		2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */; };
+		2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */; };
+		2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */; };
+		2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2E5C38402BCA7FF800A006FB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF B.otf"; sourceTree = "<group>"; };
+		2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF L.otf"; sourceTree = "<group>"; };
+		2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF M.otf"; sourceTree = "<group>"; };
+		2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Aggro.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +149,7 @@
 		2E5C38212BCA7C4400A006FB /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				2E8F983B2BCD62F200E9A79A /* Font */,
 				2E5C380D2BCA72D000A006FB /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -152,6 +161,7 @@
 				2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */,
 				2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */,
 				2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */,
+				2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -170,6 +180,24 @@
 				2E5C38232BCA7CDC00A006FB /* SignUpViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E8F98202BCD4D0B00E9A79A /* SB_Mac_Font */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */,
+				2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */,
+				2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */,
+			);
+			path = SB_Mac_Font;
+			sourceTree = "<group>";
+		};
+		2E8F983B2BCD62F200E9A79A /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98202BCD4D0B00E9A79A /* SB_Mac_Font */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,7 +275,10 @@
 			files = (
 				2E5C38192BCA734400A006FB /* .gitignore in Resources */,
 				2E5C381B2BCA73E000A006FB /* Secrets.xcconfig in Resources */,
+				2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */,
+				2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */,
 				2E5C380E2BCA72D000A006FB /* Assets.xcassets in Resources */,
+				2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */,
 				2E5C38112BCA72D000A006FB /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +299,7 @@
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
+				2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

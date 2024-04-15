@@ -16,6 +16,7 @@ extension UIColor {
         let placeHolderGray = UIColor(named: "PlaceHolderGray") ?? .white
         
         let superDarkGray = UIColor(named: "SuperDarkGray") ?? .white
-
+        
+        let backgroundBlack = UIColor(named: "BackgroundBlack") ?? .white
     }
 }
