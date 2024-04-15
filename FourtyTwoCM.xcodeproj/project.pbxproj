@@ -41,12 +41,13 @@
 		2E8F985A2BCD7EDA00E9A79A /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */; };
 		2E8F985C2BCD7EDF00E9A79A /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F985B2BCD7EDF00E9A79A /* Router.swift */; };
 		2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F985D2BCD7EE800E9A79A /* TargetType.swift */; };
-		2E8F98602BCD7EF200E9A79A /* LogInQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F985F2BCD7EF200E9A79A /* LogInQuery.swift */; };
+		2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F985F2BCD7EF200E9A79A /* SignInQuery.swift */; };
 		2E8F98622BCD7F1500E9A79A /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98612BCD7F1500E9A79A /* BaseURL.swift */; };
 		2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98642BCD803300E9A79A /* Bundle.swift */; };
 		2E8F98682BCD85CA00E9A79A /* PointButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98672BCD85CA00E9A79A /* PointButton.swift */; };
 		2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98692BCD85F300E9A79A /* SignTextField.swift */; };
 		2E8F986C2BCD900400E9A79A /* UITextField+addLeftPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986B2BCD900400E9A79A /* UITextField+addLeftPadding.swift */; };
+		2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986D2BCD937A00E9A79A /* SignInModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,12 +81,13 @@
 		2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		2E8F985B2BCD7EDF00E9A79A /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		2E8F985D2BCD7EE800E9A79A /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
-		2E8F985F2BCD7EF200E9A79A /* LogInQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInQuery.swift; sourceTree = "<group>"; };
+		2E8F985F2BCD7EF200E9A79A /* SignInQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInQuery.swift; sourceTree = "<group>"; };
 		2E8F98612BCD7F1500E9A79A /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		2E8F98642BCD803300E9A79A /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		2E8F98672BCD85CA00E9A79A /* PointButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointButton.swift; sourceTree = "<group>"; };
 		2E8F98692BCD85F300E9A79A /* SignTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTextField.swift; sourceTree = "<group>"; };
 		2E8F986B2BCD900400E9A79A /* UITextField+addLeftPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+addLeftPadding.swift"; sourceTree = "<group>"; };
+		2E8F986D2BCD937A00E9A79A /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,10 +155,11 @@
 			children = (
 				2E8F985B2BCD7EDF00E9A79A /* Router.swift */,
 				2E8F985D2BCD7EE800E9A79A /* TargetType.swift */,
-				2E8F985F2BCD7EF200E9A79A /* LogInQuery.swift */,
+				2E8F985F2BCD7EF200E9A79A /* SignInQuery.swift */,
 				2E8F98612BCD7F1500E9A79A /* BaseURL.swift */,
 				2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */,
 				2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */,
+				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -459,7 +462,7 @@
 				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
 				2E8F98512BCD74AD00E9A79A /* AddPostViewController.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
-				2E8F98602BCD7EF200E9A79A /* LogInQuery.swift in Sources */,
+				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
@@ -470,6 +473,7 @@
 				2E8F98552BCD74B700E9A79A /* FeedViewController.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E8F985C2BCD7EDF00E9A79A /* Router.swift in Sources */,
+				2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2E8F984F2BCD74A700E9A79A /* LikeViewController.swift in Sources */,
