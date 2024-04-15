@@ -38,6 +38,7 @@ final class SignInViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupToolbar()
     }
     
     override func configHierarchy() {
@@ -79,9 +80,26 @@ final class SignInViewController: BaseViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(44)
         }
+    }
+    
+    private func setupToolbar() {
+        let toolbar = UIToolbar(
+            frame: CGRect(
+                origin: .zero,
+                size: CGSize(width: 100, height: 44)
+            )
+        )
+        toolbar.sizeToFit()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(dismissKeyboard))
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
         
-        
-        
+        emailTextField.inputAccessoryView = toolbar
+        passwordTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 
