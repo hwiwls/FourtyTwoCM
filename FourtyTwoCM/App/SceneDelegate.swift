@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
          
-        let rootViewController = UINavigationController(rootViewController: SignUpViewController())
+        let rootViewController = UINavigationController(rootViewController: TabBarController())
 
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

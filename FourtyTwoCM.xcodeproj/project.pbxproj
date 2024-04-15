@@ -31,6 +31,12 @@
 		2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */; };
 		2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */; };
 		2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */; };
+		2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98402BCD73FA00E9A79A /* TabBarViewController.swift */; };
+		2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F984C2BCD74A100E9A79A /* MyPageViewController.swift */; };
+		2E8F984F2BCD74A700E9A79A /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F984E2BCD74A700E9A79A /* LikeViewController.swift */; };
+		2E8F98512BCD74AD00E9A79A /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98502BCD74AD00E9A79A /* AddPostViewController.swift */; };
+		2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98522BCD74B200E9A79A /* SearchViewController.swift */; };
+		2E8F98552BCD74B700E9A79A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98542BCD74B700E9A79A /* FeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +60,12 @@
 		2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF M.otf"; sourceTree = "<group>"; };
 		2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Aggro.swift"; sourceTree = "<group>"; };
 		2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addCharacterSpacing.swift"; sourceTree = "<group>"; };
+		2E8F98402BCD73FA00E9A79A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		2E8F984C2BCD74A100E9A79A /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		2E8F984E2BCD74A700E9A79A /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
+		2E8F98502BCD74AD00E9A79A /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
+		2E8F98522BCD74B200E9A79A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		2E8F98542BCD74B700E9A79A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +156,12 @@
 			isa = PBXGroup;
 			children = (
 				2E5C38252BCA7CE200A006FB /* SignUp */,
+				2E8F98462BCD747B00E9A79A /* MyPage */,
+				2E8F98452BCD747800E9A79A /* Like */,
+				2E8F98442BCD743600E9A79A /* AddPost */,
+				2E8F98432BCD743100E9A79A /* Search */,
+				2E8F98422BCD742700E9A79A /* Feed */,
+				2E8F983E2BCD6A8F00E9A79A /* TabBar */,
 			);
 			path = Present;
 			sourceTree = "<group>";
@@ -201,6 +219,102 @@
 				2E8F98202BCD4D0B00E9A79A /* SB_Mac_Font */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		2E8F983E2BCD6A8F00E9A79A /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F983F2BCD6A9B00E9A79A /* ViewController */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		2E8F983F2BCD6A9B00E9A79A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98402BCD73FA00E9A79A /* TabBarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E8F98422BCD742700E9A79A /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98472BCD747F00E9A79A /* ViewController */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		2E8F98432BCD743100E9A79A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98482BCD748A00E9A79A /* ViewController */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		2E8F98442BCD743600E9A79A /* AddPost */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98492BCD748F00E9A79A /* ViewController */,
+			);
+			path = AddPost;
+			sourceTree = "<group>";
+		};
+		2E8F98452BCD747800E9A79A /* Like */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F984A2BCD749400E9A79A /* ViewController */,
+			);
+			path = Like;
+			sourceTree = "<group>";
+		};
+		2E8F98462BCD747B00E9A79A /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F984B2BCD749700E9A79A /* ViewController */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		2E8F98472BCD747F00E9A79A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98542BCD74B700E9A79A /* FeedViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E8F98482BCD748A00E9A79A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98522BCD74B200E9A79A /* SearchViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E8F98492BCD748F00E9A79A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98502BCD74AD00E9A79A /* AddPostViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E8F984A2BCD749400E9A79A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F984E2BCD74A700E9A79A /* LikeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E8F984B2BCD749700E9A79A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F984C2BCD74A100E9A79A /* MyPageViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,12 +408,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
+				2E8F98512BCD74AD00E9A79A /* AddPostViewController.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignUpViewController.swift in Sources */,
+				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
+				2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */,
+				2E8F98552BCD74B700E9A79A /* FeedViewController.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
+				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
+				2E8F984F2BCD74A700E9A79A /* LikeViewController.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
