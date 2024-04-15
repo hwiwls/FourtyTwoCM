@@ -30,6 +30,7 @@
 		2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */; };
 		2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */; };
 		2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */; };
+		2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF L.otf"; sourceTree = "<group>"; };
 		2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF M.otf"; sourceTree = "<group>"; };
 		2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Aggro.swift"; sourceTree = "<group>"; };
+		2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addCharacterSpacing.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				2E5C383A2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift */,
 				2E5C383C2BCA7F9700A006FB /* UIColor+CustomColor.swift */,
 				2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */,
+				2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
+				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
 				2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */,
 			);
