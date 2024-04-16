@@ -9,6 +9,10 @@ import Foundation
 import Alamofire
 import RxSwift
 
+enum NetworkError: Error {
+    case unauthorized // 로그인 401
+}
+
 struct NetworkManager {
     
     static func createLogin(query: SignInQuery) -> Single<SignInModel> {
@@ -33,6 +37,10 @@ struct NetworkManager {
                             }
                         case .failure(let error):
                             print("키체인 저장 오류: \(error)")
+                            if response.response?.statusCode == 401 {
+                                single(.failure(NetworkError.unauthorized))
+                                return
+                            }
                             single(.failure(error))
                         }
                     }

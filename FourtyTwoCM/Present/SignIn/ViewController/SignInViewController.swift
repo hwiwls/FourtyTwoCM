@@ -72,6 +72,11 @@ final class SignInViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.toastMessage
+            .drive(with: self) { owner, message in
+                owner.view.makeToast(message, duration: 3.0, position: .top)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {
