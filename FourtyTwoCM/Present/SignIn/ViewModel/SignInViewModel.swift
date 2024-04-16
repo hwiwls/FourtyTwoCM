@@ -31,11 +31,11 @@ final class SignInViewModel: ViewModelType {
         
         let loginObservable = Observable.combineLatest(input.emailText, input.passwordText)
             .map { email, password in
-                return SigninQuery(email: email, password: password)
+                return SignInQuery(email: email, password: password)
             }
         
         loginObservable.bind(with: self) { owner, login in
-            if login.email.contains("@") && login.password.count > 5 {
+            if login.email.contains("@") && login.password.count > 5 && login.password.count < 20 {
                 loginValid.accept(true)
             } else {
                 loginValid.accept(false)
@@ -43,7 +43,18 @@ final class SignInViewModel: ViewModelType {
         }
         .disposed(by: disposeBag)
         
-        // loginButtonTapped - 네트워킹
+        input.loginButtonTapped
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)   // 한 번 탭 누르면 1초 동안 탭 못 누르게
+            .withLatestFrom(loginObservable)
+            .flatMap { signInQuery in
+                return NetworkManager.createLogin(query: signInQuery)
+            }
+            .subscribe(with: self) { owner, signInModel in
+                loginSuccessTrigger.accept(())
+            } onError: { owner, error in
+                print("로그인 버튼에서 에러: \(error)")
+            }
+            .disposed(by: disposeBag)
         
         
         return Output(loginValidation: loginValid.asDriver(), loginSuccessTrigger: loginSuccessTrigger.asDriver(onErrorJustReturn: ()))

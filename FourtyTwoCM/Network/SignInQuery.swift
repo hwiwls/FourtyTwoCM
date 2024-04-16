@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SigninQuery: Encodable {
+struct SignInQuery: Encodable {
     let email: String
     let password: String
 }
