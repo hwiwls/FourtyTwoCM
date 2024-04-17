@@ -50,6 +50,8 @@
 		2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986D2BCD937A00E9A79A /* SignInModel.swift */; };
 		2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98702BCD940700E9A79A /* SignInViewModel.swift */; };
 		2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98722BCD946100E9A79A /* ViewModelType.swift */; };
+		2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE34D572BCE725900DE3EF7 /* KeyChain.swift */; };
+		2EE486932BCEE3DD00D40682 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 2EE486922BCEE3DD00D40682 /* Toast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +94,7 @@
 		2E8F986D2BCD937A00E9A79A /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
 		2E8F98702BCD940700E9A79A /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		2E8F98722BCD946100E9A79A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		2EE34D572BCE725900DE3EF7 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +107,7 @@
 				2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */,
 				2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */,
 				2E5C38292BCA7DAF00A006FB /* Alamofire in Frameworks */,
+				2EE486932BCEE3DD00D40682 /* Toast in Frameworks */,
 				2E5C38322BCA7E0700A006FB /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,7 +167,8 @@
 				2E8F98612BCD7F1500E9A79A /* BaseURL.swift */,
 				2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */,
 				2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */,
-				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
+				2EE34D562BCE716100DE3EF7 /* KeyChain */,
+				2EE34D552BCE6EDD00DE3EF7 /* Model */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -380,6 +385,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		2EE34D552BCE6EDD00DE3EF7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2EE34D562BCE716100DE3EF7 /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				2EE34D572BCE725900DE3EF7 /* KeyChain.swift */,
+			);
+			path = KeyChain;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -403,6 +424,7 @@
 				2E5C38312BCA7E0700A006FB /* Then */,
 				2E5C38342BCA7E2400A006FB /* RxCocoa */,
 				2E5C38362BCA7E2400A006FB /* RxSwift */,
+				2EE486922BCEE3DD00D40682 /* Toast */,
 			);
 			productName = FourtyTwoCM;
 			productReference = 2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */;
@@ -438,6 +460,7 @@
 				2E5C382D2BCA7E0100A006FB /* XCRemoteSwiftPackageReference "SnapKit" */,
 				2E5C38302BCA7E0700A006FB /* XCRemoteSwiftPackageReference "Then" */,
 				2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */,
+				2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 2E5C38022BCA72CF00A006FB /* Products */;
 			projectDirPath = "";
@@ -485,6 +508,7 @@
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
 				2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */,
+				2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */,
 				2E8F98552BCD74B700E9A79A /* FeedViewController.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E8F985C2BCD7EDF00E9A79A /* Router.swift in Sources */,
@@ -758,6 +782,14 @@
 				minimumVersion = 6.6.0;
 			};
 		};
+		2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -790,6 +822,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		2EE486922BCEE3DD00D40682 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

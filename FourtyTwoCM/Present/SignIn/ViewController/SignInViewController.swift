@@ -11,6 +11,8 @@ import Then
 
 final class SignInViewController: BaseViewController {
     
+    private let viewModel = SignInViewModel()
+    
     private let logoLabel = UILabel().then {
         $0.text = "fourty-two\ncentimeters"
         $0.numberOfLines = 2
@@ -21,11 +23,13 @@ final class SignInViewController: BaseViewController {
     
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요").then {
         $0.keyboardType = .emailAddress
+        $0.textContentType = .oneTimeCode   // 텍스트 필드가 일회용 코드 입력을 위한 것임을 나타냄
     }
     
     private let passwordTextField = SignTextField(placeholderText: "비밀번호를 입력해주세요").then {
         $0.isSecureTextEntry = true
         $0.keyboardType = .default
+        $0.textContentType = .oneTimeCode   // 텍스트 필드가 일회용 코드 입력을 위한 것임을 나타냄
     }
     
     private let signInButton = PointButton(title: "LogIn")
@@ -39,6 +43,40 @@ final class SignInViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolbar()
+    }
+    
+    override func bind() {
+        let input = SignInViewModel.Input(
+            emailText: emailTextField.rx.text.orEmpty.asObservable(),
+            passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
+            loginButtonTapped: signInButton.rx.tap.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.loginValidation
+            .drive(with: self) { owner, value in
+                owner.signInButton.isEnabled = value
+            }
+            .disposed(by: disposeBag)
+        
+        output.loginSuccessTrigger
+            .drive(with: self) { owner, _ in
+                let vc = TabBarController()
+                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                
+                UIView.transition(with: sceneDelegate.window!, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    sceneDelegate.window?.rootViewController = vc
+                })
+            }
+            .disposed(by: disposeBag)
+        
+        output.toastMessage
+            .drive(with: self) { owner, message in
+                owner.view.makeToast(message, duration: 3.0, position: .top)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {
@@ -83,16 +121,11 @@ final class SignInViewController: BaseViewController {
     }
     
     private func setupToolbar() {
-        let toolbar = UIToolbar(
-            frame: CGRect(
-                origin: .zero,
-                size: CGSize(width: 100, height: 44)
-            )
-        )
+        let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "확인", style: .plain, target: self, action: #selector(dismissKeyboard))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(dismissKeyboard))
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
         
         emailTextField.inputAccessoryView = toolbar
         passwordTextField.inputAccessoryView = toolbar

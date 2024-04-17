@@ -20,6 +20,20 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         tabBarConfig()
+        
+        do {
+            let accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            print("Access Token을 겟또: \(accessToken)")
+        } catch {
+            print("Error retrieving access token: \(error)")
+        }
+        
+        do {
+            let refreshToken = try Keychain.shared.getToken(kind: .refreshToken)
+            print("Refresh Token을 겟또: \(refreshToken)")
+        } catch {
+            print("Error retrieving refresh token: \(error)")
+        }
     }
     
     private func tabBarConfig() {
@@ -56,11 +70,11 @@ final class TabBarController: UITabBarController {
         )
         
         feedViewController.tabBarItem = UITabBarItem(
-            title: nil,
-            image: UIImage(systemName: "house")?
+            title: "둘러보기",
+            image: UIImage(named: "home")?
                 .withRenderingMode(.alwaysOriginal)
                 .withTintColor(.unactiveGray),
-            selectedImage: UIImage(systemName: "house")
+            selectedImage: UIImage(named: "home")
         )
         
         
