@@ -13,6 +13,8 @@ import RxCocoa
 
 final class SignUpViewController: BaseViewController {
     
+    private let viewModel = SignUpViewModel()
+    
     private let emailLabel = UILabel().then {
         $0.text = "이메일을 입력해주세요"
         $0.font = .boldSystemFont(ofSize: 14)
@@ -64,8 +66,6 @@ final class SignUpViewController: BaseViewController {
     
     let signUpButton = PointButton(title: "Join")
     
-    private let signInButton = PointButton(title: "LogIn")
-    
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,8 +74,14 @@ final class SignUpViewController: BaseViewController {
     
     
     override func bind() {
-       
+        let input = SignUpViewModel.Input(
+            emailText: emailTextField.rx.text.orEmpty.asObservable(),
+            passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
+            signUpButtonTapped: signUpButton.rx.tap.asObservable(),
+            emailValidationButtonTapped: signUpButton.rx.tap.asObservable()
+        )
         
+        let output = viewModel.transform(input: input)
     }
     
     override func configNav() {

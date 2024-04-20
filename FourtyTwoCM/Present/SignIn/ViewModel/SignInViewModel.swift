@@ -71,7 +71,7 @@ final class SignInViewModel: ViewModelType {
         return Output(
             loginValidation: loginValid.asDriver(),
             loginSuccessTrigger: loginSuccessTrigger.asDriver(onErrorJustReturn: ()),
-            toastMessage: toastMessageRelay.asDriver(onErrorJustReturn: "Unknown error occurred"),
+            toastMessage: toastMessageRelay.asDriver(onErrorJustReturn: ("알 수 없는 에러가 발생했습니다.")),
             signUpTrigger: signUpTrigger
         )
     }
