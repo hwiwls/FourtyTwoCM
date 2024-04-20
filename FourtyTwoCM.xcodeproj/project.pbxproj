@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
 		2E597FFE2BD41EAC00AAAFA7 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFD2BD41EAC00AAAFA7 /* SignUpViewModel.swift */; };
+		2E5980002BD426CD00AAAFA7 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */; };
 		2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38042BCA72CF00A006FB /* AppDelegate.swift */; };
 		2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38062BCA72CF00A006FB /* SceneDelegate.swift */; };
 		2E5C380E2BCA72D000A006FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C380D2BCA72D000A006FB /* Assets.xcassets */; };
@@ -59,6 +60,7 @@
 /* Begin PBXFileReference section */
 		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2E597FFD2BD41EAC00AAAFA7 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
 		2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FourtyTwoCM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E5C38042BCA72CF00A006FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2E5C38062BCA72CF00A006FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
+				2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */,
 				2E8F98552BCD74B700E9A79A /* FeedViewController.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
+				2E5980002BD426CD00AAAFA7 /* SignUpModel.swift in Sources */,
 				2E8F985C2BCD7EDF00E9A79A /* Router.swift in Sources */,
 				2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,

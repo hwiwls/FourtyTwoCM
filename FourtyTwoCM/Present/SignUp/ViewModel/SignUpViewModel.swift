@@ -18,12 +18,12 @@ final class SignUpViewModel: ViewModelType {
         let passwordText: Observable<String>
         let signUpButtonTapped: Observable<Void>
         let emailValidationButtonTapped: Observable<Void>
+        let nicknameText: Observable<String>
     }
     
     struct Output {
         let signUpValidation: Driver<Bool>
         let signUpSuccessTrigger: Driver<Void>
-        let emailValid: Driver<Bool>
     }
 
     func transform(input: Input) -> Output {
@@ -33,8 +33,8 @@ final class SignUpViewModel: ViewModelType {
         
         return Output(
             signUpValidation: signUpValid.asDriver(),
-            signUpSuccessTrigger: signUpSuccessTrigger.asDriver(onErrorJustReturn: ()),
-            emailValid: emailValid.asDriver())
+            signUpSuccessTrigger: signUpSuccessTrigger.asDriver(onErrorJustReturn: ())
+            )
     }
     
 }

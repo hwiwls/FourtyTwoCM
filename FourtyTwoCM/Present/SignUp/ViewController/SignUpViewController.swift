@@ -64,12 +64,25 @@ final class SignUpViewController: BaseViewController {
         $0.isHidden = true
     }
     
+    private let nicknameLabel = UILabel().then {
+        $0.text = "닉네임을 입력해주세요"
+        $0.font = .boldSystemFont(ofSize: 14)
+        $0.textColor = .offWhite
+        $0.textAlignment = .left
+    }
+    
+    private let nicknameTextField = SignTextField(placeholderText: "닉네임").then {
+        $0.keyboardType = .alphabet
+        $0.autocorrectionType = .no
+    }
+    
     let signUpButton = PointButton(title: "Join")
     
  
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupToolbar() 
     }
     
     
@@ -78,7 +91,8 @@ final class SignUpViewController: BaseViewController {
             emailText: emailTextField.rx.text.orEmpty.asObservable(),
             passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
             signUpButtonTapped: signUpButton.rx.tap.asObservable(),
-            emailValidationButtonTapped: signUpButton.rx.tap.asObservable()
+            emailValidationButtonTapped: signUpButton.rx.tap.asObservable(), 
+            nicknameText: nicknameTextField.rx.text.orEmpty.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -105,6 +119,8 @@ final class SignUpViewController: BaseViewController {
             passwordLabel,
             passwordTextField,
             passwordValidLabel,
+            nicknameLabel,
+            nicknameTextField,
             signUpButton
         ])
     }
@@ -130,7 +146,7 @@ final class SignUpViewController: BaseViewController {
         emailValidationBtn.snp.makeConstraints {
             $0.top.bottom.equalTo(emailTextField)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            $0.width.equalToSuperview().multipliedBy(0.15)
+            $0.width.equalToSuperview().multipliedBy(0.17)
         }
         
         passwordLabel.snp.makeConstraints {
@@ -149,12 +165,39 @@ final class SignUpViewController: BaseViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
+        nicknameLabel.snp.makeConstraints {
+            $0.top.equalTo(passwordValidLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+        }
+        
+        nicknameTextField.snp.makeConstraints {
+            $0.top.equalTo(nicknameLabel.snp.bottom).offset(8)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.height.equalTo(40)
+        }
+        
         signUpButton.snp.makeConstraints {
-            $0.top.equalTo(passwordValidLabel.snp.bottom).offset(40)
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(48)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(45)
         }
         
+    }
+    
+    private func setupToolbar() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "확인", style: .plain, target: self, action: #selector(dismissKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: true)
+        
+        emailTextField.inputAccessoryView = toolbar
+        passwordTextField.inputAccessoryView = toolbar
+        nicknameTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 
