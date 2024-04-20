@@ -32,7 +32,6 @@ final class SignUpViewController: BaseViewController {
         $0.font = .systemFont(ofSize: 12)
         $0.textColor = .offWhite
         $0.textAlignment = .left
-        $0.isHidden = true
     }
     
     private let emailValidationBtn = UIButton().then {
@@ -61,11 +60,10 @@ final class SignUpViewController: BaseViewController {
         $0.font = .systemFont(ofSize: 12)
         $0.textColor = .offWhite
         $0.textAlignment = .left
-        $0.isHidden = true
     }
     
     private let nicknameLabel = UILabel().then {
-        $0.text = "닉네임을 입력해주세요"
+        $0.text = "ID를 입력해주세요"
         $0.font = .boldSystemFont(ofSize: 14)
         $0.textColor = .offWhite
         $0.textAlignment = .left
@@ -74,6 +72,14 @@ final class SignUpViewController: BaseViewController {
     private let nicknameTextField = SignTextField(placeholderText: "닉네임").then {
         $0.keyboardType = .alphabet
         $0.autocorrectionType = .no
+    }
+    
+    private let nicknameValidLabel = UILabel().then {
+        $0.text = "3자~10자 이내로 입력해주세요"
+        $0.font = .systemFont(ofSize: 12)
+        $0.textColor = .offWhite
+        $0.textAlignment = .left
+ 
     }
     
     let signUpButton = PointButton(title: "Join")
@@ -90,13 +96,36 @@ final class SignUpViewController: BaseViewController {
         let input = SignUpViewModel.Input(
             emailText: emailTextField.rx.text.orEmpty.asObservable(),
             passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
+            nicknameText: nicknameTextField.rx.text.orEmpty.asObservable(),
             signUpButtonTapped: signUpButton.rx.tap.asObservable(),
-            emailValidationButtonTapped: signUpButton.rx.tap.asObservable(), 
-            nicknameText: nicknameTextField.rx.text.orEmpty.asObservable()
+            emailValidationButtonTapped: emailValidationBtn.rx.tap.asObservable()
         )
-        
+                
         let output = viewModel.transform(input: input)
+        
+        output.emailValidationResult
+            .drive(emailValidLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.passwordValidationResult
+            .drive(passwordValidLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.nicknameValidationResult
+            .drive(nicknameValidLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        output.signUpEnabled
+            .drive(signUpButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        output.signUpSuccessTrigger
+            .drive(with: self) { owner, _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
+
     
     override func configNav() {
         self.navigationItem.title = "회원가입"
@@ -121,6 +150,7 @@ final class SignUpViewController: BaseViewController {
             passwordValidLabel,
             nicknameLabel,
             nicknameTextField,
+            nicknameValidLabel,
             signUpButton
         ])
     }
@@ -174,6 +204,11 @@ final class SignUpViewController: BaseViewController {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(40)
+        }
+        
+        nicknameValidLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(8)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
         
         signUpButton.snp.makeConstraints {

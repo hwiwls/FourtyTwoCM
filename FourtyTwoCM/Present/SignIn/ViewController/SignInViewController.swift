@@ -77,7 +77,7 @@ final class SignInViewController: BaseViewController {
         
         output.toastMessage
             .drive(with: self) { owner, message in
-                owner.view.makeToast(message, duration: 3.0)
+                owner.view.makeToast(message, duration: 3.0, position: .top)
             }
             .disposed(by: disposeBag)
         

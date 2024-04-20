@@ -53,25 +53,28 @@ struct NetworkManager {
     }
     
     
-    static func createAccount(query: SignUpQuery) -> Single<EmailValidationModel> {
-        return Single<EmailValidationModel>.create { single in
+    static func createAccount(query: SignUpQuery) -> Single<SignUpModel> {
+        return Single<SignUpModel>.create { single in
             do {
                 let urlRequest = try Router.signUp(query: query).asURLRequest()
                                 
                 AF.request(urlRequest)
                     .validate(statusCode: 200..<300)
-                    .responseDecodable(of: EmailValidationModel.self) { response in
+                    .responseDecodable(of: SignUpModel.self) { response in
                         switch response.result {
-                        case .success(let emailValidationModel):
-                            print("emailvalid success: \(emailValidationModel)")
-                            single(.success(emailValidationModel))
+                        case .success(let signUpModel):
+                            single(.success(signUpModel))
                         case .failure(let error):
-                            print("email valid error: \(error)")
                             single(.failure(error))
+                            print("failure: \(error)")
+                            if let response = response.response {
+                                print("HTTP Status Code: \(response.statusCode)")
+                            }
                         }
                     }
             } catch {
                 single(.failure(error))
+                print("URLRequest Error: \(error)")
             }
             
             return Disposables.create()
