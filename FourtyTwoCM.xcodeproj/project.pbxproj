@@ -10,6 +10,9 @@
 		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
 		2E597FFE2BD41EAC00AAAFA7 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFD2BD41EAC00AAAFA7 /* SignUpViewModel.swift */; };
 		2E5980002BD426CD00AAAFA7 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */; };
+		2E5980022BD42C7A00AAAFA7 /* EmailValidationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5980012BD42C7A00AAAFA7 /* EmailValidationModel.swift */; };
+		2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5980032BD42F0100AAAFA7 /* SignUpQuery.swift */; };
+		2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5980062BD42FBD00AAAFA7 /* EmailValidationQuery.swift */; };
 		2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38042BCA72CF00A006FB /* AppDelegate.swift */; };
 		2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38062BCA72CF00A006FB /* SceneDelegate.swift */; };
 		2E5C380E2BCA72D000A006FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C380D2BCA72D000A006FB /* Assets.xcassets */; };
@@ -61,6 +64,9 @@
 		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2E597FFD2BD41EAC00AAAFA7 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		2E5980012BD42C7A00AAAFA7 /* EmailValidationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationModel.swift; sourceTree = "<group>"; };
+		2E5980032BD42F0100AAAFA7 /* SignUpQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpQuery.swift; sourceTree = "<group>"; };
+		2E5980062BD42FBD00AAAFA7 /* EmailValidationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationQuery.swift; sourceTree = "<group>"; };
 		2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FourtyTwoCM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E5C38042BCA72CF00A006FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2E5C38062BCA72CF00A006FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +152,16 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		2E5980052BD42FAA00AAAFA7 /* Query */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F985F2BCD7EF200E9A79A /* SignInQuery.swift */,
+				2E5980032BD42F0100AAAFA7 /* SignUpQuery.swift */,
+				2E5980062BD42FBD00AAAFA7 /* EmailValidationQuery.swift */,
+			);
+			path = Query;
+			sourceTree = "<group>";
+		};
 		2E5C37F82BCA72CF00A006FB = {
 			isa = PBXGroup;
 			children = (
@@ -194,10 +210,10 @@
 			children = (
 				2E8F985B2BCD7EDF00E9A79A /* Router.swift */,
 				2E8F985D2BCD7EE800E9A79A /* TargetType.swift */,
-				2E8F985F2BCD7EF200E9A79A /* SignInQuery.swift */,
 				2E8F98612BCD7F1500E9A79A /* BaseURL.swift */,
 				2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */,
 				2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */,
+				2E5980052BD42FAA00AAAFA7 /* Query */,
 				2EE34D562BCE716100DE3EF7 /* KeyChain */,
 				2EE34D552BCE6EDD00DE3EF7 /* Model */,
 			);
@@ -422,6 +438,7 @@
 			children = (
 				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
 				2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */,
+				2E5980012BD42C7A00AAAFA7 /* EmailValidationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -527,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */,
+				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
 				2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */,
 				2E8F986C2BCD900400E9A79A /* UITextField+addLeftPadding.swift in Sources */,
 				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
@@ -536,6 +554,7 @@
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
+				2E5980022BD42C7A00AAAFA7 /* EmailValidationModel.swift in Sources */,
 				2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
@@ -549,6 +568,7 @@
 				2E8F985C2BCD7EDF00E9A79A /* Router.swift in Sources */,
 				2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
+				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2E8F984F2BCD74A700E9A79A /* LikeViewController.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
