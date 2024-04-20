@@ -51,4 +51,58 @@ struct NetworkManager {
             return Disposables.create()
         }
     }
+    
+    
+    static func createAccount(query: SignUpQuery) -> Single<SignUpModel> {
+        return Single<SignUpModel>.create { single in
+            do {
+                let urlRequest = try Router.signUp(query: query).asURLRequest()
+                                
+                AF.request(urlRequest)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: SignUpModel.self) { response in
+                        switch response.result {
+                        case .success(let signUpModel):
+                            single(.success(signUpModel))
+                        case .failure(let error):
+                            single(.failure(error))
+                            print("failure: \(error)")
+                            if let response = response.response {
+                                print("HTTP Status Code: \(response.statusCode)")
+                            }
+                        }
+                    }
+            } catch {
+                single(.failure(error))
+                print("URLRequest Error: \(error)")
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    static func requestEmailValid(query: EmailValidationQuery) -> Single<EmailValidationModel> {
+        return Single<EmailValidationModel>.create { single in
+            do {
+                let urlRequest = try Router.emailValidation(query: query).asURLRequest()
+                                
+                AF.request(urlRequest)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: EmailValidationModel.self) { response in
+                        switch response.result {
+                        case .success(let emailValidationModel):
+                            print("requestEmailValid success: \(emailValidationModel)")
+                            single(.success(emailValidationModel))
+                        case .failure(let error):
+                            print("requestEmailValid error: \(error)")
+                            single(.failure(error))
+                        }
+                    }
+            } catch {
+                single(.failure(error))
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

@@ -18,12 +18,14 @@ final class SignInViewModel: ViewModelType {
         let emailText: Observable<String>
         let passwordText: Observable<String>
         let loginButtonTapped: Observable<Void>
+        let signUpButtonTapped: Observable<Void>
     }
     
     struct Output {
-        let loginValidation: Driver<Bool>   // UI적인 handling을 하게 될 거라서 driver 채택
+        let loginValidation: Driver<Bool>
         let loginSuccessTrigger: Driver<Void>
         let toastMessage: Driver<String>
+        let signUpTrigger: Driver<Void>
     }
     
     func transform(input: Input) -> Output {
@@ -47,7 +49,7 @@ final class SignInViewModel: ViewModelType {
         .disposed(by: disposeBag)
         
         input.loginButtonTapped
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)   // 한 번 탭 누르면 1초 동안 탭 못 누르게
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(loginObservable)
             .flatMap { signInQuery in
                 return NetworkManager.createLogin(query: signInQuery)
@@ -55,7 +57,6 @@ final class SignInViewModel: ViewModelType {
             .subscribe(with: self) { owner, signInModel in
                 loginSuccessTrigger.accept(())
             } onError: { owner, error in
-//                print("로그인 버튼에서 에러: \(error)")
                 if let networkError = error as? NetworkError, networkError == .unauthorized {
                     toastMessageRelay.accept("계정 혹은 비밀번호를 확인해주세요")
                 } else {
@@ -64,12 +65,15 @@ final class SignInViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        let signUpTrigger = input.signUpButtonTapped
+                .asDriver(onErrorJustReturn: ())
         
         return Output(
-                    loginValidation: loginValid.asDriver(),
-                    loginSuccessTrigger: loginSuccessTrigger.asDriver(onErrorJustReturn: ()),
-                    toastMessage: toastMessageRelay.asDriver(onErrorJustReturn: "Unknown error occurred") // Safely drive the error messages
-                )
+            loginValidation: loginValid.asDriver(),
+            loginSuccessTrigger: loginSuccessTrigger.asDriver(onErrorJustReturn: ()),
+            toastMessage: toastMessageRelay.asDriver(onErrorJustReturn: ("알 수 없는 에러가 발생했습니다.")),
+            signUpTrigger: signUpTrigger
+        )
     }
     
 }

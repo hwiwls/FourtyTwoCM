@@ -18,6 +18,12 @@ class SignTextField: UITextField {
         borderStyle = .none
         backgroundColor = .superDarkGray
         layer.cornerRadius = 5
+        autocorrectionType = .no
+        autocapitalizationType = .none
+        smartDashesType = .no
+        smartInsertDeleteType = .no
+        smartQuotesType = .no
+        spellCheckingType = .no
         let placeholderAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.placeHolderGray,
             .font: UIFont.systemFont(ofSize: 14)

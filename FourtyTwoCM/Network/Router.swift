@@ -10,6 +10,8 @@ import Alamofire
 
 enum Router {
     case login(query: SignInQuery)
+    case signUp(query: SignUpQuery)
+    case emailValidation(query: EmailValidationQuery)
 }
 
 extension Router: TargetType {
@@ -21,6 +23,10 @@ extension Router: TargetType {
         switch self {
         case .login:
             return .post
+        case .signUp:
+            return .post
+        case .emailValidation:
+            return .post
         }
     }
     
@@ -28,12 +34,40 @@ extension Router: TargetType {
         switch self {
         case .login:
             return "users/login"
+        case .signUp:
+            return "users/join"
+        case .emailValidation(query: let query):
+            return "validation/email"
         }
     }
     
     var header: [String : String] {
         switch self {
         case .login:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            return [
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .signUp(query: let query):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            return [
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .emailValidation(query: let query):
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -62,6 +96,14 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)   
+        case .signUp(let query):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            return try? encoder.encode(query)
+        case .emailValidation(let query):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            return try? encoder.encode(query)
         }
     }
 }
