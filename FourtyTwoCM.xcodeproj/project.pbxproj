@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
 		2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38042BCA72CF00A006FB /* AppDelegate.swift */; };
 		2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38062BCA72CF00A006FB /* SceneDelegate.swift */; };
 		2E5C380E2BCA72D000A006FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C380D2BCA72D000A006FB /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FourtyTwoCM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E5C38042BCA72CF00A006FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2E5C38062BCA72CF00A006FB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E597FF82BD3AD6F00AAAFA7 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				2E597FFA2BD3AD7D00AAAFA7 /* ViewModel */,
+				2E597FF92BD3AD7900AAAFA7 /* ViewController */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		2E597FF92BD3AD7900AAAFA7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E597FFA2BD3AD7D00AAAFA7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		2E5C37F82BCA72CF00A006FB = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				2E5C38252BCA7CE200A006FB /* SignIn */,
+				2E597FF82BD3AD6F00AAAFA7 /* SignUp */,
 				2E8F98422BCD742700E9A79A /* Feed */,
 				2E8F98462BCD747B00E9A79A /* MyPage */,
 				2E8F98452BCD747800E9A79A /* Like */,
@@ -503,6 +530,7 @@
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
+				2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,

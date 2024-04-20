@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 
 final class SignInViewController: BaseViewController {
     
@@ -23,6 +24,7 @@ final class SignInViewController: BaseViewController {
     
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요").then {
         $0.keyboardType = .emailAddress
+        $0.autocorrectionType = .no // 자동완성 구역 없애기
         $0.textContentType = .oneTimeCode   // 텍스트 필드가 일회용 코드 입력을 위한 것임을 나타냄
     }
     
@@ -49,7 +51,8 @@ final class SignInViewController: BaseViewController {
         let input = SignInViewModel.Input(
             emailText: emailTextField.rx.text.orEmpty.asObservable(),
             passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
-            loginButtonTapped: signInButton.rx.tap.asObservable()
+            loginButtonTapped: signInButton.rx.tap.asObservable(), 
+            signUpButtonTapped: signUpButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -74,7 +77,14 @@ final class SignInViewController: BaseViewController {
         
         output.toastMessage
             .drive(with: self) { owner, message in
-                owner.view.makeToast(message, duration: 3.0, position: .top)
+                owner.view.makeToast(message, duration: 3.0)
+            }
+            .disposed(by: disposeBag)
+        
+        output.signUpTrigger
+            .drive(with: self) { owner, _ in
+                let signUpVC = SignUpViewController()
+                owner.navigationController?.pushViewController(signUpVC, animated: true)
             }
             .disposed(by: disposeBag)
     }
