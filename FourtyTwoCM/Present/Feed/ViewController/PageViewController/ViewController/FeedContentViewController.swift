@@ -20,7 +20,7 @@ final class FeedContentViewController: BaseViewController {
         $0.progress = 0.5
     }
     
-    private let postImageView = UIImageView().then {
+    let postImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "SampleImg1")
         $0.backgroundColor = .white
@@ -67,9 +67,14 @@ final class FeedContentViewController: BaseViewController {
         
     }
     
+    
     override func viewDidLayoutSubviews() {
         userProfileIamgeView.layer.cornerRadius = userProfileIamgeView.frame.height / 2
         userProfileIamgeView.clipsToBounds = true
+    }
+    
+    func updateImage(imageName: String) {
+        postImageView.image = UIImage(named: imageName)
     }
     
     override func configHierarchy() {
@@ -93,7 +98,7 @@ final class FeedContentViewController: BaseViewController {
     
     override func configLayout() {
         postProgressbar.snp.makeConstraints {
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12)
             $0.top.equalToSuperview().offset(60)
         }
         
@@ -107,13 +112,14 @@ final class FeedContentViewController: BaseViewController {
         }
         
         postContentLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(20)
             $0.trailing.equalTo(btnStackView.snp.leading).offset(-12)
         }
         
         btnStackView.snp.makeConstraints {
-            $0.trailing.bottom.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
         likePostBtn.snp.makeConstraints {
@@ -134,7 +140,7 @@ final class FeedContentViewController: BaseViewController {
         
         userProfileIamgeView.snp.makeConstraints {
             $0.width.height.equalTo(40)
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(16)
             $0.bottom.equalTo(postContentLabel.snp.top).offset(-12)
         }
         

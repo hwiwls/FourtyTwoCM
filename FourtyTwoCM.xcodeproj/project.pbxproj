@@ -137,6 +137,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E56664C2BD671070018E8E7 /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E8F98542BCD74B700E9A79A /* FeedPageViewController.swift */,
+				2E56664D2BD671180018E8E7 /* ViewController */,
+			);
+			path = PageViewController;
+			sourceTree = "<group>";
+		};
+		2E56664D2BD671180018E8E7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		2E597FF82BD3AD6F00AAAFA7 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,8 +395,7 @@
 		2E8F98472BCD747F00E9A79A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2E8F98542BCD74B700E9A79A /* FeedPageViewController.swift */,
-				2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */,
+				2E56664C2BD671070018E8E7 /* PageViewController */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
