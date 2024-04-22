@@ -50,7 +50,7 @@ final class TabBarController: UITabBarController {
         }
         
         let feedViewController = UINavigationController(
-            rootViewController: FeedViewController()
+            rootViewController: FeedPageViewController()
         )
         
         let searchViewController = UINavigationController(

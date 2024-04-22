@@ -36,7 +36,7 @@ extension Router: TargetType {
             return "users/login"
         case .signUp:
             return "users/join"
-        case .emailValidation(query: let query):
+        case .emailValidation:
             return "validation/email"
         }
     }
@@ -55,7 +55,7 @@ extension Router: TargetType {
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .signUp(query: let query):
+        case .signUp:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -67,7 +67,7 @@ extension Router: TargetType {
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .emailValidation(query: let query):
+        case .emailValidation:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
