@@ -105,4 +105,30 @@ struct NetworkManager {
             return Disposables.create()
         }
     }
+    
+    static func requestViewPost() -> Single<FeedModel> {
+        return Single<FeedModel>.create { single in
+            do {
+                let urlRequest = try Router.viewPost.asURLRequest()
+                                
+                AF.request(urlRequest)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: FeedModel.self) { response in
+                        switch response.result {
+                        case .success(let feedModel):
+                            print("feedModel success: \(feedModel)")
+                            single(.success(feedModel))
+                        case .failure(let error):
+                            print("feed error: \(error)")
+                            single(.failure(error))
+                        }
+                    }
+            } catch {
+                single(.failure(error))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
 }

@@ -12,6 +12,7 @@ enum Router {
     case login(query: SignInQuery)
     case signUp(query: SignUpQuery)
     case emailValidation(query: EmailValidationQuery)
+    case viewPost
 }
 
 extension Router: TargetType {
@@ -27,6 +28,8 @@ extension Router: TargetType {
             return .post
         case .emailValidation:
             return .post
+        case .viewPost:
+            return .get
         }
     }
     
@@ -38,6 +41,8 @@ extension Router: TargetType {
             return "users/join"
         case .emailValidation:
             return "validation/email"
+        case .viewPost:
+            return "posts"
         }
     }
     
@@ -79,6 +84,18 @@ extension Router: TargetType {
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
+        case .viewPost:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            return [
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
         }
     }
     
@@ -104,6 +121,10 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
+        case .viewPost:
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            return try? encoder.encode("ker0r0")
         }
     }
 }
