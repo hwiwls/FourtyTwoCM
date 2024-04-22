@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E56664B2BD663FE0018E8E7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664A2BD663FE0018E8E7 /* GradientView.swift */; };
+		2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664E2BD6815E0018E8E7 /* FeedModel.swift */; };
 		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
 		2E597FFE2BD41EAC00AAAFA7 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFD2BD41EAC00AAAFA7 /* SignUpViewModel.swift */; };
 		2E5980002BD426CD00AAAFA7 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */; };
@@ -67,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		2E56664A2BD663FE0018E8E7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		2E56664E2BD6815E0018E8E7 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2E597FFD2BD41EAC00AAAFA7 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
 				2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */,
 				2E5980012BD42C7A00AAAFA7 /* EmailValidationModel.swift */,
+				2E56664E2BD6815E0018E8E7 /* FeedModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -586,6 +589,7 @@
 				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
 				2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */,
 				2E8F986C2BCD900400E9A79A /* UITextField+addLeftPadding.swift in Sources */,
+				2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */,
 				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
 				2E8F98512BCD74AD00E9A79A /* AddPostViewController.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
