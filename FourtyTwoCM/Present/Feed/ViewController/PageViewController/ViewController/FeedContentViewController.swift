@@ -10,14 +10,13 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import Kingfisher
 
 final class FeedContentViewController: BaseViewController {
     
     private let postProgressbar = UIProgressView(progressViewStyle: .bar).then {
         $0.trackTintColor = .unactiveGray
         $0.progressTintColor = .offWhite
-        $0.progress = 0.5
+        $0.progress = 0.0
     }
     
     let postImageView = UIImageView().then {
@@ -71,7 +70,17 @@ final class FeedContentViewController: BaseViewController {
         userProfileImageView.clipsToBounds = true
     }
     
-    func updatePost(post: Post) {
+    func updateProgressBar(progress: Float) {
+        if progress == 0 {
+            postProgressbar.progress = 0
+        } else {
+            UIView.animate(withDuration: 7.0, animations: { [weak self] in
+                self?.postProgressbar.setProgress(1.0, animated: true)
+            })
+        }
+    }
+    
+    func loadPost(post: Post) {
         self.postContentLabel.text = post.content
         self.userIDLabel.text = post.creator.nick
     

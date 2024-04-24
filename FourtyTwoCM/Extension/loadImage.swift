@@ -14,9 +14,9 @@ extension UIImageView {
         
         do {
             accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            print("Refresh Token을 겟또: \(accessToken)")
+            print("access Token을 겟또: \(accessToken)")
         } catch {
-            print("Error retrieving refresh token: \(error)")
+            print("Error retrieving access token: \(error)")
         }
         
         guard let sesacKey = Bundle.main.sesacKey else {
