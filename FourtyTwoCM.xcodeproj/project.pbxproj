@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */; };
 		2E56664B2BD663FE0018E8E7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664A2BD663FE0018E8E7 /* GradientView.swift */; };
 		2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664E2BD6815E0018E8E7 /* FeedModel.swift */; };
 		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
@@ -34,6 +35,7 @@
 		2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */; };
 		2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38402BCA7FF800A006FB /* BaseView.swift */; };
 		2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */; };
+		2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D7B922BD82C2200E25B26 /* loadImage.swift */; };
 		2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */; };
 		2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */; };
 		2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */; };
@@ -67,6 +69,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostQuery.swift; sourceTree = "<group>"; };
 		2E56664A2BD663FE0018E8E7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		2E56664E2BD6815E0018E8E7 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 		2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2E5C38402BCA7FF800A006FB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		2E5D7B922BD82C2200E25B26 /* loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadImage.swift; sourceTree = "<group>"; };
 		2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF B.otf"; sourceTree = "<group>"; };
 		2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF L.otf"; sourceTree = "<group>"; };
 		2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF M.otf"; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 				2E8F985F2BCD7EF200E9A79A /* SignInQuery.swift */,
 				2E5980032BD42F0100AAAFA7 /* SignUpQuery.swift */,
 				2E5980062BD42FBD00AAAFA7 /* EmailValidationQuery.swift */,
+				2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 				2E8F98632BCD7F5000E9A79A /* UI */,
 				2E8F98642BCD803300E9A79A /* Bundle.swift */,
 				2E56664A2BD663FE0018E8E7 /* GradientView.swift */,
+				2E5D7B922BD82C2200E25B26 /* loadImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -468,8 +474,8 @@
 		2ED642FC2BD5271000722299 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2ED642FD2BD5271E00722299 /* FeedContentViewModel.swift */,
 				2ED642FF2BD5272500722299 /* FeedPageViewModel.swift */,
+				2ED642FD2BD5271E00722299 /* FeedContentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -594,6 +600,7 @@
 				2E8F98512BCD74AD00E9A79A /* AddPostViewController.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2ED643002BD5272500722299 /* FeedPageViewModel.swift in Sources */,
+				2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
@@ -618,6 +625,7 @@
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2E8F984F2BCD74A700E9A79A /* LikeViewController.swift in Sources */,
+				2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,

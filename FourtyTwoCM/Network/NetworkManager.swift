@@ -106,10 +106,10 @@ struct NetworkManager {
         }
     }
     
-    static func requestViewPost() -> Single<FeedModel> {
+    static func requestViewPost(query: ViewPostQuery) -> Single<FeedModel> {
         return Single<FeedModel>.create { single in
             do {
-                let urlRequest = try Router.viewPost.asURLRequest()
+                let urlRequest = try Router.viewPost(query: query).asURLRequest()
                                 
                 AF.request(urlRequest)
                     .validate(statusCode: 200..<300)

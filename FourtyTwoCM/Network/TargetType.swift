@@ -21,17 +21,34 @@ protocol TargetType: URLRequestConvertible {
 }
 
 extension TargetType {
+//    func asURLRequest() throws -> URLRequest {
+//        let url = try baseURL.asURL()
+//        var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
+//        urlRequest.allHTTPHeaderFields = header
+//        urlRequest.httpBody = parameter?.data(using: .utf8)
+//        urlRequest.httpBody = body
+//        
+//        print("Request URL: \(urlRequest.url?.absoluteString ?? "Invalid URL")")
+//        print("Headers: \(String(describing: urlRequest.allHTTPHeaderFields))")
+//        print("HTTP Body: \(String(data: urlRequest.httpBody ?? Data(), encoding: .utf8) ?? "No body data")")
+//        
+//        return urlRequest
+//    }
+    
     func asURLRequest() throws -> URLRequest {
-        let url = try baseURL.asURL()
-        var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
+        let url = try baseURL.asURL().appendingPathComponent(path)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.queryItems = queryItems
+
+        var urlRequest = try URLRequest(url: components?.url ?? url, method: method)
         urlRequest.allHTTPHeaderFields = header
-        urlRequest.httpBody = parameter?.data(using: .utf8)
-        urlRequest.httpBody = body
-        
+        urlRequest.httpBody = body  
+
         print("Request URL: \(urlRequest.url?.absoluteString ?? "Invalid URL")")
         print("Headers: \(String(describing: urlRequest.allHTTPHeaderFields))")
         print("HTTP Body: \(String(data: urlRequest.httpBody ?? Data(), encoding: .utf8) ?? "No body data")")
         
         return urlRequest
     }
+
 }

@@ -10,9 +10,9 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class FeedContentViewController: BaseViewController {
-    private let viewModel = FeedContentViewModel()
     
     private let postProgressbar = UIProgressView(progressViewStyle: .bar).then {
         $0.trackTintColor = .unactiveGray
@@ -28,8 +28,9 @@ final class FeedContentViewController: BaseViewController {
     
     private let postShadowView = GradientView()
     
-    private let userProfileIamgeView = UIImageView().then {
-        $0.image = UIImage(named: "SampleProfileImg")
+    private let userProfileImageView = UIImageView().then {
+        $0.image = UIImage(named: "")
+        $0.backgroundColor = .red
         $0.contentMode = .scaleAspectFill
     }
     
@@ -63,26 +64,39 @@ final class FeedContentViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
     }
-    
     
     override func viewDidLayoutSubviews() {
-        userProfileIamgeView.layer.cornerRadius = userProfileIamgeView.frame.height / 2
-        userProfileIamgeView.clipsToBounds = true
+        userProfileImageView.layer.cornerRadius = userProfileImageView.frame.height / 2
+        userProfileImageView.clipsToBounds = true
     }
     
-    func updateImage(imageName: String) {
-        postImageView.image = UIImage(named: imageName)
+    func updatePost(post: Post) {
+        self.postContentLabel.text = post.content
+        self.userIDLabel.text = post.creator.nick
+    
+        let baseURL = BaseURL.baseURL.rawValue
+    
+        if let profileImageUrl = post.creator.profileImage {
+            let url = URL(string: baseURL + "/" + profileImageUrl)!
+            print("프로필이미지 url: \(String(describing: url))")
+            self.userProfileImageView.loadImage(from: url)
+        }
+
+        if let firstFile = post.files.first {
+            let url = URL(string: baseURL + "/" + firstFile)!
+            print("프로필이미지 url: \(String(describing: url))")
+            self.postImageView.loadImage(from: url)
+        }
     }
+
     
     override func configHierarchy() {
         view.addSubviews([
             postImageView,
             postProgressbar,
             postShadowView,
-            userProfileIamgeView,
+            userProfileImageView,
             userIDLabel,
             postContentLabel,
             btnStackView,
@@ -138,15 +152,15 @@ final class FeedContentViewController: BaseViewController {
             $0.size.equalTo(30)
         }
         
-        userProfileIamgeView.snp.makeConstraints {
+        userProfileImageView.snp.makeConstraints {
             $0.width.height.equalTo(40)
             $0.leading.equalToSuperview().offset(16)
             $0.bottom.equalTo(postContentLabel.snp.top).offset(-12)
         }
         
         userIDLabel.snp.makeConstraints {
-            $0.leading.equalTo(userProfileIamgeView.snp.trailing).offset(8)
-            $0.centerY.equalTo(userProfileIamgeView)
+            $0.leading.equalTo(userProfileImageView.snp.trailing).offset(8)
+            $0.centerY.equalTo(userProfileImageView)
         }
         
         

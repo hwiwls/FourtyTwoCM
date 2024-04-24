@@ -12,7 +12,7 @@ enum Router {
     case login(query: SignInQuery)
     case signUp(query: SignUpQuery)
     case emailValidation(query: EmailValidationQuery)
-    case viewPost
+    case viewPost(query: ViewPostQuery)
 }
 
 extension Router: TargetType {
@@ -92,7 +92,17 @@ extension Router: TargetType {
             
             print("sesacKey: \(sesacKey)")
             
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+                print("Refresh Token을 겟또: \(accessToken)")
+            } catch {
+                print("Error retrieving refresh token: \(error)")
+            }
+            
             return [
+                HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
@@ -104,7 +114,12 @@ extension Router: TargetType {
     }
     
     var queryItems: [URLQueryItem]? {
-        return nil
+        switch self {
+        case .viewPost(let query):
+            return [URLQueryItem(name: "product_id", value: query.product_id)]
+        default:
+            return nil
+        }
     }
     
     var body: Data? {
@@ -121,10 +136,8 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
-        case .viewPost:
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            return try? encoder.encode("ker0r0")
+        case .viewPost(let query):
+            return nil
         }
     }
 }

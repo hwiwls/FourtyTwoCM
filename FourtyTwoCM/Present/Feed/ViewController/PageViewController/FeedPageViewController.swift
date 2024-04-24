@@ -18,18 +18,26 @@ final class FeedPageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dataSource = self
-        setupViewControllers()
+        bind()
     }
     
-    private func setupViewControllers() {
-        // 예시 데이터 - 실제 구현에서는 ViewModel을 통해 데이터를 받아야 함
-        let items = ["SampleImg1", "SampleImg2", "SampleImg3"]
-        self.contentViewControllers = items.map { imageName in
+    private func bind() {
+        let input = FeedPageViewModel.Input(trigger: .just(()))
+        let output = viewModel.transform(input: input)
+
+        output.posts
+            .drive(onNext: { [weak self] posts in
+                self?.setupViewControllers(posts: posts)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setupViewControllers(posts: [Post]) {
+        self.contentViewControllers = posts.map { post in
             let vc = FeedContentViewController()
-            vc.updateImage(imageName: imageName)
+            vc.updatePost(post: post)
             return vc
         }
-        
         if let firstViewController = contentViewControllers.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
@@ -64,4 +72,3 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
         return contentViewControllers[nextIndex]
     }
 }
-

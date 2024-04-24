@@ -12,43 +12,37 @@ struct FeedModel: Decodable {
 }
 
 struct Post: Decodable {
-    let postID, productID, title, content: String
-    let content1, createdAt: String
+    let postID, productID, content: String
+    let createdAt: String
     let creator: PostCreator
-    let files, likes, likes2, hashTags: [String]
-    let comments: [Comment]
-    /*
-     content2: 위도
-     content3: 경도
-     
-     */
-    let content2, content3, content4, content5: String?
+    let files: [String]
+    let likes, likes2, hashTags: [String]?
+    let comments: [Comment]?
+    let content1, content2: String  // 위도, 경도
 
     enum CodingKeys: String, CodingKey {
         case postID = "post_id"
         case productID = "product_id"
-        case title, content, content1, createdAt, creator, files, likes, likes2, hashTags, comments, content2, content3, content4, content5
+        case content, content1, createdAt, creator, files, likes, likes2, hashTags, comments, content2
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.postID = try container.decode(String.self, forKey: .postID)
         self.productID = try container.decode(String.self, forKey: .productID)
-        self.title = try container.decode(String.self, forKey: .title)
         self.content = try container.decode(String.self, forKey: .content)
         self.content1 = try container.decode(String.self, forKey: .content1)
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
         self.creator = try container.decode(PostCreator.self, forKey: .creator)
         self.files = try container.decode([String].self, forKey: .files)
-        self.likes = try container.decode([String].self, forKey: .likes)
-        self.likes2 = try container.decode([String].self, forKey: .likes2)
-        self.hashTags = try container.decode([String].self, forKey: .hashTags)
-        self.comments = try container.decode([Comment].self, forKey: .comments)
-        self.content2 = try container.decodeIfPresent(String.self, forKey: .content2) ?? "ㅜㅜ"
-        self.content3 = try container.decodeIfPresent(String.self, forKey: .content3) ?? "ㅜㅜ"
-        self.content4 = try container.decodeIfPresent(String.self, forKey: .content4) ?? "ㅜㅜ"
-        self.content5 = try container.decodeIfPresent(String.self, forKey: .content5) ?? "ㅜㅜ"
+        self.likes = try container.decodeIfPresent([String].self, forKey: .likes) ?? []
+        self.likes2 = try container.decodeIfPresent([String].self, forKey: .likes2) ?? []
+        self.hashTags = try container.decodeIfPresent([String].self, forKey: .hashTags) ?? []
+        self.comments = try container.decodeIfPresent([Comment].self, forKey: .comments) ?? []
+        self.content2 = try container.decode(String.self, forKey: .content2)
     }
+    
+    
     
 }
 
