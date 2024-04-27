@@ -60,6 +60,8 @@
 		2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986D2BCD937A00E9A79A /* SignInModel.swift */; };
 		2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98702BCD940700E9A79A /* SignInViewModel.swift */; };
 		2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98722BCD946100E9A79A /* ViewModelType.swift */; };
+		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
+		2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397F02BDA485A0064CD71 /* LikeModel.swift */; };
 		2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */; };
 		2ED642FE2BD5271E00722299 /* FeedContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FD2BD5271E00722299 /* FeedContentViewModel.swift */; };
 		2ED643002BD5272500722299 /* FeedPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FF2BD5272500722299 /* FeedPageViewModel.swift */; };
@@ -118,6 +120,8 @@
 		2E8F986D2BCD937A00E9A79A /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
 		2E8F98702BCD940700E9A79A /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		2E8F98722BCD946100E9A79A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
+		2ED397F02BDA485A0064CD71 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentViewController.swift; sourceTree = "<group>"; };
 		2ED642FD2BD5271E00722299 /* FeedContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentViewModel.swift; sourceTree = "<group>"; };
 		2ED642FF2BD5272500722299 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 				2E5980032BD42F0100AAAFA7 /* SignUpQuery.swift */,
 				2E5980062BD42FBD00AAAFA7 /* EmailValidationQuery.swift */,
 				2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */,
+				2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				2E597FFF2BD426CD00AAAFA7 /* SignUpModel.swift */,
 				2E5980012BD42C7A00AAAFA7 /* EmailValidationModel.swift */,
 				2E56664E2BD6815E0018E8E7 /* FeedModel.swift */,
+				2ED397F02BDA485A0064CD71 /* LikeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -608,12 +614,14 @@
 				2ED643022BD52A1A00722299 /* IconBtn.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
 				2ED642FE2BD5271E00722299 /* FeedContentViewModel.swift in Sources */,
+				2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */,
 				2E5980022BD42C7A00AAAFA7 /* EmailValidationModel.swift in Sources */,
 				2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
+				2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */,
 				2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */,
 				2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */,
 				2E8F98552BCD74B700E9A79A /* FeedPageViewController.swift in Sources */,

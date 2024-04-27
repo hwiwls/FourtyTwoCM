@@ -13,6 +13,7 @@ enum Router {
     case signUp(query: SignUpQuery)
     case emailValidation(query: EmailValidationQuery)
     case viewPost(query: ViewPostQuery)
+    case likePost(postId: String, query: LikeQuery)
 }
 
 extension Router: TargetType {
@@ -30,6 +31,8 @@ extension Router: TargetType {
             return .post
         case .viewPost:
             return .get
+        case .likePost:
+            return .post
         }
     }
     
@@ -43,6 +46,8 @@ extension Router: TargetType {
             return "validation/email"
         case .viewPost:
             return "posts"
+        case .likePost(let postId, _):
+            return "posts/\(postId)/like"
         }
     }
     
@@ -96,9 +101,29 @@ extension Router: TargetType {
             
             do {
                 accessToken = try Keychain.shared.getToken(kind: .accessToken)
-                print("Refresh Token을 겟또: \(accessToken)")
             } catch {
-                print("Error retrieving refresh token: \(error)")
+                print("Error retrieving access token: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .likePost:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("Error retrieving access token: \(error)")
             }
             
             return [
@@ -136,8 +161,12 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
-        case .viewPost(let query):
+        case .viewPost(_):
             return nil
+        case .likePost(postId: _, query: let query):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            return try? encoder.encode(query)
         }
     }
 }

@@ -16,7 +16,7 @@ struct Post: Decodable {
     let createdAt: String
     let creator: PostCreator
     let files: [String]
-    let likes, likes2, hashTags: [String]?
+    var likes, likes2, hashTags: [String]?
     let comments: [Comment]?
     let content1, content2: String  // 위도, 경도
 
@@ -35,7 +35,7 @@ struct Post: Decodable {
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
         self.creator = try container.decode(PostCreator.self, forKey: .creator)
         self.files = try container.decode([String].self, forKey: .files)
-        self.likes = try container.decodeIfPresent([String].self, forKey: .likes) ?? []
+        self.likes = try container.decodeIfPresent([String].self, forKey: .likes) ?? ["rr"]
         self.likes2 = try container.decodeIfPresent([String].self, forKey: .likes2) ?? []
         self.hashTags = try container.decodeIfPresent([String].self, forKey: .hashTags) ?? []
         self.comments = try container.decodeIfPresent([Comment].self, forKey: .comments) ?? []

@@ -27,9 +27,14 @@ struct NetworkManager {
                         case .success(let signInModel):
                             do {
                                 try Keychain.shared.saveToken(kind: .accessToken, token: signInModel.accessToken)
-                                print("AccessToken 저장 성공: \(signInModel.accessToken)")
+//                                print("AccessToken 저장 성공: \(signInModel.accessToken)")
                                 try Keychain.shared.saveToken(kind: .refreshToken, token: signInModel.refreshToken)
-                                print("RefreshToken 저장 성공: \(signInModel.refreshToken)")
+//                                print("RefreshToken 저장 성공: \(signInModel.refreshToken)")
+                                
+                                UserDefaults.standard.set(signInModel.user_id, forKey: "userID")
+                                let temp = UserDefaults.standard.string(forKey: "userID") ?? ""
+                                print("userID: \(temp)"
+)
                                 
                                 single(.success(signInModel))
                             } catch {
@@ -116,7 +121,7 @@ struct NetworkManager {
                     .responseDecodable(of: FeedModel.self) { response in
                         switch response.result {
                         case .success(let feedModel):
-                            print("feedModel success: \(feedModel)")
+//                            print("feedModel success: \(feedModel)")
                             single(.success(feedModel))
                         case .failure(let error):
                             print("feed error: \(error)")
@@ -131,4 +136,31 @@ struct NetworkManager {
         }
     }
     
+    static func requestLikePost(query: LikeQuery, postID: String) -> Single<LikeModel> {
+        return Single<LikeModel>.create { single in
+            do {
+                let urlRequest = try Router.likePost(postId: postID, query: query).asURLRequest()
+                                
+                AF.request(urlRequest)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: LikeModel.self) { response in
+                        switch response.result {
+                        case .success(let likeModel):
+                            print("likeModel success: \(likeModel)")
+                            print("============================================")
+                            single(.success(likeModel))
+                        case .failure(let error):
+                            print("likeModel error: \(error)")
+                            single(.failure(error))
+                        }
+                    }
+            } catch {
+                single(.failure(error))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+   
 }

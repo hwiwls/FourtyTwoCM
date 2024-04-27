@@ -14,7 +14,6 @@ extension UIImageView {
         
         do {
             accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            print("access Token을 겟또: \(accessToken)")
         } catch {
             print("Error retrieving access token: \(error)")
         }

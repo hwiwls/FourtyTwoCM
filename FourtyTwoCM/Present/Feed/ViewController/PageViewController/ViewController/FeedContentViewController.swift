@@ -12,7 +12,8 @@ import RxSwift
 import RxCocoa
 
 final class FeedContentViewController: BaseViewController {
-    
+    private var viewModel: FeedContentViewModel!
+
     private let postProgressbar = UIProgressView(progressViewStyle: .bar).then {
         $0.trackTintColor = .unactiveGray
         $0.progressTintColor = .offWhite
@@ -70,6 +71,23 @@ final class FeedContentViewController: BaseViewController {
         userProfileImageView.clipsToBounds = true
     }
     
+    
+    override func bind() {
+        let input = FeedContentViewModel.Input(likeBtnTapped: likePostBtn.rx.tap.asObservable())
+        let output = viewModel.transform(input: input)
+        
+        output.likeStatus
+            .drive(with: self) { owner, isLiked in
+                owner.updateLikeButton(isLiked: isLiked)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func updateLikeButton(isLiked: Bool) {
+        let imageName = isLiked ? "heart.fill" : "heart"
+        likePostBtn.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
     func updateProgressBar(progress: Float) {
         if progress == 0 {
             postProgressbar.progress = 0
@@ -81,23 +99,42 @@ final class FeedContentViewController: BaseViewController {
     }
     
     func loadPost(post: Post) {
-        self.postContentLabel.text = post.content
-        self.userIDLabel.text = post.creator.nick
-    
-        let baseURL = BaseURL.baseURL.rawValue
-    
-        if let profileImageUrl = post.creator.profileImage {
-            let url = URL(string: baseURL + "/" + profileImageUrl)!
-            print("프로필이미지 url: \(String(describing: url))")
-            self.userProfileImageView.loadImage(from: url)
-        }
+        viewModel = FeedContentViewModel(post: post)
+        
+        viewModel.content
+            .bind(to: postContentLabel.rx.text)
+            .disposed(by: disposeBag)
 
-        if let firstFile = post.files.first {
-            let url = URL(string: baseURL + "/" + firstFile)!
-            print("프로필이미지 url: \(String(describing: url))")
-            self.postImageView.loadImage(from: url)
-        }
+        viewModel.nickname
+            .bind(to: userIDLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.profileImageUrl
+            .compactMap { $0 }
+            .compactMap { URL(string: $0) }
+            .subscribe(onNext: { [weak self] url in
+                self?.userProfileImageView.loadImage(from: url)
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.postImageUrl
+            .compactMap { $0 }
+            .compactMap { URL(string: $0) }
+            .subscribe(onNext: { [weak self] url in
+                self?.postImageView.loadImage(from: url)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.isLiked
+            .subscribe(onNext: { [weak self] isLiked in
+                self?.likePostBtn.isSelected = isLiked
+                let imageName = isLiked ? "heart.fill" : "heart"
+                self?.likePostBtn.setImage(UIImage(systemName: imageName), for: .normal)
+            })
+            .disposed(by: disposeBag)
+        
     }
+    
 
     
     override func configHierarchy() {
@@ -136,7 +173,7 @@ final class FeedContentViewController: BaseViewController {
         
         postContentLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(28)
             $0.trailing.equalTo(btnStackView.snp.leading).offset(-12)
         }
         
@@ -146,19 +183,19 @@ final class FeedContentViewController: BaseViewController {
         }
         
         likePostBtn.snp.makeConstraints {
-            $0.size.equalTo(30)
+            $0.size.equalTo(40)
         }
         
         savePostBtn.snp.makeConstraints {
-            $0.size.equalTo(30)
+            $0.size.equalTo(40)
         }
         
         commentPostBtn.snp.makeConstraints {
-            $0.size.equalTo(30)
+            $0.size.equalTo(40)
         }
         
         ellipsisPostBtn.snp.makeConstraints {
-            $0.size.equalTo(30)
+            $0.size.equalTo(40)
         }
         
         userProfileImageView.snp.makeConstraints {
