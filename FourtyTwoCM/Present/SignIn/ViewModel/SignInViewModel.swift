@@ -40,7 +40,7 @@ final class SignInViewModel: ViewModelType {
             }
         
         loginObservable.bind(with: self) { owner, login in
-            if login.email.contains("@") && login.password.count > 5 && login.password.count < 20 {
+            if login.email.contains("@") && login.password.count >= 5 && login.password.count <= 20 {
                 loginValid.accept(true)
             } else {
                 loginValid.accept(false)
