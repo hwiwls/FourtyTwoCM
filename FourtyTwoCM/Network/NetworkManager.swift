@@ -15,6 +15,7 @@ enum NetworkError: Error {
 
 struct NetworkManager {
     
+    // 로그인
     static func createLogin(query: SignInQuery) -> Single<SignInModel> {
         return Single<SignInModel>.create { single in
             do {
@@ -57,7 +58,7 @@ struct NetworkManager {
         }
     }
     
-    
+    // 회원가입
     static func createAccount(query: SignUpQuery) -> Single<SignUpModel> {
         return Single<SignUpModel>.create { single in
             do {
@@ -86,6 +87,7 @@ struct NetworkManager {
         }
     }
     
+    // 이메일 중복 확인
     static func requestEmailValid(query: EmailValidationQuery) -> Single<EmailValidationModel> {
         return Single<EmailValidationModel>.create { single in
             do {
@@ -111,6 +113,7 @@ struct NetworkManager {
         }
     }
     
+    // 게시글 조회
     static func requestViewPost(query: ViewPostQuery) -> Single<FeedModel> {
         return Single<FeedModel>.create { single in
             do {
@@ -136,6 +139,7 @@ struct NetworkManager {
         }
     }
     
+    // 게시글 좋아요/취소
     static func requestLikePost(query: LikeQuery, postID: String) -> Single<LikeModel> {
         return Single<LikeModel>.create { single in
             do {
@@ -161,6 +165,34 @@ struct NetworkManager {
             return Disposables.create()
         }
     }
+    
+    
+    static func requestDeletePost(postID: String) {
+        return Single<LikeModel>.create { single in
+            do {
+                let urlRequest = try Router.likePost(postId: postID, query: query).asURLRequest()
+                                
+                AF.request(urlRequest)
+                    .validate(statusCode: 200..<300)
+                    .responseDecodable(of: LikeModel.self) { response in
+                        switch response.result {
+                        case .success(let likeModel):
+                            print("likeModel success: \(likeModel)")
+                            print("============================================")
+                            single(.success(likeModel))
+                        case .failure(let error):
+                            print("likeModel error: \(error)")
+                            single(.failure(error))
+                        }
+                    }
+            } catch {
+                single(.failure(error))
+            }
+            
+            return Disposables.create()
+        }
+    }
+
     
    
 }

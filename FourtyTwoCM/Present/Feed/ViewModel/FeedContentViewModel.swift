@@ -9,88 +9,81 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class FeedContentViewModel: ViewModelType {
+class FeedContentViewModel {
     var disposeBag = DisposeBag()
     
-    var post: BehaviorSubject<Post>
-    
-    var content: Observable<String>
-    var nickname: Observable<String>
-    var profileImageUrl: Observable<String?>
-    var postImageUrl: Observable<String?>
-    
-    let isLiked = BehaviorSubject<Bool>(value: false)
-    
-    
-    init(post: Post) {
-        self.post = BehaviorSubject<Post>(value: post)
-        if let userID = UserDefaults.standard.string(forKey: "userID"),
-               let isLikedByUser = post.likes?.contains(userID) {
-            self.isLiked.onNext(isLikedByUser)
-        }
-        
-        content = self.post.map { $0.content }.asObservable()
-        nickname = self.post.map { $0.creator.nick }.asObservable()
-        profileImageUrl = self.post.map { post in
-            guard let profileImage = post.creator.profileImage else { return nil }
-            return BaseURL.baseURL.rawValue + "/" + profileImage
-        }.asObservable()
-        postImageUrl = self.post.map { post in
-            guard let firstFile = post.files.first else { return nil }
-            return BaseURL.baseURL.rawValue + "/" + firstFile
-        }.asObservable()
-    }
-    
-    var postID: Observable<String> {
-        return post.map { $0.postID }
-    }
+    private var post: BehaviorSubject<Post>
+
+    var isLiked = BehaviorSubject<Bool>(value: false)
     
     struct Input {
+        let viewDidLoadTrigger: Observable<Void>
         let likeBtnTapped: Observable<Void>
     }
 
     struct Output {
+        let content: Driver<String>
+        let nickname: Driver<String>
+        let profileImageUrl: Driver<String?>
+        let postImageUrl: Driver<String?>
         let likeStatus: Driver<Bool>
+        let likeButtonImage: Driver<String>  // 좋아요 버튼 이미지 이름을 제공
+        let ellipsisVisibility: Driver<Bool>
+    }
+
+    init(post: Post) {
+        self.post = BehaviorSubject<Post>(value: post)
+        
+        let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+                
+                // 초기 좋아요 상태 설정
+                let initialIsLiked = post.likes?.contains(userID) ?? false
+                self.isLiked.onNext(initialIsLiked)
     }
 
     func transform(input: Input) -> Output {
-        // 좋아요 버튼 탭을 감지하고 상태를 토글
+        let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        
+        
         let likeStatus = input.likeBtnTapped
-            .withLatestFrom(isLiked)  // 현재 좋아요 상태를 가져오기
-            .flatMapLatest { [weak self] currentStatus -> Observable<Bool> in
-                guard let self = self else { return .just(false) }
-                let newStatus = !currentStatus
-                self.isLiked.onNext(newStatus)  // 상태 업데이트
-                guard let postID = try? self.post.value().postID else {
-                            return Observable.just(false)
-                        }
-
-                        return self.toggleLikeStatus(for: postID, newStatus: newStatus)
+                .withLatestFrom(isLiked) { !$1 }
+                .flatMapLatest { [weak self] newStatus -> Observable<Bool> in
+                    guard let self = self, let postID = try? self.post.value().postID else {
+                        return .just(false)
                     }
+                    return self.toggleLikeStatus(for: postID, newStatus: newStatus)
+                }
+                .do(onNext: isLiked.onNext)
+                .asDriver(onErrorJustReturn: false)
+            
+            let likeButtonImage = isLiked
+                .map { $0 ? "heart.fill" : "heart" }
+                .asDriver(onErrorJustReturn: "heart")
+        let ellipsisVisibility = post.map { $0.creator.userID == userID }
             .asDriver(onErrorJustReturn: false)
 
-        return Output(likeStatus: likeStatus)
+        let content = post.map { $0.content }.asDriver(onErrorJustReturn: "")
+        let nickname = post.map { $0.creator.nick }.asDriver(onErrorJustReturn: "")
+        let profileImageUrl = post.map { post in post.creator.profileImage.map { BaseURL.baseURL.rawValue + "/" + $0 } }.asDriver(onErrorJustReturn: nil)
+        let postImageUrl = post.map { post in post.files.first.map { BaseURL.baseURL.rawValue + "/" + $0 } }.asDriver(onErrorJustReturn: nil)
+        
+
+        return Output(
+            content: content,
+            nickname: nickname,
+            profileImageUrl: profileImageUrl,
+            postImageUrl: postImageUrl,
+            likeStatus: likeStatus, 
+            likeButtonImage: likeButtonImage,
+            ellipsisVisibility: ellipsisVisibility
+        )
     }
 
     private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
-        return Observable.create { [weak self] observer in
-            guard let self = self else {
-                observer.onCompleted()
-                return Disposables.create()
-            }
-
-            let query = LikeQuery(like_status: newStatus)
-
-            NetworkManager.requestLikePost(query: query, postID: postID)
-                .subscribe(onSuccess: { likeModel in
-                    observer.onNext(likeModel.likeStatus)
-                    observer.onCompleted()
-                }, onFailure: { error in
-                    observer.onError(error)
-                })
-                .disposed(by: self.disposeBag)
-
-            return Disposables.create()
-        }
+        let query = LikeQuery(like_status: newStatus)
+        return NetworkManager.requestLikePost(query: query, postID: postID)
+            .map { $0.likeStatus }
+            .asObservable()
+            .catchAndReturn(false)
     }
 }

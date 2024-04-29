@@ -14,6 +14,7 @@ enum Router {
     case emailValidation(query: EmailValidationQuery)
     case viewPost(query: ViewPostQuery)
     case likePost(postId: String, query: LikeQuery)
+    case deletePost(postId: String)
 }
 
 extension Router: TargetType {
@@ -33,6 +34,8 @@ extension Router: TargetType {
             return .get
         case .likePost:
             return .post
+        case .deletePost:
+            return .delete
         }
     }
     
@@ -48,6 +51,8 @@ extension Router: TargetType {
             return "posts"
         case .likePost(let postId, _):
             return "posts/\(postId)/like"
+        case .deletePost(let postId):
+            return "posts/\(postId)"
         }
     }
     
@@ -131,6 +136,27 @@ extension Router: TargetType {
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
+        case .deletePost(postId: let postId):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("Error retrieving access token: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
         }
     }
     
@@ -167,6 +193,8 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
+        case .deletePost(postId: let postId):
+            return nil
         }
     }
 }

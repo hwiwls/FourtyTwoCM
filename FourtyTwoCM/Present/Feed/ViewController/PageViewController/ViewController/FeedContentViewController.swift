@@ -72,16 +72,67 @@ final class FeedContentViewController: BaseViewController {
     }
     
     
+    func loadPost(post: Post) {
+        viewModel = FeedContentViewModel(post: post)
+    }
+
     override func bind() {
-        let input = FeedContentViewModel.Input(likeBtnTapped: likePostBtn.rx.tap.asObservable())
+        guard let viewModel = viewModel else { return }
+
+        let input = FeedContentViewModel.Input(
+            viewDidLoadTrigger: .just(()),
+            likeBtnTapped: likePostBtn.rx.tap.asObservable()
+        )
+        
         let output = viewModel.transform(input: input)
         
+        viewModel.isLiked
+                    .asDriver(onErrorJustReturn: false)
+                    .drive(onNext: { [weak self] isLiked in
+                        self?.updateLikeButton(isLiked: isLiked)
+                    })
+                    .disposed(by: disposeBag)
+
+        output.content
+            .drive(postContentLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        output.nickname
+            .drive(userIDLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        output.profileImageUrl
+            .compactMap { URL(string: $0 ?? "") }
+            .drive(onNext: { [weak self] url in
+                self?.userProfileImageView.loadImage(from: url)
+            })
+            .disposed(by: disposeBag)
+
+        output.postImageUrl
+            .compactMap { URL(string: $0 ?? "") }
+            .drive(onNext: { [weak self] url in
+                self?.postImageView.loadImage(from: url)
+            })
+            .disposed(by: disposeBag)
+        
+
         output.likeStatus
-            .drive(with: self) { owner, isLiked in
-                owner.updateLikeButton(isLiked: isLiked)
-            }
+            .drive(onNext: { [weak self] isLiked in
+                self?.updateLikeButton(isLiked: isLiked)
+            })
+            .disposed(by: disposeBag)
+
+        output.ellipsisVisibility
+            .drive(ellipsisPostBtn.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.likeButtonImage
+            .drive(onNext: { [weak self] imageName in
+                self?.likePostBtn.setImage(UIImage(systemName: imageName), for: .normal)
+            })
             .disposed(by: disposeBag)
     }
+
 
     private func updateLikeButton(isLiked: Bool) {
         let imageName = isLiked ? "heart.fill" : "heart"
@@ -97,45 +148,6 @@ final class FeedContentViewController: BaseViewController {
             })
         }
     }
-    
-    func loadPost(post: Post) {
-        viewModel = FeedContentViewModel(post: post)
-        
-        viewModel.content
-            .bind(to: postContentLabel.rx.text)
-            .disposed(by: disposeBag)
-
-        viewModel.nickname
-            .bind(to: userIDLabel.rx.text)
-            .disposed(by: disposeBag)
-
-        viewModel.profileImageUrl
-            .compactMap { $0 }
-            .compactMap { URL(string: $0) }
-            .subscribe(onNext: { [weak self] url in
-                self?.userProfileImageView.loadImage(from: url)
-            })
-            .disposed(by: disposeBag)
-
-        viewModel.postImageUrl
-            .compactMap { $0 }
-            .compactMap { URL(string: $0) }
-            .subscribe(onNext: { [weak self] url in
-                self?.postImageView.loadImage(from: url)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.isLiked
-            .subscribe(onNext: { [weak self] isLiked in
-                self?.likePostBtn.isSelected = isLiked
-                let imageName = isLiked ? "heart.fill" : "heart"
-                self?.likePostBtn.setImage(UIImage(systemName: imageName), for: .normal)
-            })
-            .disposed(by: disposeBag)
-        
-    }
-    
-
     
     override func configHierarchy() {
         view.addSubviews([
