@@ -44,12 +44,39 @@ final class FeedPageViewController: UIPageViewController {
         self.contentViewControllers = posts.map { post in
             let vc = FeedContentViewController()
             vc.loadPost(post: post)
+            vc.viewModel.postDeleteSuccess
+                .subscribe(onNext: { [weak self] _ in
+                    self?.moveToNextPage()
+                })
+                .disposed(by: vc.disposeBag)
+            
             return vc
         }
         if let firstViewController = contentViewControllers.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
     }
+    
+    private func moveToNextPage() {
+        contentViewControllers.remove(at: currentIndex) // 현재 페이지 삭제
+        
+        currentIndex = currentIndex % contentViewControllers.count // 새 인덱스 계산
+        let nextViewController = contentViewControllers[currentIndex]
+        setViewControllers([nextViewController], direction: .forward, animated: true) { [weak self] completed in
+            if completed {
+                self?.resetTimerAndProgress() // 페이지 전환 완료 후 타이머 리셋
+            }
+        }
+    }
+
+    private func resetTimerAndProgress() {
+        timer?.invalidate()  // 기존 타이머 중지
+        elapsedTime = 0      // 경과 시간 리셋
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        updateProgressBarForCurrentPage()  // 프로그레스 바 업데이트
+    }
+
+
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
@@ -58,13 +85,16 @@ final class FeedPageViewController: UIPageViewController {
     @objc private func timerAction() {
         elapsedTime += 1.0
         if elapsedTime >= progressBarMaxValue {
-            currentIndex = (currentIndex + 1) % contentViewControllers.count
-            setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+            if contentViewControllers.count > 1 {  // 페이지가 1개를 초과할 때만 다음 페이지로 이동
+                currentIndex = (currentIndex + 1) % contentViewControllers.count
+                setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+            }
             resetTimerAndProgress()  // 새 페이지로 전환 시 프로그레스 바와 타이머 재설정
         } else {
             contentViewControllers[currentIndex].updateProgressBar(progress: elapsedTime / progressBarMaxValue)
         }
     }
+
     
     private func resetTimer() {
         timer?.invalidate() // 기존 타이머를 중지
@@ -73,13 +103,6 @@ final class FeedPageViewController: UIPageViewController {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     }
     
-    private func resetTimerAndProgress() {
-        timer?.invalidate()  // 기존 타이머 중지
-        elapsedTime = 0
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
-        updateProgressBarForCurrentPage()
-    }
-
     private func updateProgressBarForCurrentPage() {
         contentViewControllers[currentIndex].updateProgressBar(progress: 0)
     }

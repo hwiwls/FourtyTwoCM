@@ -167,31 +167,37 @@ struct NetworkManager {
     }
     
     
-    static func requestDeletePost(postID: String) {
-        return Single<LikeModel>.create { single in
-            do {
-                let urlRequest = try Router.likePost(postId: postID, query: query).asURLRequest()
-                                
-                AF.request(urlRequest)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: LikeModel.self) { response in
-                        switch response.result {
-                        case .success(let likeModel):
-                            print("likeModel success: \(likeModel)")
-                            print("============================================")
-                            single(.success(likeModel))
-                        case .failure(let error):
-                            print("likeModel error: \(error)")
-                            single(.failure(error))
+    static func requestDeletePost(postID: String) -> Single<Void> {
+            return Single<Void>.create { single in
+                do {
+                    let urlRequest = try Router.deletePost(postId: postID).asURLRequest()
+                    
+                    AF.request(urlRequest)
+                        .validate(statusCode: 200..<300)
+                        .response { response in
+                            switch response.result {
+                            case .success:
+                                print("Delete post success")
+                                single(.success(()))
+                            case .failure(let error):
+                                print("Delete post error: \(error)")
+                                if response.response?.statusCode == 410 {
+                                    print("게시물을 찾을 수 없습니다.")
+                                } else if response.response?.statusCode == 445 {
+                                    print("게시글을 삭제할 권한이 없습니다.")
+                                }
+                                single(.failure(error))
+                            }
                         }
-                    }
-            } catch {
-                single(.failure(error))
+                } catch {
+                    single(.failure(error))
+                }
+                
+                return Disposables.create {
+                    // 요청 취소 처리
+                }
             }
-            
-            return Disposables.create()
         }
-    }
 
     
    

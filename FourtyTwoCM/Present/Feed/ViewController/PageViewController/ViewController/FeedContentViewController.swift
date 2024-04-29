@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 final class FeedContentViewController: BaseViewController {
-    private var viewModel: FeedContentViewModel!
+    var viewModel: FeedContentViewModel!
 
     private let postProgressbar = UIProgressView(progressViewStyle: .bar).then {
         $0.trackTintColor = .unactiveGray
@@ -81,7 +81,8 @@ final class FeedContentViewController: BaseViewController {
 
         let input = FeedContentViewModel.Input(
             viewDidLoadTrigger: .just(()),
-            likeBtnTapped: likePostBtn.rx.tap.asObservable()
+            likeBtnTapped: likePostBtn.rx.tap.asObservable(),
+            ellipsisBtnTapped: ellipsisPostBtn.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -131,8 +132,26 @@ final class FeedContentViewController: BaseViewController {
                 self?.likePostBtn.setImage(UIImage(systemName: imageName), for: .normal)
             })
             .disposed(by: disposeBag)
+        
+        output.showActionSheet
+            .drive(onNext: { [weak self] _ in
+                self?.showActionSheet()
+            })
+            .disposed(by: disposeBag)
     }
-
+    
+    private func showActionSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+            self?.viewModel.confirmDeletion()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
 
     private func updateLikeButton(isLiked: Bool) {
         let imageName = isLiked ? "heart.fill" : "heart"

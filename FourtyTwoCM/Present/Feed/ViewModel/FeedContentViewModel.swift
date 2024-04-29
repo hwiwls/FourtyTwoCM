@@ -16,9 +16,12 @@ class FeedContentViewModel {
 
     var isLiked = BehaviorSubject<Bool>(value: false)
     
+    var postDeleteSuccess = PublishSubject<Void>()
+    
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
         let likeBtnTapped: Observable<Void>
+        let ellipsisBtnTapped: Observable<Void>
     }
 
     struct Output {
@@ -29,16 +32,16 @@ class FeedContentViewModel {
         let likeStatus: Driver<Bool>
         let likeButtonImage: Driver<String>  // 좋아요 버튼 이미지 이름을 제공
         let ellipsisVisibility: Driver<Bool>
+        let showActionSheet: Driver<Void>
     }
 
     init(post: Post) {
         self.post = BehaviorSubject<Post>(value: post)
         
         let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-                
-                // 초기 좋아요 상태 설정
-                let initialIsLiked = post.likes?.contains(userID) ?? false
-                self.isLiked.onNext(initialIsLiked)
+        // 초기 좋아요 상태 설정
+        let initialIsLiked = post.likes?.contains(userID) ?? false
+        self.isLiked.onNext(initialIsLiked)
     }
 
     func transform(input: Input) -> Output {
@@ -56,17 +59,24 @@ class FeedContentViewModel {
                 .do(onNext: isLiked.onNext)
                 .asDriver(onErrorJustReturn: false)
             
-            let likeButtonImage = isLiked
-                .map { $0 ? "heart.fill" : "heart" }
-                .asDriver(onErrorJustReturn: "heart")
-        let ellipsisVisibility = post.map { $0.creator.userID == userID }
+        let likeButtonImage = isLiked
+            .map { $0 ? "heart.fill" : "heart" }
+            .asDriver(onErrorJustReturn: "heart")
+        
+        let ellipsisVisibility = post.map { $0.creator.userID != userID } // isHidden의 default가 true라서 반대로 넘겨줌
             .asDriver(onErrorJustReturn: false)
 
         let content = post.map { $0.content }.asDriver(onErrorJustReturn: "")
         let nickname = post.map { $0.creator.nick }.asDriver(onErrorJustReturn: "")
-        let profileImageUrl = post.map { post in post.creator.profileImage.map { BaseURL.baseURL.rawValue + "/" + $0 } }.asDriver(onErrorJustReturn: nil)
-        let postImageUrl = post.map { post in post.files.first.map { BaseURL.baseURL.rawValue + "/" + $0 } }.asDriver(onErrorJustReturn: nil)
+        let profileImageUrl = post
+            .map { $0.creator.profileImage?.prependBaseURL() }
+            .asDriver(onErrorJustReturn: nil)
+        let postImageUrl = post
+            .map { $0.files.first?.prependBaseURL() }
+            .asDriver(onErrorJustReturn: nil)
         
+        let showActionSheet = input.ellipsisBtnTapped
+                    .asDriver(onErrorJustReturn: ())
 
         return Output(
             content: content,
@@ -75,7 +85,8 @@ class FeedContentViewModel {
             postImageUrl: postImageUrl,
             likeStatus: likeStatus, 
             likeButtonImage: likeButtonImage,
-            ellipsisVisibility: ellipsisVisibility
+            ellipsisVisibility: ellipsisVisibility,
+            showActionSheet: showActionSheet
         )
     }
 
@@ -85,5 +96,23 @@ class FeedContentViewModel {
             .map { $0.likeStatus }
             .asObservable()
             .catchAndReturn(false)
+    }
+    
+    func confirmDeletion() {
+        guard let postID = try? post.value().postID else { return }
+        
+        NetworkManager.requestDeletePost(postID: postID)
+            .subscribe(onSuccess: { [weak self] _ in
+                self?.postDeleteSuccess.onNext(())
+            }, onFailure: { error in
+                print("Error deleting post: \(error)")
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension String {
+    func prependBaseURL() -> String {
+        return BaseURL.baseURL.rawValue + "/" + self
     }
 }
