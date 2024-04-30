@@ -19,6 +19,7 @@ final class FeedPageViewController: UIPageViewController {
     private var timer: Timer?
     private let progressBarMaxValue: Float = 7.0
     private var elapsedTime: Float = 0.0
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,10 @@ final class FeedPageViewController: UIPageViewController {
     }
     
     private func bind() {
-        let input = FeedPageViewModel.Input(trigger: .just(()))
+        let trigger = Observable.just(())
+        let fetchNextPage = Observable<Void>.never() // Change this based on your UI interaction pattern, e.g., button tap
+
+        let input = FeedPageViewModel.Input(trigger: trigger, fetchNextPage: fetchNextPage)
         let output = viewModel.transform(input: input)
 
         output.posts
@@ -39,6 +43,7 @@ final class FeedPageViewController: UIPageViewController {
             })
             .disposed(by: disposeBag)
     }
+
     
     private func setupViewControllers(posts: [Post]) {
         self.contentViewControllers = posts.map { post in
@@ -136,13 +141,50 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
         return contentViewControllers[nextIndex]
     }
 }
+
 extension FeedPageViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let viewController = pageViewController.viewControllers?.first as? FeedContentViewController {
             if let index = contentViewControllers.firstIndex(of: viewController) {
                 currentIndex = index
                 resetTimerAndProgress()
+
+                // 마지막 페이지에서 다음 페이지를 로드
+                if currentIndex == contentViewControllers.count - 1 {
+                    loadNextPage()
+                }
             }
         }
     }
+    
+    private func loadNextPage() {
+        let fetchNextPage = Observable.just(())
+        let input = FeedPageViewModel.Input(trigger: Observable.never(), fetchNextPage: fetchNextPage)
+        let output = viewModel.transform(input: input)
+
+        output.posts
+            .drive(onNext: { [weak self] newPosts in
+                guard let self = self else { return }
+                self.addNewViewControllers(newPosts: newPosts)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func addNewViewControllers(newPosts: [Post]) {
+        print("Adding new posts: \(newPosts.map { $0.postID })")
+        let newViewControllers = newPosts.map { post -> FeedContentViewController in
+            let vc = FeedContentViewController()
+            vc.loadPost(post: post)
+            vc.viewModel.postDeleteSuccess
+                .subscribe(onNext: { [weak self] _ in
+                    self?.moveToNextPage()
+                })
+                .disposed(by: vc.disposeBag)
+            return vc
+        }
+
+        contentViewControllers.append(contentsOf: newViewControllers)
+    }
 }
+
+
