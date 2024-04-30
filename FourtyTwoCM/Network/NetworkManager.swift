@@ -117,27 +117,35 @@ struct NetworkManager {
     static func requestViewPost(query: ViewPostQuery) -> Single<FeedModel> {
         return Single<FeedModel>.create { single in
             do {
-                let urlRequest = try Router.viewPost(query: query).asURLRequest()
-                                
+                var urlRequest = try Router.viewPost(query: query).asURLRequest()
+                if let nextCursor = query.next_cursor {
+                    if var urlComponents = URLComponents(url: urlRequest.url!, resolvingAgainstBaseURL: false) {
+                        let queryItem = URLQueryItem(name: "next", value: nextCursor)
+                        urlComponents.queryItems = (urlComponents.queryItems ?? []) + [queryItem]
+                        urlRequest.url = urlComponents.url
+                    }
+                }
+                
                 AF.request(urlRequest)
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: FeedModel.self) { response in
                         switch response.result {
-                        case .success(let feedModel):
-//                            print("feedModel success: \(feedModel)")
-                            single(.success(feedModel))
+                        case .success(let model):
+                            single(.success(model))
                         case .failure(let error):
-                            print("feed error: \(error)")
+                            print("Network request failed with error: \(error)")
                             single(.failure(error))
                         }
                     }
             } catch {
+                print("URLRequest could not be created: \(error)")
                 single(.failure(error))
             }
             
             return Disposables.create()
         }
     }
+
     
     // 게시글 좋아요/취소
     static func requestLikePost(query: LikeQuery, postID: String) -> Single<LikeModel> {

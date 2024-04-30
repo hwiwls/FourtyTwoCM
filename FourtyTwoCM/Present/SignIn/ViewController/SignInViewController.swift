@@ -14,12 +14,19 @@ final class SignInViewController: BaseViewController {
     
     private let viewModel = SignInViewModel()
     
+    private let introduceLabel = UILabel().then {
+        $0.text = "위치기반 실시간  커뮤니티 플랫폼"
+        $0.textColor = .offWhite
+        $0.textAlignment = .center
+        $0.font = .systemFont(ofSize: 13)
+    }
+    
     private let logoLabel = UILabel().then {
         $0.text = "fourty-two\ncentimeters"
         $0.numberOfLines = 2
         $0.textAlignment = .center
         $0.textColor = .offWhite
-        $0.font = .aggro.aggroMedium32
+        $0.font = .aggro.aggroMedium34
     }
     
     private let emailTextField = SignTextField(placeholderText: "이메일을 입력해주세요").then {
@@ -92,6 +99,7 @@ final class SignInViewController: BaseViewController {
     override func configHierarchy() {
         view.addSubviews([
             logoLabel,
+            introduceLabel,
             emailTextField,
             passwordTextField,
             signInButton,
@@ -101,7 +109,12 @@ final class SignInViewController: BaseViewController {
     
     override func configLayout() {
         logoLabel.snp.makeConstraints {
-            $0.bottom.equalTo(emailTextField.snp.top).offset(-50)
+            $0.bottom.equalTo(emailTextField.snp.top).offset(-60)
+            $0.centerX.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        introduceLabel.snp.makeConstraints {
+            $0.bottom.equalTo(logoLabel.snp.top).offset(-8)
             $0.centerX.equalTo(view.safeAreaLayoutGuide)
         }
         

@@ -136,7 +136,7 @@ extension Router: TargetType {
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .deletePost(postId: let postId):
+        case .deletePost:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -193,7 +193,7 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
-        case .deletePost(postId: let postId):
+        case .deletePost(postId: _):
             return nil
         }
     }
