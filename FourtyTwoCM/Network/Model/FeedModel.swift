@@ -25,11 +25,12 @@ struct Post: Decodable {
     var likes, likes2, hashTags: [String]?
     let comments: [Comment]?
     let content1, content2: String  // 위도, 경도
+    let content3: String?
 
     enum CodingKeys: String, CodingKey {
         case postID = "post_id"
         case productID = "product_id"
-        case content, content1, createdAt, creator, files, likes, likes2, hashTags, comments, content2
+        case content, content1, createdAt, creator, files, likes, likes2, hashTags, comments, content2, content3
     }
     
     init(from decoder: any Decoder) throws {
@@ -46,9 +47,8 @@ struct Post: Decodable {
         self.hashTags = try container.decodeIfPresent([String].self, forKey: .hashTags) ?? []
         self.comments = try container.decodeIfPresent([Comment].self, forKey: .comments) ?? []
         self.content2 = try container.decode(String.self, forKey: .content2)
+        self.content3 = try container.decodeIfPresent(String.self, forKey: .content3) ?? "0"
     }
-    
-    
     
 }
 

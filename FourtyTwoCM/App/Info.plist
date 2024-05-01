@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>사용자 주변의 게시글을 필터링 하기 위해 위치 권한이 필요합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>게시글 업로드를 위해 갤러리 접근이 필요합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>게시글 업로드를 위해 카메라 접근이 필요합니다.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>사용자 주변의 게시글을 필터링 하기 위해 위치 권한이 필요합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SB 어그로OTF M.otf</string>

@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import CoreLocation
 import RxSwift
 import RxCocoa
 
 class FeedPageViewModel: ViewModelType {
     var disposeBag = DisposeBag()
+    private var next_cursor: String?
+    private var isFetching = BehaviorSubject<Bool>(value: false)
+    private var currentLocation: CLLocation?
     
     struct Input {
         let trigger: Observable<Void>
@@ -19,18 +23,22 @@ class FeedPageViewModel: ViewModelType {
 
     struct Output {
         let posts: Driver<[Post]>
-       
+        
+    }
+    
+    func setCurrentLocation(_ location: CLLocation) {
+        currentLocation = location
+        print("Current location updated: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+        
     }
 
-    private var next_cursor: String?
-    private var isFetching = BehaviorSubject<Bool>(value: false)
-
+    
     func transform(input: Input) -> Output {
         let fetchRequest = Observable.merge(
             input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next_cursor: self.next_cursor) },
             input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next_cursor: self.next_cursor) }
         )
-
+        
         let posts = fetchRequest
             .flatMapLatest { query -> Observable<FeedModel> in
                 self.isFetching.onNext(true)
@@ -42,9 +50,34 @@ class FeedPageViewModel: ViewModelType {
                 self?.next_cursor = feedModel.nextCursor
                 self?.isFetching.onNext(false)
             })
-            .map { $0.data }
+            .map { feedModel -> [Post] in
+                guard let currentLocation = self.currentLocation else { return [] }
+                return feedModel.data.filter { post in
+                    guard let lat = Double(post.content1), let lon = Double(post.content2) else { return false }
+                    let postLocation = CLLocation(latitude: lat, longitude: lon)
+                    let distance = postLocation.distance(from: currentLocation)
+                    guard let postDate = post.createdAt.toDate() else { return false }
+                    let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: postDate, to: Date())
+                    let timeDiff = (timeComponents.hour ?? 0) * 60 + (timeComponents.minute ?? 0)
+                    
+                    print("Post \(post.postID) time difference: \(timeDiff) minutes")
+
+                    let timeCondition = timeDiff <= (23 * 60 + 59)
+                    let contentCondition = post.content3 == "1"
+                    
+                    return (distance <= 1000 && timeCondition) || contentCondition
+                }
+            }
             .asDriver(onErrorJustReturn: [])
 
-        return Output(posts: posts)
+            return Output(posts: posts)
+        }
+}
+
+extension String {
+    func toDate() -> Date? {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.date(from: self)
     }
 }
