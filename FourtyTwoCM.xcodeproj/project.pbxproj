@@ -60,6 +60,9 @@
 		2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F986D2BCD937A00E9A79A /* SignInModel.swift */; };
 		2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98702BCD940700E9A79A /* SignInViewModel.swift */; };
 		2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98722BCD946100E9A79A /* ViewModelType.swift */; };
+		2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E152BE2710C00F48CF4 /* PermissionViewModel.swift */; };
+		2E988E182BE2711900F48CF4 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E172BE2711900F48CF4 /* Permission.swift */; };
+		2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
 		2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397F02BDA485A0064CD71 /* LikeModel.swift */; };
 		2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */; };
@@ -120,6 +123,9 @@
 		2E8F986D2BCD937A00E9A79A /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
 		2E8F98702BCD940700E9A79A /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		2E8F98722BCD946100E9A79A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		2E988E152BE2710C00F48CF4 /* PermissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewModel.swift; sourceTree = "<group>"; };
+		2E988E172BE2711900F48CF4 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
+		2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
 		2ED397F02BDA485A0064CD71 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 		2E5C38202BCA7C3E00A006FB /* Present */ = {
 			isa = PBXGroup;
 			children = (
+				2E988E102BE2525700F48CF4 /* Permission */,
 				2E5C38252BCA7CE200A006FB /* SignIn */,
 				2E597FF82BD3AD6F00AAAFA7 /* SignUp */,
 				2E8F98422BCD742700E9A79A /* Feed */,
@@ -476,6 +483,32 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		2E988E102BE2525700F48CF4 /* Permission */ = {
+			isa = PBXGroup;
+			children = (
+				2E988E172BE2711900F48CF4 /* Permission.swift */,
+				2E988E122BE2527E00F48CF4 /* ViewModel */,
+				2E988E112BE2527700F48CF4 /* ViewController */,
+			);
+			path = Permission;
+			sourceTree = "<group>";
+		};
+		2E988E112BE2527700F48CF4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E988E122BE2527E00F48CF4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E988E152BE2710C00F48CF4 /* PermissionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		2ED642FC2BD5271000722299 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,6 +639,8 @@
 				2E8F98512BCD74AD00E9A79A /* AddPostViewController.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2ED643002BD5272500722299 /* FeedPageViewModel.swift in Sources */,
+				2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */,
+				2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */,
 				2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
@@ -632,6 +667,7 @@
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
+				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
 				2E8F984F2BCD74A700E9A79A /* LikeViewController.swift in Sources */,
 				2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,

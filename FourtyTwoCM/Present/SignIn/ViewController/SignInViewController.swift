@@ -72,13 +72,34 @@ final class SignInViewController: BaseViewController {
         
         output.loginSuccessTrigger
             .drive(with: self) { owner, _ in
-                let vc = TabBarController()
-                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                      let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+                let isPermissioned = UserDefaults.standard.bool(forKey: "isPermissioned")
                 
-                UIView.transition(with: sceneDelegate.window!, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                    sceneDelegate.window?.rootViewController = vc
-                })
+                if isPermissioned == true {
+                    let tabBarVC = TabBarController()
+                    
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                          let window = sceneDelegate.window else {
+                        return
+                    }
+
+                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                        window.rootViewController = tabBarVC
+                    })
+                } else {
+                    let permissionVC = PermissionsViewController()
+                    
+                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                          let rootViewController = sceneDelegate.window?.rootViewController as? UINavigationController else {
+                            print("Navigation controller not found")
+                            return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        rootViewController.pushViewController(permissionVC, animated: true)
+                    }
+                }
             }
             .disposed(by: disposeBag)
         

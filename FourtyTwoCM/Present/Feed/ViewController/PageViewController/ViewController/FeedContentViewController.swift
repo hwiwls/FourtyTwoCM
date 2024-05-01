@@ -29,8 +29,8 @@ final class FeedContentViewController: BaseViewController {
     private let postShadowView = GradientView()
     
     private let userProfileImageView = UIImageView().then {
-        $0.image = UIImage(named: "")
-        $0.backgroundColor = .red
+        $0.image = UIImage(systemName: "person")
+        $0.backgroundColor = .borderGray
         $0.contentMode = .scaleAspectFill
     }
     
