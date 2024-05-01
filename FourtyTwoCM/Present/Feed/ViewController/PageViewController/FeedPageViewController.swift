@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import CoreLocation
 
 final class FeedPageViewController: UIPageViewController {
 
@@ -20,19 +21,24 @@ final class FeedPageViewController: UIPageViewController {
     private let progressBarMaxValue: Float = 7.0
     private var elapsedTime: Float = 0.0
     
+    private let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dataSource = self
         self.delegate = self
-        
+        requestLocationAuthorization()
         bind()
         setupTimer()
     }
     
+    private func requestLocationAuthorization() {
+            Permissions.shared.checkUserDeviceLocationServiceAuthorization()
+        }
+    
     private func bind() {
         let trigger = Observable.just(())
-        let fetchNextPage = Observable<Void>.never() // Change this based on your UI interaction pattern, e.g., button tap
+        let fetchNextPage = Observable<Void>.never()
 
         let input = FeedPageViewModel.Input(trigger: trigger, fetchNextPage: fetchNextPage)
         let output = viewModel.transform(input: input)
@@ -42,6 +48,26 @@ final class FeedPageViewController: UIPageViewController {
                 self?.setupViewControllers(posts: posts)
             })
             .disposed(by: disposeBag)
+        
+        Permissions.shared.isLocationAuthorized
+            .subscribe(onNext: { [weak self] isAuthorized in
+                if isAuthorized {
+                    self?.printUserLocation()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func printUserLocation() {
+        guard let currentLocation = locationManager.location else {
+            print("Failed to get current location.")
+            return
+        }
+
+        viewModel.setCurrentLocation(currentLocation)
+        let latitude = currentLocation.coordinate.latitude
+        let longitude = currentLocation.coordinate.longitude
+        print("유저의 위치 - Latitude: \(latitude), Longitude: \(longitude)")
     }
 
     
