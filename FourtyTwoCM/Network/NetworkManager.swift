@@ -36,33 +36,6 @@ struct NetworkManager {
             return Disposables.create()
         }
     }
-
-    // 게시글 조회
-    static func requestViewPost(query: ViewPostQuery) -> Single<FeedModel> {
-        return Single<FeedModel>.create { single in
-            do {
-                let urlRequest = try Router.viewPost(query: query).asURLRequest()
-                
-                AF.request(urlRequest)
-                    .validate(statusCode: 200..<300)
-                    .responseDecodable(of: FeedModel.self) { response in
-                        switch response.result {
-                        case .success(let model):
-                            single(.success(model))
-                        case .failure(let error):
-                            print("Network request failed with error: \(error)")
-                            single(.failure(error))
-                        }
-                    }
-            } catch {
-                print("URLRequest could not be created: \(error)")
-                single(.failure(error))
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
     
     static func requestDeletePost(postID: String) -> Single<Void> {
         return Single<Void>.create { single in
