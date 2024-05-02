@@ -16,7 +16,7 @@ enum KeyChainError: Error {
     case tokenDataCreationFailed
 }
 
-class Keychain {
+final class Keychain {
     static let shared = Keychain()
 
     enum TokenKind: String {

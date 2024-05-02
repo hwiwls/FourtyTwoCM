@@ -63,6 +63,7 @@
 		2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E152BE2710C00F48CF4 /* PermissionViewModel.swift */; };
 		2E988E182BE2711900F48CF4 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E172BE2711900F48CF4 /* Permission.swift */; };
 		2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */; };
+		2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA15DA42BE2C6AE002DB338 /* APIError.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
 		2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397F02BDA485A0064CD71 /* LikeModel.swift */; };
 		2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */; };
@@ -126,6 +127,7 @@
 		2E988E152BE2710C00F48CF4 /* PermissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewModel.swift; sourceTree = "<group>"; };
 		2E988E172BE2711900F48CF4 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
+		2EA15DA42BE2C6AE002DB338 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
 		2ED397F02BDA485A0064CD71 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		2E5C381D2BCA7C2F00A006FB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2EA15DA42BE2C6AE002DB338 /* APIError.swift */,
 				2E8F985B2BCD7EDF00E9A79A /* Router.swift */,
 				2E8F985D2BCD7EE800E9A79A /* TargetType.swift */,
 				2E8F98612BCD7F1500E9A79A /* BaseURL.swift */,
@@ -630,6 +633,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */,
 				2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */,
 				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
 				2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */,

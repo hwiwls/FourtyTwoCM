@@ -12,7 +12,7 @@ import Toast
 
 final class SignUpViewModel: ViewModelType {
     var disposeBag = DisposeBag()
-        
+
     struct Input {
         let emailText: Observable<String>
         let passwordText: Observable<String>
@@ -20,7 +20,7 @@ final class SignUpViewModel: ViewModelType {
         let signUpButtonTapped: Observable<Void>
         let emailValidationButtonTapped: Observable<Void>
     }
-    
+
     struct Output {
         let emailValidationResult: Driver<String>
         let passwordValidationResult: Driver<String>
@@ -38,7 +38,7 @@ final class SignUpViewModel: ViewModelType {
         input.emailValidationButtonTapped
             .withLatestFrom(input.emailText)
             .flatMapLatest { email in
-                NetworkManager.requestEmailValid(query: EmailValidationQuery(email: email))
+                NetworkManager.performRequest(route: Router.emailValidation(query: EmailValidationQuery(email: email)), dataType: EmailValidationModel.self)
                     .asObservable()
                     .materialize()
             }
@@ -59,32 +59,32 @@ final class SignUpViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         let emailValidationResult = emailValid
-            .map { $0 ? "사용할 수 있는 이메일입니다" : "사용할 수 없는 이메일입니다" }
-            .asDriver(onErrorJustReturn: "사용할 수 없는 이메일입니다")
+            .map { $0 ? "사용 가능한 이메일입니다." : "사용할 수 없는 이메일입니다." }
+            .asDriver(onErrorJustReturn: "이메일 검증 오류 발생")
 
         let passwordValidationResult = input.passwordText
             .map { password in
                 if password.count >= 5 && password.count <= 20 {
                     passwordValid.onNext(true)
-                    return "사용할 수 있는 비밀번호입니다"
+                    return "사용 가능한 비밀번호입니다."
                 } else {
                     passwordValid.onNext(false)
-                    return "비밀번호는 5글자~20글자로 구성되어야 합니다"
+                    return "비밀번호는 5~20자로 구성되어야 합니다."
                 }
             }
-            .asDriver(onErrorJustReturn: "비밀번호는 5글자~20글자로 구성되어야 합니다")
+            .asDriver(onErrorJustReturn: "비밀번호 검증 오류 발생")
 
         let nicknameValidationResult = input.nicknameText
             .map { nickname in
-                if nickname.count >= 3 && nickname.count < 10 && nickname.allSatisfy({ $0.isLowercase }) {
+                if nickname.count >= 3 && nickname.count <= 10 {
                     nicknameValid.onNext(true)
-                    return "사용할 수 있는 ID입니다"
+                    return "사용 가능한 닉네임입니다."
                 } else {
                     nicknameValid.onNext(false)
-                    return "ID는 3글자~10글자의 영문으로만 구성되어야 합니다"
+                    return "닉네임은 3~10자로 구성되어야 합니다."
                 }
             }
-            .asDriver(onErrorJustReturn: "ID는 3글자~10글자의 영문으로만 구성되어야 합니다")
+            .asDriver(onErrorJustReturn: "닉네임 검증 오류 발생")
 
         let signUpEnabled = Observable.combineLatest(emailValid, passwordValid, nicknameValid) { $0 && $1 && $2 }
             .asDriver(onErrorJustReturn: false)
@@ -93,15 +93,20 @@ final class SignUpViewModel: ViewModelType {
             .withLatestFrom(Observable.combineLatest(input.emailText, input.passwordText, input.nicknameText))
             .map { SignUpQuery(email: $0.0, password: $0.1, nick: $0.2) }
             .flatMapLatest { signUpQuery in
-                NetworkManager.createAccount(query: signUpQuery)
+                NetworkManager.performRequest(route: Router.signUp(query: signUpQuery), dataType: SignUpModel.self)
                     .asObservable()
                     .materialize()
             }
-            .subscribe(with: self) { owner, signInModel in
-                signUpSuccessTrigger.accept(())
-            } onError: { owner, error in
-                print("error about signup")
-            }
+            .subscribe(onNext: { event in
+                switch event {
+                case .next(_):
+                    signUpSuccessTrigger.accept(())
+                case .error(let error):
+                    print("회원가입 오류: \(error)")
+                default:
+                    break
+                }
+            })
             .disposed(by: disposeBag)
 
         return Output(
