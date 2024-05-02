@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Alamofire
 
 class FeedContentViewModel {
     var disposeBag = DisposeBag()
@@ -17,6 +18,8 @@ class FeedContentViewModel {
     var isLiked = BehaviorSubject<Bool>(value: false)
     
     var postDeleteSuccess = PublishSubject<Void>()
+    
+    var errorMessage = PublishSubject<String>()
     
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
@@ -90,14 +93,6 @@ class FeedContentViewModel {
         )
     }
 
-    private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
-        let query = LikeQuery(like_status: newStatus)
-        return NetworkManager.requestLikePost(query: query, postID: postID)
-            .map { $0.likeStatus }
-            .asObservable()
-            .catchAndReturn(false)
-    }
-    
     func confirmDeletion() {
         guard let postID = try? post.value().postID else { return }
         
@@ -109,6 +104,20 @@ class FeedContentViewModel {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
+        let query = LikeQuery(like_status: newStatus)
+        return NetworkManager.performRequest(route: Router.likePost(postId: postID, query: query), dataType: LikeModel.self)
+            .map { $0.likeStatus }
+            .asObservable()
+            .catch { [weak self] error -> Observable<Bool> in
+                if let apiError = error as? APIError, apiError == .notFound {
+                    self?.errorMessage.onNext("게시물이 더이상 존재하지 않습니다.")
+                }
+                return .just(false)
+            }
+    }
+
 }
 
 extension String {

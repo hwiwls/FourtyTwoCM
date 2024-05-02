@@ -138,6 +138,22 @@ final class FeedContentViewController: BaseViewController {
                 self?.showActionSheet()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(onNext: { [weak self] message in
+                self?.showToast(message: message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showToast(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
     
     private func showActionSheet() {

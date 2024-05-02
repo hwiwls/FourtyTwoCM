@@ -184,6 +184,11 @@ extension FeedPageViewController: UIPageViewControllerDelegate {
     }
     
     private func loadNextPage() {
+        guard viewModel.next_cursor != nil else {
+            print("더 이상 게시글이 없습니다")
+            return
+        }
+        
         let fetchNextPage = Observable.just(())
         let input = FeedPageViewModel.Input(trigger: Observable.never(), fetchNextPage: fetchNextPage)
         let output = viewModel.transform(input: input)

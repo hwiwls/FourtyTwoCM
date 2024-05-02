@@ -9,5 +9,6 @@ import Foundation
 
 struct ViewPostQuery: Encodable {
     let product_id: String
-    var next_cursor: String? 
+    var next: String?
+    var limit: String
 }

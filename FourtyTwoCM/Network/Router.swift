@@ -9,12 +9,12 @@ import Foundation
 import Alamofire
 
 enum Router {
-    case login(query: SignInQuery)
-    case signUp(query: SignUpQuery)
-    case emailValidation(query: EmailValidationQuery)
-    case viewPost(query: ViewPostQuery)
-    case likePost(postId: String, query: LikeQuery)
-    case deletePost(postId: String)
+    case login(query: SignInQuery)  // 로그인
+    case signUp(query: SignUpQuery) // 회원가입
+    case emailValidation(query: EmailValidationQuery)   // 이메일 중복 확인
+    case viewPost(query: ViewPostQuery) // 게시물 조회
+    case likePost(postId: String, query: LikeQuery) // 게시물 좋아요
+    case deletePost(postId: String) // 게시물 삭제
 }
 
 extension Router: TargetType {
@@ -167,7 +167,13 @@ extension Router: TargetType {
     var queryItems: [URLQueryItem]? {
         switch self {
         case .viewPost(let query):
-            return [URLQueryItem(name: "product_id", value: query.product_id)]
+            var items = [URLQueryItem(name: "product_id", value: query.product_id),
+                         URLQueryItem(name: "limit", value: query.limit)]
+            
+            if let next = query.next {
+                items.append(URLQueryItem(name: "next", value: next))
+            }
+            return items
         default:
             return nil
         }

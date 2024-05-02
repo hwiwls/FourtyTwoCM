@@ -54,61 +54,101 @@ final class SignInViewController: BaseViewController {
         setupToolbar()
     }
     
+//    override func bind() {
+//        let input = SignInViewModel.Input(
+//            emailText: emailTextField.rx.text.orEmpty.asObservable(),
+//            passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
+//            signInButtonTapped: signInButton.rx.tap.asObservable(), 
+//            signUpButtonTapped: signUpButton.rx.tap.asObservable()
+//        )
+//        
+//        let output = viewModel.transform(input: input)
+//        
+//        output.loginValidation
+//            .drive(with: self) { owner, value in
+//                owner.signInButton.isEnabled = value
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        output.loginSuccessTrigger
+//            .drive(with: self) { owner, _ in
+//                let isPermissioned = UserDefaults.standard.bool(forKey: "isPermissioned")
+//                
+//                if isPermissioned == true {
+//                    let tabBarVC = TabBarController()
+//                    
+//                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
+//                          let window = sceneDelegate.window else {
+//                        return
+//                    }
+//
+//                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
+//                        window.rootViewController = tabBarVC
+//                    })
+//                } else {
+//                    let permissionVC = PermissionsViewController()
+//                    
+//                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
+//                          let rootViewController = sceneDelegate.window?.rootViewController as? UINavigationController else {
+//                            print("Navigation controller not found")
+//                            return
+//                    }
+//                    
+//                    DispatchQueue.main.async {
+//                        rootViewController.pushViewController(permissionVC, animated: true)
+//                    }
+//                }
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        output.toastMessage
+//            .drive(with: self) { owner, message in
+//                owner.view.makeToast(message, duration: 3.0, position: .top)
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        output.signUpTrigger
+//            .drive(with: self) { owner, _ in
+//                let signUpVC = SignUpViewController()
+//                owner.navigationController?.pushViewController(signUpVC, animated: true)
+//            }
+//            .disposed(by: disposeBag)
+//    }
+    
     override func bind() {
         let input = SignInViewModel.Input(
             emailText: emailTextField.rx.text.orEmpty.asObservable(),
             passwordText: passwordTextField.rx.text.orEmpty.asObservable(),
-            loginButtonTapped: signInButton.rx.tap.asObservable(), 
+            signInButtonTapped: signInButton.rx.tap.asObservable(),
             signUpButtonTapped: signUpButton.rx.tap.asObservable()
         )
-        
-        let output = viewModel.transform(input: input)
-        
-        output.loginValidation
-            .drive(with: self) { owner, value in
-                owner.signInButton.isEnabled = value
-            }
-            .disposed(by: disposeBag)
-        
-        output.loginSuccessTrigger
-            .drive(with: self) { owner, _ in
-                let isPermissioned = UserDefaults.standard.bool(forKey: "isPermissioned")
-                
-                if isPermissioned == true {
-                    let tabBarVC = TabBarController()
-                    
-                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
-                          let window = sceneDelegate.window else {
-                        return
-                    }
 
-                    UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                        window.rootViewController = tabBarVC
-                    })
+        let output = viewModel.transform(input: input)
+
+        output.isLoginButtonEnabled
+            .drive(signInButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        output.signInSuccess
+            .drive(with: self) { owner, _ in
+                // 성공 시 처리 로직
+                let isPermissioned = UserDefaults.standard.bool(forKey: "isPermissioned")
+                if isPermissioned {
+                    owner.transitionToMainInterface()
                 } else {
-                    let permissionVC = PermissionsViewController()
-                    
-                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                          let sceneDelegate = windowScene.delegate as? SceneDelegate,
-                          let rootViewController = sceneDelegate.window?.rootViewController as? UINavigationController else {
-                            print("Navigation controller not found")
-                            return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        rootViewController.pushViewController(permissionVC, animated: true)
-                    }
+                    owner.navigateToPermissionsInterface()
                 }
             }
             .disposed(by: disposeBag)
-        
-        output.toastMessage
+
+        output.signInFailure
             .drive(with: self) { owner, message in
                 owner.view.makeToast(message, duration: 3.0, position: .top)
             }
             .disposed(by: disposeBag)
-        
+
         output.signUpTrigger
             .drive(with: self) { owner, _ in
                 let signUpVC = SignUpViewController()
@@ -116,6 +156,33 @@ final class SignInViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
+
+    // 화면 전환 및 네비게이션 관련 추가 함수들
+    private func transitionToMainInterface() {
+        let tabBarVC = TabBarController()
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else {
+            return
+        }
+        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
+            window.rootViewController = tabBarVC
+        })
+    }
+
+    private func navigateToPermissionsInterface() {
+        let permissionVC = PermissionsViewController()
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let rootViewController = sceneDelegate.window?.rootViewController as? UINavigationController else {
+            print("Navigation controller not found")
+            return
+        }
+        DispatchQueue.main.async {
+            rootViewController.pushViewController(permissionVC, animated: true)
+        }
+    }
+
     
     override func configHierarchy() {
         view.addSubviews([

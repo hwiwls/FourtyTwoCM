@@ -12,10 +12,10 @@ import RxCocoa
 
 class FeedPageViewModel: ViewModelType {
     var disposeBag = DisposeBag()
-    private var next_cursor: String?
+    var next_cursor: String?
     private var isFetching = BehaviorSubject<Bool>(value: false)
     private var currentLocation: CLLocation?
-    
+
     struct Input {
         let trigger: Observable<Void>
         let fetchNextPage: Observable<Void>
@@ -23,31 +23,32 @@ class FeedPageViewModel: ViewModelType {
 
     struct Output {
         let posts: Driver<[Post]>
-        
     }
-    
+
     func setCurrentLocation(_ location: CLLocation) {
         currentLocation = location
         print("Current location updated: \(location.coordinate.latitude), \(location.coordinate.longitude)")
-        
     }
 
-    
     func transform(input: Input) -> Output {
         let fetchRequest = Observable.merge(
-            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next_cursor: self.next_cursor) },
-            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next_cursor: self.next_cursor) }
+            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "9") },
+            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "9") }
         )
-        
+
         let posts = fetchRequest
             .flatMapLatest { query -> Observable<FeedModel> in
                 self.isFetching.onNext(true)
-                return NetworkManager.requestViewPost(query: query)
+                return NetworkManager.performRequest(route: Router.viewPost(query: query), dataType: FeedModel.self)
                     .asObservable()
                     .catchAndReturn(FeedModel(data: [], nextCursor: nil))
             }
             .do(onNext: { [weak self] feedModel in
-                self?.next_cursor = feedModel.nextCursor
+                if let nextCursor = feedModel.nextCursor, nextCursor != "0" {
+                    self?.next_cursor = nextCursor
+                } else {
+                    self?.next_cursor = nil  // "0" 또는 유효하지 않은 커서를 nil로 설정
+                }
                 self?.isFetching.onNext(false)
             })
             .map { feedModel -> [Post] in
@@ -70,8 +71,8 @@ class FeedPageViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [])
 
-            return Output(posts: posts)
-        }
+        return Output(posts: posts)
+    }
 }
 
 extension String {
@@ -81,3 +82,4 @@ extension String {
         return formatter.date(from: self)
     }
 }
+
