@@ -15,6 +15,7 @@ enum Router {
     case viewPost(query: ViewPostQuery) // 게시물 조회
     case likePost(postId: String, query: LikeQuery) // 게시물 좋아요
     case deletePost(postId: String) // 게시물 삭제
+    case refresh
 }
 
 extension Router: TargetType {
@@ -36,6 +37,8 @@ extension Router: TargetType {
             return .post
         case .deletePost:
             return .delete
+        case .refresh:
+            return .get
         }
     }
     
@@ -53,6 +56,8 @@ extension Router: TargetType {
             return "posts/\(postId)/like"
         case .deletePost(let postId):
             return "posts/\(postId)"
+        case .refresh:
+            return "auth/refresh"
         }
     }
     
@@ -128,7 +133,7 @@ extension Router: TargetType {
             do {
                 accessToken = try Keychain.shared.getToken(kind: .accessToken)
             } catch {
-                print("Error retrieving access token: \(error)")
+                print("게시글 좋아요에서 액세스 토큰을 가지고 오지 못함: \(error)")
             }
             
             return [
@@ -149,13 +154,41 @@ extension Router: TargetType {
             do {
                 accessToken = try Keychain.shared.getToken(kind: .accessToken)
             } catch {
-                print("Error retrieving access token: \(error)")
+                print("게시글 삭제에서 액세스 토큰을 가지고 오지 못함: \(error)")
             }
             
             return [
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .refresh:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            var refreshToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("리프레시에서 액세스 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            do {
+                refreshToken = try Keychain.shared.getToken(kind: .refreshToken)
+            } catch {
+                print("리프레스에서 리프레시 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey,
+                HTTPHeader.refresh.rawValue: refreshToken
             ]
         }
     }
@@ -200,6 +233,8 @@ extension Router: TargetType {
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
         case .deletePost(postId: _):
+            return nil
+        case .refresh:
             return nil
         }
     }

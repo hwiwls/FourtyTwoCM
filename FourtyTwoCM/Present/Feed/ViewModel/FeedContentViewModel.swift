@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Alamofire
 
-class FeedContentViewModel {
+class FeedContentViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     private var post: BehaviorSubject<Post>
@@ -92,18 +92,6 @@ class FeedContentViewModel {
             showActionSheet: showActionSheet
         )
     }
-
-    func confirmDeletion() {
-        guard let postID = try? post.value().postID else { return }
-        
-        NetworkManager.requestDeletePost(postID: postID)
-            .subscribe(onSuccess: { [weak self] _ in
-                self?.postDeleteSuccess.onNext(())
-            }, onFailure: { error in
-                print("Error deleting post: \(error)")
-            })
-            .disposed(by: disposeBag)
-    }
     
     private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
         let query = LikeQuery(like_status: newStatus)
@@ -111,11 +99,24 @@ class FeedContentViewModel {
             .map { $0.likeStatus }
             .asObservable()
             .catch { [weak self] error -> Observable<Bool> in
-                if let apiError = error as? APIError, apiError == .notFound {
-                    self?.errorMessage.onNext("게시물이 더이상 존재하지 않습니다.")
+                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
+                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
                 }
                 return .just(false)
             }
+    }
+    
+    func confirmDeletion() {
+        guard let postID = try? post.value().postID else { return }
+        NetworkManager.requestDeletePost(postID: postID)
+            .subscribe(onSuccess: { [weak self] _ in
+                self?.postDeleteSuccess.onNext(())
+            }, onFailure: { [weak self] error in
+                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
+                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
 }

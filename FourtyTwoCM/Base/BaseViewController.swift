@@ -17,6 +17,7 @@ class BaseViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundBlack
@@ -26,6 +27,7 @@ class BaseViewController: UIViewController {
         configLayout()
         configNav()
     }
+    
     
     func bind() {
         
@@ -53,6 +55,10 @@ class BaseViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
 }
+
+
+    
+        
+

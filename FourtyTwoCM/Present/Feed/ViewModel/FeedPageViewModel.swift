@@ -32,8 +32,8 @@ class FeedPageViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
         let fetchRequest = Observable.merge(
-            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "9") },
-            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "9") }
+            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "50") },
+            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "50") }
         )
 
         let posts = fetchRequest

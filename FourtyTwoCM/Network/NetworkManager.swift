@@ -16,7 +16,7 @@ struct NetworkManager {
         return Single<T>.create { single in
             do {
                 let urlRequest = try route.asURLRequest()
-                AF.request(urlRequest)
+                AF.request(urlRequest, interceptor: APIInterceptor())
                     .validate(statusCode: 200..<300)
                     .responseDecodable(of: dataType) { response in
                         switch response.result {
@@ -42,7 +42,7 @@ struct NetworkManager {
             do {
                 let urlRequest = try Router.deletePost(postId: postID).asURLRequest()
                 
-                AF.request(urlRequest)
+                AF.request(urlRequest, interceptor: APIInterceptor())
                     .validate(statusCode: 200..<300)
                     .response { response in
                         switch response.result {
@@ -63,7 +63,4 @@ struct NetworkManager {
             }
         }
     }
-
-    
-   
 }

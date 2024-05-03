@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
+        
+        setupTokenRefreshListener()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -50,6 +52,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    private func setupTokenRefreshListener() {
+            NotificationCenter.default.addObserver(self, selector: #selector(handleTokenRefreshFailure), name: NSNotification.Name("TokenRefreshFailed"), object: nil)
+        }
+
+        @objc private func handleTokenRefreshFailure() {
+            // 토큰 삭제 등 세션 청소
+            try? Keychain.shared.deleteToken(kind: .accessToken)
+            try? Keychain.shared.deleteToken(kind: .refreshToken)
+            UserDefaults.standard.removeObject(forKey: "userID")
+            
+            DispatchQueue.main.async {
+                    self.changeRootViewControllerToSignIn()
+                }
+        }
+
+        private func changeRootViewControllerToSignIn() {
+            guard (window?.windowScene) != nil else { return }
+            
+            let signInVC = SignInViewController()
+            signInVC.sessionExpiredMessage = "세션이 만료되었습니다. 재로그인 해주세요."
+            
+            let navController = UINavigationController(rootViewController: signInVC)
+            window?.rootViewController = navController
+            window?.makeKeyAndVisible()
+        }
 
 
 }

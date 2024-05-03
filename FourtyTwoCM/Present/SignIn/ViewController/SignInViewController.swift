@@ -14,6 +14,8 @@ final class SignInViewController: BaseViewController {
     
     private let viewModel = SignInViewModel()
     
+    var sessionExpiredMessage: String?
+    
     private let introduceLabel = UILabel().then {
         $0.text = "위치기반 실시간  커뮤니티 플랫폼"
         $0.textColor = .offWhite
@@ -52,6 +54,21 @@ final class SignInViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolbar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let message = sessionExpiredMessage {
+            showToast(message: message)
+        }
+    }
+
+    func showToast(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
     
 //    override func bind() {
@@ -157,7 +174,6 @@ final class SignInViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
 
-    // 화면 전환 및 네비게이션 관련 추가 함수들
     private func transitionToMainInterface() {
         let tabBarVC = TabBarController()
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

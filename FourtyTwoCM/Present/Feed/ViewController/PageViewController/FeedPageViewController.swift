@@ -33,8 +33,8 @@ final class FeedPageViewController: UIPageViewController {
     }
     
     private func requestLocationAuthorization() {
-            Permissions.shared.checkUserDeviceLocationServiceAuthorization()
-        }
+        Permissions.shared.checkUserDeviceLocationServiceAuthorization()
+    }
     
     private func bind() {
         let trigger = Observable.just(())

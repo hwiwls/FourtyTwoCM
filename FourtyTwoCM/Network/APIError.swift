@@ -11,6 +11,7 @@ enum APIError: Error {
     case forbidden
     case notFound
     case unknown
+    case expiredToken
 
     static func mapError(from statusCode: Int) -> APIError {
         switch statusCode {
@@ -24,6 +25,16 @@ enum APIError: Error {
             return .serverError
         default:
             return .unknown
+        }
+    }
+    
+    func checkAccessTokenError() -> Bool {
+        
+        switch self {
+        case .expiredToken:
+            return true
+        default:
+            return false
         }
     }
 }

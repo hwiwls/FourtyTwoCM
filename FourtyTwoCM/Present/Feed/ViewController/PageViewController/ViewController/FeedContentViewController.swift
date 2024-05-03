@@ -64,6 +64,8 @@ final class FeedContentViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        self.viewModel = FeedContentViewModel(post: post)
     }
     
     override func viewDidLayoutSubviews() {
@@ -151,7 +153,7 @@ final class FeedContentViewController: BaseViewController {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             alert.dismiss(animated: true, completion: nil)
         }
     }

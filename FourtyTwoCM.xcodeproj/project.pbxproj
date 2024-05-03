@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */; };
+		2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D54E2BE4DB430028A172 /* Interceptor.swift */; };
+		2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5502BE4DD760028A172 /* RefreshModel.swift */; };
+		2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */; };
 		2E56664B2BD663FE0018E8E7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664A2BD663FE0018E8E7 /* GradientView.swift */; };
 		2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664E2BD6815E0018E8E7 /* FeedModel.swift */; };
 		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
@@ -76,6 +79,9 @@
 
 /* Begin PBXFileReference section */
 		2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostQuery.swift; sourceTree = "<group>"; };
+		2E38D54E2BE4DB430028A172 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
+		2E38D5502BE4DD760028A172 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
+		2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelErrorProtocol.swift; sourceTree = "<group>"; };
 		2E56664A2BD663FE0018E8E7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		2E56664E2BD6815E0018E8E7 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				2E5C381C2BCA7C2A00A006FB /* App */,
+				2EE34D562BCE716100DE3EF7 /* KeyChain */,
 				2E5C381D2BCA7C2F00A006FB /* Network */,
 				2E5C381E2BCA7C3400A006FB /* Base */,
 				2E5C381F2BCA7C3900A006FB /* Protocol */,
@@ -261,9 +268,9 @@
 				2E8F98612BCD7F1500E9A79A /* BaseURL.swift */,
 				2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */,
 				2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */,
+				2E38D54E2BE4DB430028A172 /* Interceptor.swift */,
 				2E5980052BD42FAA00AAAFA7 /* Query */,
-				2EE34D562BCE716100DE3EF7 /* KeyChain */,
-				2EE34D552BCE6EDD00DE3EF7 /* Model */,
+				2EE34D552BCE6EDD00DE3EF7 /* DataModel */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -282,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				2E8F98722BCD946100E9A79A /* ViewModelType.swift */,
+				2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -317,7 +325,6 @@
 			children = (
 				2E8F98632BCD7F5000E9A79A /* UI */,
 				2E8F98642BCD803300E9A79A /* Bundle.swift */,
-				2E56664A2BD663FE0018E8E7 /* GradientView.swift */,
 				2E5D7B922BD82C2200E25B26 /* loadImage.swift */,
 			);
 			path = Extension;
@@ -471,6 +478,7 @@
 		2E8F98662BCD85B300E9A79A /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				2E56664A2BD663FE0018E8E7 /* GradientView.swift */,
 				2E8F98672BCD85CA00E9A79A /* PointButton.swift */,
 				2E8F98692BCD85F300E9A79A /* SignTextField.swift */,
 				2ED643012BD52A1A00722299 /* IconBtn.swift */,
@@ -521,7 +529,7 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		2EE34D552BCE6EDD00DE3EF7 /* Model */ = {
+		2EE34D552BCE6EDD00DE3EF7 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
 				2E8F986D2BCD937A00E9A79A /* SignInModel.swift */,
@@ -529,8 +537,9 @@
 				2E5980012BD42C7A00AAAFA7 /* EmailValidationModel.swift */,
 				2E56664E2BD6815E0018E8E7 /* FeedModel.swift */,
 				2ED397F02BDA485A0064CD71 /* LikeModel.swift */,
+				2E38D5502BE4DD760028A172 /* RefreshModel.swift */,
 			);
-			path = Model;
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		2EE34D562BCE716100DE3EF7 /* KeyChain */ = {
@@ -644,6 +653,7 @@
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2ED643002BD5272500722299 /* FeedPageViewModel.swift in Sources */,
 				2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */,
+				2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */,
 				2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */,
 				2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
@@ -651,6 +661,7 @@
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */,
 				2ED643022BD52A1A00722299 /* IconBtn.swift in Sources */,
+				2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
 				2ED642FE2BD5271E00722299 /* FeedContentViewModel.swift in Sources */,
 				2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */,
@@ -660,6 +671,7 @@
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
+				2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */,
 				2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */,
 				2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */,
 				2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */,

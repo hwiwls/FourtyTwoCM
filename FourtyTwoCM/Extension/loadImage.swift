@@ -15,7 +15,7 @@ extension UIImageView {
         do {
             accessToken = try Keychain.shared.getToken(kind: .accessToken)
         } catch {
-            print("Error retrieving access token: \(error)")
+            print("loadImage에서 액세스토큰을 불러오지 못함: \(error)")
         }
         
         guard let sesacKey = Bundle.main.sesacKey else {
