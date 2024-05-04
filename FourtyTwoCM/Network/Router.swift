@@ -289,7 +289,7 @@ extension Router: TargetType {
             return nil
         case .refresh:
             return nil
-        case .uploadFile(let query):
+        case .uploadFile:
             return nil
         case .uploadPost(let query):
             let encoder = JSONEncoder()
