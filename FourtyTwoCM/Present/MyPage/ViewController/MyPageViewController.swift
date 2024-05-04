@@ -8,8 +8,12 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class MyPageViewController: BaseViewController {
+    
+    private let viewModel = MyPageViewModel()
     
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -60,7 +64,34 @@ final class MyPageViewController: BaseViewController {
     }
     
     override func bind() {
-        // Add any RxSwift bindings if necessary
+        let input = MyPageViewModel.Input(loadProfileTrigger: .just(()))
+                let output = viewModel.transform(input: input)
+                
+                output.profileImageURL
+                    .drive(onNext: { [weak self] url in
+                        guard let urlString = url?.absoluteString, let url = URL(string: BaseURL.baseURL.rawValue + "/" + urlString) else { return }
+                        print("mypage url: \(url)")
+                        self?.profileImageView.loadImage(from: url)
+                    })
+                    .disposed(by: disposeBag)
+                
+                output.username
+                    .drive(usernameLabel.rx.text)
+                    .disposed(by: disposeBag)
+                
+                output.followerCount
+                    .drive(followerLabel.rx.text)
+                    .disposed(by: disposeBag)
+                
+                output.followingCount
+                    .drive(followingLabel.rx.text)
+                    .disposed(by: disposeBag)
+                
+                output.error
+                    .drive(onNext: { error in
+                        print("An error occurred: \(error.localizedDescription)")
+                    })
+                    .disposed(by: disposeBag)
     }
     
     override func configView() {

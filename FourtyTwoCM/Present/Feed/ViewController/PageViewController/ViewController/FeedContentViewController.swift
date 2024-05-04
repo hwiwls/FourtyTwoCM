@@ -107,6 +107,7 @@ final class FeedContentViewController: BaseViewController {
         output.profileImageUrl
             .compactMap { URL(string: $0 ?? "") }
             .drive(onNext: { [weak self] url in
+                print("feed url: \(url)")
                 self?.userProfileImageView.loadImage(from: url)
             })
             .disposed(by: disposeBag)

@@ -12,6 +12,8 @@
 		2E1B91E22BE632FA00751288 /* UploadPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */; };
 		2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E52BE63F5200751288 /* UploadPostModel.swift */; };
 		2E1B91E82BE64EB300751288 /* UploadImageQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E72BE64EB300751288 /* UploadImageQuery.swift */; };
+		2E1E93282BE6D28700E9F9A5 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */; };
+		2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E932A2BE6D4F800E9F9A5 /* MyPageViewModel.swift */; };
 		2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D54E2BE4DB430028A172 /* Interceptor.swift */; };
 		2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5502BE4DD760028A172 /* RefreshModel.swift */; };
 		2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */; };
@@ -88,6 +90,8 @@
 		2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostQuery.swift; sourceTree = "<group>"; };
 		2E1B91E52BE63F5200751288 /* UploadPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostModel.swift; sourceTree = "<group>"; };
 		2E1B91E72BE64EB300751288 /* UploadImageQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageQuery.swift; sourceTree = "<group>"; };
+		2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
+		2E1E932A2BE6D4F800E9F9A5 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		2E38D54E2BE4DB430028A172 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
 		2E38D5502BE4DD760028A172 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
 		2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelErrorProtocol.swift; sourceTree = "<group>"; };
@@ -171,6 +175,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E1E93292BE6D4ED00E9F9A5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E1E932A2BE6D4F800E9F9A5 /* MyPageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		2E38D5572BE53F560028A172 /* PostCreation */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +450,7 @@
 		2E8F98462BCD747B00E9A79A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				2E1E93292BE6D4ED00E9F9A5 /* ViewModel */,
 				2E8F984B2BCD749700E9A79A /* ViewController */,
 			);
 			path = MyPage;
@@ -545,6 +558,7 @@
 				2E38D5502BE4DD760028A172 /* RefreshModel.swift */,
 				2E1B91DF2BE62F1000751288 /* FileModel.swift */,
 				2E1B91E52BE63F5200751288 /* UploadPostModel.swift */,
+				2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -652,6 +666,7 @@
 				2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */,
 				2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */,
 				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
+				2E1E93282BE6D28700E9F9A5 /* MyProfileModel.swift in Sources */,
 				2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */,
 				2E8F986C2BCD900400E9A79A /* UITextField+addLeftPadding.swift in Sources */,
 				2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */,
@@ -692,6 +707,7 @@
 				2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
 				2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */,
+				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
