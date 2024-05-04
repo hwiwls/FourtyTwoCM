@@ -30,6 +30,18 @@ final class FeedPageViewController: UIPageViewController {
         requestLocationAuthorization()
         bind()
         setupTimer()
+        configureSubscriptions()
+    }
+    
+    
+    private func configureSubscriptions() {
+        NotificationCenter.default.addObserver(self, selector: #selector(newPostReceived), name: .postUploaded, object: nil)
+    }
+
+    private var newPostAddedSubject = PublishSubject<Void>()
+    
+    @objc private func newPostReceived() {
+        newPostAddedSubject.onNext(())
     }
     
     private func requestLocationAuthorization() {
@@ -40,7 +52,7 @@ final class FeedPageViewController: UIPageViewController {
         let trigger = Observable.just(())
         let fetchNextPage = Observable<Void>.never()
 
-        let input = FeedPageViewModel.Input(trigger: trigger, fetchNextPage: fetchNextPage)
+        let input = FeedPageViewModel.Input(trigger: trigger, fetchNextPage: fetchNextPage, newPostAdded: newPostAddedSubject.asObservable())
         let output = viewModel.transform(input: input)
 
         output.posts
@@ -190,7 +202,7 @@ extension FeedPageViewController: UIPageViewControllerDelegate {
         }
         
         let fetchNextPage = Observable.just(())
-        let input = FeedPageViewModel.Input(trigger: Observable.never(), fetchNextPage: fetchNextPage)
+        let input = FeedPageViewModel.Input(trigger: Observable.never(), fetchNextPage: fetchNextPage, newPostAdded: newPostAddedSubject)
         let output = viewModel.transform(input: input)
 
         output.posts
