@@ -15,7 +15,9 @@ enum Router {
     case viewPost(query: ViewPostQuery) // 게시물 조회
     case likePost(postId: String, query: LikeQuery) // 게시물 좋아요
     case deletePost(postId: String) // 게시물 삭제
-    case refresh
+    case refresh // 토큰 갱신
+    case uploadFile(query: UploadImageQuery) // 파일 업로드
+    case uploadPost(query: UploadPostQuery)
 }
 
 extension Router: TargetType {
@@ -39,6 +41,10 @@ extension Router: TargetType {
             return .delete
         case .refresh:
             return .get
+        case .uploadFile:
+            return .post
+        case .uploadPost:
+            return .post
         }
     }
     
@@ -58,6 +64,10 @@ extension Router: TargetType {
             return "posts/\(postId)"
         case .refresh:
             return "auth/refresh"
+        case .uploadFile:
+            return "posts/files"
+        case .uploadPost:
+            return "posts"
         }
     }
     
@@ -190,11 +200,53 @@ extension Router: TargetType {
                 HTTPHeader.sesacKey.rawValue: sesacKey,
                 HTTPHeader.refresh.rawValue: refreshToken
             ]
+        case .uploadFile:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("파일 업로드에서 액세스 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.contentType.rawValue: HTTPHeader.multipart.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .uploadPost:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("파일 업로드에서 액세스 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
         }
     }
     
     var parameter: String? {
-        return nil
+        nil
     }
     
     var queryItems: [URLQueryItem]? {
@@ -211,6 +263,7 @@ extension Router: TargetType {
             return nil
         }
     }
+    
     
     var body: Data? {
         switch self {
@@ -236,6 +289,11 @@ extension Router: TargetType {
             return nil
         case .refresh:
             return nil
+        case .uploadFile(let query):
+            return nil
+        case .uploadPost(let query):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(query)
         }
     }
 }

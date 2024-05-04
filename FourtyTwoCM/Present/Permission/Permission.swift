@@ -18,6 +18,7 @@ class Permissions: NSObject, CLLocationManagerDelegate {
     let isLocationAuthorized = BehaviorSubject<Bool>(value: false)
     let isCameraAuthorized = BehaviorSubject<Bool>(value: false)
     let isPhotosAuthorized = BehaviorSubject<Bool>(value: false)
+    private let currentLocationSubject = ReplaySubject<CLLocation>.create(bufferSize: 1)
 
     private override init() {
         super.init()
@@ -155,6 +156,10 @@ class Permissions: NSObject, CLLocationManagerDelegate {
         
         print("위도: \(latitude)")
         print("경도: \(longitude)")
+        
+        if let location = locations.first {
+            currentLocationSubject.onNext(location)
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -169,5 +174,9 @@ class Permissions: NSObject, CLLocationManagerDelegate {
         checkUserDeviceLocationServiceAuthorization()
     }
     
+    func currentLocationObservable() -> Observable<CLLocation> {
+            return currentLocationSubject.asObservable()
+        }
+
     
 }

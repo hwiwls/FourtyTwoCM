@@ -147,6 +147,10 @@ final class PostCreationViewController: BaseViewController {
 }
 
 extension PostCreationViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.updatePostText(textView.text)  
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .placeHolderGray {
             textView.text = nil
