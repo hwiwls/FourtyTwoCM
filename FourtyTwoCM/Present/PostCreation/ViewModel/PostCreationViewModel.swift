@@ -80,3 +80,4 @@ final class PostCreationViewModel: ViewModelType {
 extension Notification.Name {
     static let postUploaded = Notification.Name("postUploaded")
 }
+

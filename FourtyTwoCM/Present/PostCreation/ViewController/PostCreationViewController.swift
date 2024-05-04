@@ -71,7 +71,6 @@ final class PostCreationViewController: BaseViewController {
                 self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
-
     }
     
     @objc private func closeButtonTapped() {

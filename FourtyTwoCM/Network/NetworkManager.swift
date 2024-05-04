@@ -39,6 +39,7 @@ struct NetworkManager {
         }
     }
     
+    
     static func requestDeletePost(postID: String) -> Single<Void> {
         return Single<Void>.create { single in
             do {
@@ -66,7 +67,7 @@ struct NetworkManager {
         }
     }
     
-    // 파일 업로드
+     // 파일 업로드
     static func performMultipartRequest(route: Router) -> Single<FileModel> {
         return Single.create { single in
             do {
@@ -101,6 +102,7 @@ struct NetworkManager {
             return Disposables.create()
         }
     }
-
-
+    
+    
+    
 }
