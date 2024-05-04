@@ -33,7 +33,7 @@ final class PostCreationViewModel: ViewModelType {
     func updatePostText(_ text: String) {
             postTextViewSubject.onNext(text)
         }
-
+    
     func transform(input: Input) -> Output {
         input.submitTap
             .flatMapLatest { [weak self] _ -> Observable<[String]> in
@@ -60,7 +60,11 @@ final class PostCreationViewModel: ViewModelType {
                     }
             }
             .subscribe(onNext: { [weak self] _ in
+                NotificationCenter.default.post(name: .postUploaded, object: nil)
                 self?.postSubmittedSubject.onNext(())
+            }, onError: { error in
+                // 오류 처리
+                print("Error uploading post: \(error)")
             })
             .disposed(by: disposeBag)
 
@@ -71,4 +75,8 @@ final class PostCreationViewModel: ViewModelType {
     }
 
 
+}
+
+extension Notification.Name {
+    static let postUploaded = Notification.Name("postUploaded")
 }

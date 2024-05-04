@@ -148,7 +148,7 @@ final class PostCreationViewController: BaseViewController {
 
 extension PostCreationViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.updatePostText(textView.text)  
+        viewModel.updatePostText(textView.text)  // ViewModel에 텍스트 업데이트 함수 추가 필요
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

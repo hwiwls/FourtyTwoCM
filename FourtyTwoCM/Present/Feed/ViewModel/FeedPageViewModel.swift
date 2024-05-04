@@ -19,6 +19,7 @@ class FeedPageViewModel: ViewModelType {
     struct Input {
         let trigger: Observable<Void>
         let fetchNextPage: Observable<Void>
+        let newPostAdded: Observable<Void>
     }
 
     struct Output {
@@ -33,7 +34,8 @@ class FeedPageViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let fetchRequest = Observable.merge(
             input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "12") },
-            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "12") }
+            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "12") },
+            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "12") } // Trigger a full refresh on new post
         )
 
         let posts = fetchRequest
