@@ -75,19 +75,36 @@ final class FeedContentViewController: BaseViewController {
     
     @objc func goReservationButtonTapped() {
         guard let post = try? viewModel.post.value() else { return }
-            let reservationVC = ReservationViewController()
-
-            // 전달할 데이터 설정
-            reservationVC.storeName = post.creator.nick
-            reservationVC.productDetail = post.content
-            reservationVC.productName = post.content4
-            reservationVC.priceValue = post.content5
-            reservationVC.imageUrls = post.files
-            reservationVC.postID = post.postID  // 결제 기능에 사용될 postID 저장
-
-            // ReservationViewController 설정
-            reservationVC.modalPresentationStyle = .fullScreen
+//            let reservationVC = ReservationViewController()
+//
+//            // 전달할 데이터 설정
+//            reservationVC.storeName = post.creator.nick
+//            reservationVC.productDetail = post.content
+//            reservationVC.productName = post.content4
+//            reservationVC.priceValue = post.content5
+//            reservationVC.imageUrls = post.files
+//            reservationVC.postID = post.postID  // 결제 기능에 사용될 postID 저장
+//
+//            // ReservationViewController 설정
+//            reservationVC.modalPresentationStyle = .fullScreen
+//            self.present(reservationVC, animated: true, completion: nil)
+//        
+        
+        let reservationVC = ReservationViewController()
+        reservationVC.modalPresentationStyle = .overFullScreen
+        
+        reservationVC.storeName = post.creator.nick
+        reservationVC.productDetail = post.content
+        reservationVC.productName = post.content4
+        reservationVC.priceValue = post.content5
+        reservationVC.imageUrls = post.files
+        reservationVC.postID = post.postID
+        if let tabBar = self.tabBarController {
+            
+            tabBar.present(reservationVC, animated: true, completion: nil)
+        } else {
             self.present(reservationVC, animated: true, completion: nil)
+        }
     }
 
     

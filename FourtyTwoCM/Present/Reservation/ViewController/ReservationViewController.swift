@@ -26,7 +26,6 @@ final class ReservationViewController: BaseViewController {
     
     private let productImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .blue
         $0.clipsToBounds = true
     }
     
@@ -96,6 +95,10 @@ final class ReservationViewController: BaseViewController {
         productDetailLabel.text = productDetail
         productNameLabel.text = productName
         priceValueLabel.text = price
+        
+        print("결제 상품 이름: \(String(describing: productName))")
+        print("결제 상품 가격: \(price)")
+        print("결제 postID: \(String(describing: postID))")
 
         if let firstImageUrl = imageUrls?.first, let url = URL(string: BaseURL.baseURL.rawValue + "/" + firstImageUrl) {
             // 이미지 뷰에 이미지 로드
@@ -107,6 +110,18 @@ final class ReservationViewController: BaseViewController {
     }
     
     @objc func payForReserve() {
+        lazy var wkWebView: WKWebView = {
+            let view = WKWebView()
+            view.backgroundColor = UIColor.clear
+            return view
+        }()
+        
+        view.addSubview(wkWebView)
+        
+        wkWebView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         guard let sesacKey = Bundle.main.sesacKey else {
             print("payForReserve에서 sesacKey를 로드하지 못했습니다.")
             return
@@ -123,11 +138,7 @@ final class ReservationViewController: BaseViewController {
         $0.app_scheme = "sesac"
         }
         
-        lazy var wkWebView: WKWebView = {
-            var view = WKWebView()
-            view.backgroundColor = UIColor.clear
-            return view
-        }()
+        
         
         Iamport.shared.paymentWebView(
             webViewMode: wkWebView,
@@ -135,22 +146,54 @@ final class ReservationViewController: BaseViewController {
             payment: payment) { [weak self] iamportResponse in
                 print(String(describing: iamportResponse))
                 
+                guard let self = self else { return }
                 let success = iamportResponse?.success
                 let impUid = iamportResponse?.imp_uid
-                
-                if success == true {
-                    let alert = UIAlertController(title: "결제 성공", message: "결제에 성공했습니다.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                    self?.present(alert, animated: true, completion: nil)
+
+                if success == true, let impUid = impUid {
+                    // 결제 검증을 위한 쿼리 준비
+                    guard let price = Int(self.priceValue ?? "0"), let postID = self.postID, let productName = self.productName else {
+                        print("필요한 정보를 불러오는데 실패했습니다.")
+                        return
+                    }
+                    guard let priceInt = Int(priceValue ?? "0"), let impUid = iamportResponse?.imp_uid, let postID = self.postID, let productName = self.productName else {
+                        print("필수 정보가 누락되었거나 잘못되었습니다.")
+                        return
+                    }
+                    let validationQuery = PaymentsValidationQuery(imp_uid: impUid, post_id: postID, productName: productName, price: priceInt)
+                    let router = Router.paymentValidation(query: validationQuery)
+                    
+                    // 결제 검증 요청
+                    NetworkManager.performRequest(route: router, dataType: PaymentsValidationModel.self)
+                        .subscribe(onSuccess: { validationResponse in
+                            // 결제 및 검증 성공 시 Alert 표시
+                            let alert = UIAlertController(title: "결제 성공", message: "결제 및 검증에 성공했습니다.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                                self.dismiss(animated: true, completion: nil)
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }, onFailure: { error in
+                            // 결제는 성공했으나 검증 실패 시
+                            let alert = UIAlertController(title: "결제 검증 실패", message: "결제는 성공했으나 검증에 실패했습니다.", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                                self.dismiss(animated: true, completion: nil)
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }).disposed(by: self.disposeBag)
                 } else {
+                    // 결제 실패 시
                     let alert = UIAlertController(title: "결제 실패", message: "결제에 실패했습니다.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                    self?.present(alert, animated: true, completion: nil)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
                 
                 print ("결제에 성공했나요? \(String(describing: success))")
                 print("결제 고유 번호: \(String(describing: impUid))")
             }
+
         
         
     }
@@ -173,6 +216,7 @@ final class ReservationViewController: BaseViewController {
     
     
     override func configLayout() {
+        
         storeNameLabel.snp.makeConstraints {
             $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
         }

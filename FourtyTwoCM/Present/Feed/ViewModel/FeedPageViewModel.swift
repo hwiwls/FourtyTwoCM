@@ -33,9 +33,9 @@ class FeedPageViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
         let fetchRequest = Observable.merge(
-            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "12") },
-            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "12") },
-            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "12") } // Trigger a full refresh on new post
+            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "7") },
+            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "7") },
+            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "7") } // Trigger a full refresh on new post
         )
 
         let posts = fetchRequest
@@ -56,7 +56,7 @@ class FeedPageViewModel: ViewModelType {
             .map { feedModel -> [Post] in
                 guard let currentLocation = self.currentLocation else { return [] }
                 return feedModel.data.filter { post in
-                    guard let lat = Double(post.content1), let lon = Double(post.content2) else { return false }
+                    guard let lat = Double(post.content1 ?? ""), let lon = Double(post.content2 ?? "") else { return false }
                     let postLocation = CLLocation(latitude: lat, longitude: lon)
                     let distance = postLocation.distance(from: currentLocation)
                     guard let postDate = post.createdAt.toDate() else { return false }

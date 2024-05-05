@@ -22,7 +22,6 @@ final class PostCreationViewController: BaseViewController {
 
     private let postImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .red
         $0.clipsToBounds = true
     }
     
