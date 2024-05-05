@@ -12,17 +12,19 @@ import Then
 class CustomButton: UIControl {
 
     private let iconImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.image = UIImage(systemName: "storefront")?.withRenderingMode(.alwaysOriginal).withTintColor(.lightGray)
         $0.tintColor = .white
         $0.backgroundColor = .offWhite
         $0.layer.cornerRadius = 5
+        $0.clipsToBounds = true
     }
 
     private let priceLabel = UILabel().then {
         $0.text = "990원 한끼통살"
         $0.textColor = .white
         $0.font = UIFont.systemFont(ofSize: 14)
+        $0.numberOfLines = 1
     }
     
     private let moreInfoView = UIView().then {
@@ -74,6 +76,7 @@ class CustomButton: UIControl {
         // 가격 레이블 레이아웃
         priceLabel.snp.makeConstraints {
             $0.leading.equalTo(iconImageView.snp.trailing).offset(8)
+            $0.trailing.equalToSuperview().inset(8)
             $0.centerY.equalTo(iconImageView)
         }
         
@@ -97,3 +100,16 @@ class CustomButton: UIControl {
     }
 }
 
+extension CustomButton {
+    func updatePriceLabel(price: String) {
+            DispatchQueue.main.async {
+                self.priceLabel.text = price
+            }
+        }
+
+    func updateIconImageView(with url: URL) {
+        print("iconimageurl: \(url)")
+        
+        iconImageView.loadImage(from: url)
+    }
+}

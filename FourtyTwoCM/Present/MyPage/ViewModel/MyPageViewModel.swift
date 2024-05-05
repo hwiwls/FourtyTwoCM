@@ -30,7 +30,7 @@ class MyPageViewModel: ViewModelType {
             .flatMapLatest {
                 NetworkManager.performRequest(route: Router.myProfile, dataType: MyProfileModel.self)
                     .asObservable()
-                    .catchError { error -> Observable<MyProfileModel> in
+                    .catch { error -> Observable<MyProfileModel> in
                         errorTracker.onNext(error)
                         return Observable.empty()
                     }
@@ -38,7 +38,7 @@ class MyPageViewModel: ViewModelType {
             .share(replay: 1, scope: .whileConnected)
         
         let profileImageURL = profileData
-            .map { profile in URL(string: profile.profileImage ?? "") }
+            .map { profile in URL(string: profile.profileImage) }
             .asDriver(onErrorJustReturn: nil)
         
         let username = profileData

@@ -69,7 +69,27 @@ final class FeedContentViewController: BaseViewController {
         super.viewDidLoad()
         
 //        self.viewModel = FeedContentViewModel(post: post)
+        
+        goReservationBtn.addTarget(self, action: #selector(goReservationButtonTapped), for: .touchUpInside)
     }
+    
+    @objc func goReservationButtonTapped() {
+        guard let post = try? viewModel.post.value() else { return }
+            let reservationVC = ReservationViewController()
+
+            // 전달할 데이터 설정
+            reservationVC.storeName = post.creator.nick
+            reservationVC.productDetail = post.content
+            reservationVC.productName = post.content4
+            reservationVC.priceValue = post.content5
+            reservationVC.imageUrls = post.files
+            reservationVC.postID = post.postID  // 결제 기능에 사용될 postID 저장
+
+            // ReservationViewController 설정
+            reservationVC.modalPresentationStyle = .fullScreen
+            self.present(reservationVC, animated: true, completion: nil)
+    }
+
     
     override func viewDidLayoutSubviews() {
         userProfileImageView.layer.cornerRadius = userProfileImageView.frame.height / 2
@@ -156,6 +176,20 @@ final class FeedContentViewController: BaseViewController {
         output.goReservationVisibility
                .drive(goReservationBtn.rx.isHidden)
                .disposed(by: disposeBag)
+        
+        output.formattedPrice
+            .drive(onNext: { [weak self] price in
+                self?.goReservationBtn.updatePriceLabel(price: price)
+            })
+            .disposed(by: disposeBag)
+
+        output.imageUrls
+            .drive(onNext: { [weak self] urls in
+                if let firstUrl = urls.first, let url = URL(string: BaseURL.baseURL.rawValue + "/" + firstUrl) {
+                    self?.goReservationBtn.updateIconImageView(with: url)
+                }
+            })
+            .disposed(by: disposeBag)
         
     }
     
