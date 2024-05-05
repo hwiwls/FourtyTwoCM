@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import iamport_ios
+import WebKit
 
 final class ReservationViewController: BaseViewController {
     var storeName: String?
@@ -76,6 +78,7 @@ final class ReservationViewController: BaseViewController {
         $0.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
     
+    
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
@@ -99,6 +102,57 @@ final class ReservationViewController: BaseViewController {
             print("예약 상품 이미지 url: \(url)")
             productImageView.loadImage(from: url)
         }
+        
+        reserveBtn.addTarget(self, action: #selector(payForReserve), for: .touchUpInside)
+    }
+    
+    @objc func payForReserve() {
+        guard let sesacKey = Bundle.main.sesacKey else {
+            print("payForReserve에서 sesacKey를 로드하지 못했습니다.")
+            return
+        }
+        
+        let payment = IamportPayment(
+            pg: PG.html5_inicis.makePgRawName(pgId: "INIpayTest"),
+            merchant_uid: "ios_\(sesacKey)_\(Int(Date().timeIntervalSince1970))",
+            
+            amount: priceValue ?? "").then {
+        $0.pay_method = PayMethod.card.rawValue
+        $0.name = productName
+        $0.buyer_name = "정휘진"
+        $0.app_scheme = "sesac"
+        }
+        
+        lazy var wkWebView: WKWebView = {
+            var view = WKWebView()
+            view.backgroundColor = UIColor.clear
+            return view
+        }()
+        
+        Iamport.shared.paymentWebView(
+            webViewMode: wkWebView,
+            userCode: UserCode.userCode.rawValue,
+            payment: payment) { [weak self] iamportResponse in
+                print(String(describing: iamportResponse))
+                
+                let success = iamportResponse?.success
+                let impUid = iamportResponse?.imp_uid
+                
+                if success == true {
+                    let alert = UIAlertController(title: "결제 성공", message: "결제에 성공했습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: "결제 실패", message: "결제에 실패했습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                }
+                
+                print ("결제에 성공했나요? \(String(describing: success))")
+                print("결제 고유 번호: \(String(describing: impUid))")
+            }
+        
+        
     }
     
     override func configHierarchy() {
