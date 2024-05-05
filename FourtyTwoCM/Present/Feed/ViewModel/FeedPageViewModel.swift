@@ -67,8 +67,9 @@ class FeedPageViewModel: ViewModelType {
 
                     let timeCondition = timeDiff <= (23 * 60 + 59)
                     let contentCondition = post.content3 == "1"
+                    let contentCondition2 = post.content3 == "2"
                     
-                    return (distance <= 1000 && timeCondition) || contentCondition
+                    return (distance <= 1000 && timeCondition) || contentCondition || contentCondition2
                 }
             }
             .asDriver(onErrorJustReturn: [])

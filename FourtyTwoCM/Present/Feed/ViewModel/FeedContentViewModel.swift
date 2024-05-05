@@ -35,6 +35,7 @@ class FeedContentViewModel: ViewModelType {
         let likeStatus: Driver<Bool>
         let likeButtonImage: Driver<String>  // 좋아요 버튼 이미지 이름을 제공
         let ellipsisVisibility: Driver<Bool>
+        let goReservationVisibility: Driver<Bool>
         let showActionSheet: Driver<Void>
     }
 
@@ -80,6 +81,10 @@ class FeedContentViewModel: ViewModelType {
         
         let showActionSheet = input.ellipsisBtnTapped
                     .asDriver(onErrorJustReturn: ())
+        
+        let goReservationVisibility = post
+                .map { $0.content3 != "2" }
+                .asDriver(onErrorJustReturn: false)
 
         return Output(
             content: content,
@@ -89,6 +94,7 @@ class FeedContentViewModel: ViewModelType {
             likeStatus: likeStatus, 
             likeButtonImage: likeButtonImage,
             ellipsisVisibility: ellipsisVisibility,
+            goReservationVisibility: goReservationVisibility,
             showActionSheet: showActionSheet
         )
     }

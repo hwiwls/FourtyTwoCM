@@ -62,6 +62,9 @@ final class FeedContentViewController: BaseViewController {
     
     private let ellipsisPostBtn = IconButton(image: "ellipsis")
     
+    let goReservationBtn = CustomButton()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,6 +79,7 @@ final class FeedContentViewController: BaseViewController {
     
     func loadPost(post: Post) {
         viewModel = FeedContentViewModel(post: post)
+       
     }
 
     override func bind() {
@@ -148,6 +152,11 @@ final class FeedContentViewController: BaseViewController {
                 self?.showToast(message: message)
             })
             .disposed(by: disposeBag)
+        
+        output.goReservationVisibility
+               .drive(goReservationBtn.rx.isHidden)
+               .disposed(by: disposeBag)
+        
     }
     
     private func showToast(message: String) {
@@ -196,6 +205,7 @@ final class FeedContentViewController: BaseViewController {
             userIDLabel,
             postContentLabel,
             btnStackView,
+            goReservationBtn
         ])
         
         btnStackView.addArrangedSubviews([
@@ -229,7 +239,7 @@ final class FeedContentViewController: BaseViewController {
         
         btnStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.top.equalTo(goReservationBtn.snp.top).offset(4)
         }
         
         likePostBtn.snp.makeConstraints {
@@ -257,6 +267,13 @@ final class FeedContentViewController: BaseViewController {
         userIDLabel.snp.makeConstraints {
             $0.leading.equalTo(userProfileImageView.snp.trailing).offset(8)
             $0.centerY.equalTo(userProfileImageView)
+        }
+        
+        goReservationBtn.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalTo(userProfileImageView.snp.top).offset(-20)
+            $0.height.equalTo(120)
+            $0.trailing.equalTo(btnStackView.snp.leading).offset(-20)
         }
         
         
