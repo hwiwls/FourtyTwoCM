@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import Then
+//import Then
 import RxSwift
 import RxCocoa
 
@@ -20,7 +20,6 @@ final class MyPageViewController: BaseViewController {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 40
         $0.image = UIImage(systemName: "person.fill")
-        $0.backgroundColor = .red
     }
     
     private let usernameLabel = UILabel().then {

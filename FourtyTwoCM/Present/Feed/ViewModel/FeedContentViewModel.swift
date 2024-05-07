@@ -13,7 +13,7 @@ import Alamofire
 class FeedContentViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
-    private var post: BehaviorSubject<Post>
+    var post: BehaviorSubject<Post>
 
     var isLiked = BehaviorSubject<Bool>(value: false)
     
@@ -35,7 +35,10 @@ class FeedContentViewModel: ViewModelType {
         let likeStatus: Driver<Bool>
         let likeButtonImage: Driver<String>  // 좋아요 버튼 이미지 이름을 제공
         let ellipsisVisibility: Driver<Bool>
+        let goReservationVisibility: Driver<Bool>
         let showActionSheet: Driver<Void>
+        let formattedPrice: Driver<String>
+        let imageUrls: Driver<[String]>
     }
 
     init(post: Post) {
@@ -80,6 +83,20 @@ class FeedContentViewModel: ViewModelType {
         
         let showActionSheet = input.ellipsisBtnTapped
                     .asDriver(onErrorJustReturn: ())
+        
+        let goReservationVisibility = post
+                .map { $0.content3 != "2" }
+                .asDriver(onErrorJustReturn: false)
+        
+        let formattedPrice = post.map { post in
+            let price = post.content5?.formattedAsCurrency() ?? "가격 정보 없음"
+            let product = post.content4 ?? "제품 정보 없음"
+            return "\(product) \(price)"
+        }.asDriver(onErrorJustReturn: "데이터 로드 실패")
+        
+
+        let imageUrls = post.map { $0.files }
+            .asDriver(onErrorJustReturn: [])
 
         return Output(
             content: content,
@@ -89,7 +106,10 @@ class FeedContentViewModel: ViewModelType {
             likeStatus: likeStatus, 
             likeButtonImage: likeButtonImage,
             ellipsisVisibility: ellipsisVisibility,
-            showActionSheet: showActionSheet
+            goReservationVisibility: goReservationVisibility,
+            showActionSheet: showActionSheet,
+            formattedPrice: formattedPrice,
+            imageUrls: imageUrls
         )
     }
     

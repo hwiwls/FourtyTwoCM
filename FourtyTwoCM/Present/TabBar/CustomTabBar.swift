@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Then
+//import Then
 
 final class CustomTabBar: UITabBar {
     let middleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 70, height: 70)).then {

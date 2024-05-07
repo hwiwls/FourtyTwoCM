@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import Then
+//import Then
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

@@ -19,6 +19,7 @@ enum Router {
     case uploadFile(query: UploadImageQuery) // 파일 업로드
     case uploadPost(query: UploadPostQuery)
     case myProfile
+    case paymentValidation(query: PaymentsValidationQuery)
 }
 
 extension Router: TargetType {
@@ -48,6 +49,8 @@ extension Router: TargetType {
             return .post
         case .myProfile:
             return .get
+        case .paymentValidation:
+            return .post
         }
     }
     
@@ -73,6 +76,8 @@ extension Router: TargetType {
             return "posts"
         case .myProfile:
             return "users/me/profile"
+        case .paymentValidation:
+            return "payments/validation"
         }
     }
     
@@ -267,6 +272,27 @@ extension Router: TargetType {
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
+        case .paymentValidation:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("Error retrieving access token: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey,
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue
+            ]
         }
     }
     
@@ -321,6 +347,9 @@ extension Router: TargetType {
             return try? encoder.encode(query)
         case .myProfile:
             return nil
+        case .paymentValidation(query: let query):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(query)
         }
     }
 }

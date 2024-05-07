@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import Then
+//import Then
 import RxSwift
 import RxCocoa
 

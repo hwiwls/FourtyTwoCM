@@ -38,7 +38,6 @@
 		2E5C38292BCA7DAF00A006FB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38282BCA7DAF00A006FB /* Alamofire */; };
 		2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C382B2BCA7DD100A006FB /* Kingfisher */; };
 		2E5C382F2BCA7E0100A006FB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C382E2BCA7E0100A006FB /* SnapKit */; };
-		2E5C38322BCA7E0700A006FB /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38312BCA7E0700A006FB /* Then */; };
 		2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38342BCA7E2400A006FB /* RxCocoa */; };
 		2E5C38372BCA7E2400A006FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38362BCA7E2400A006FB /* RxSwift */; };
 		2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38382BCA7EA900A006FB /* UIView+addSubViews.swift */; };
@@ -48,6 +47,11 @@
 		2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38402BCA7FF800A006FB /* BaseView.swift */; };
 		2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */; };
 		2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D7B922BD82C2200E25B26 /* loadImage.swift */; };
+		2E7198342BE78CAA00C8F334 /* String + formattedAsCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7198332BE78CAA00C8F334 /* String + formattedAsCurrency.swift */; };
+		2E7198372BE7925600C8F334 /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7198362BE7925600C8F334 /* iamport-ios */; };
+		2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7198392BE798EF00C8F334 /* UserCode.swift */; };
+		2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */; };
+		2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */; };
 		2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */; };
 		2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */; };
 		2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */; };
@@ -74,6 +78,8 @@
 		2E988E182BE2711900F48CF4 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E172BE2711900F48CF4 /* Permission.swift */; };
 		2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */; };
 		2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA15DA42BE2C6AE002DB338 /* APIError.swift */; };
+		2EB7F3332BE770390064276D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3322BE770390064276D /* CustomButton.swift */; };
+		2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3362BE77B840064276D /* ReservationViewController.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
 		2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397F02BDA485A0064CD71 /* LikeModel.swift */; };
 		2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */; };
@@ -122,6 +128,10 @@
 		2E5C38402BCA7FF800A006FB /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E5D7B922BD82C2200E25B26 /* loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadImage.swift; sourceTree = "<group>"; };
+		2E7198332BE78CAA00C8F334 /* String + formattedAsCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + formattedAsCurrency.swift"; sourceTree = "<group>"; };
+		2E7198392BE798EF00C8F334 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
+		2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationQuery.swift; sourceTree = "<group>"; };
+		2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationModel.swift; sourceTree = "<group>"; };
 		2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF B.otf"; sourceTree = "<group>"; };
 		2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF L.otf"; sourceTree = "<group>"; };
 		2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF M.otf"; sourceTree = "<group>"; };
@@ -148,6 +158,8 @@
 		2E988E172BE2711900F48CF4 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		2EA15DA42BE2C6AE002DB338 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		2EB7F3322BE770390064276D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		2EB7F3362BE77B840064276D /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
 		2ED397F02BDA485A0064CD71 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentViewController.swift; sourceTree = "<group>"; };
@@ -167,8 +179,8 @@
 				2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */,
 				2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */,
 				2E5C38292BCA7DAF00A006FB /* Alamofire in Frameworks */,
+				2E7198372BE7925600C8F334 /* iamport-ios in Frameworks */,
 				2EE486932BCEE3DD00D40682 /* Toast in Frameworks */,
-				2E5C38322BCA7E0700A006FB /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +272,7 @@
 				2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */,
 				2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */,
 				2E1B91E72BE64EB300751288 /* UploadImageQuery.swift */,
+				2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -287,6 +300,7 @@
 			children = (
 				2E5C381C2BCA7C2A00A006FB /* App */,
 				2EE34D562BCE716100DE3EF7 /* KeyChain */,
+				2E7198382BE798D600C8F334 /* Payment */,
 				2E5C381D2BCA7C2F00A006FB /* Network */,
 				2E5C381E2BCA7C3400A006FB /* Base */,
 				2E5C381F2BCA7C3900A006FB /* Protocol */,
@@ -350,6 +364,7 @@
 				2E988E102BE2525700F48CF4 /* Permission */,
 				2E5C38252BCA7CE200A006FB /* SignIn */,
 				2E597FF82BD3AD6F00AAAFA7 /* SignUp */,
+				2EB7F3342BE77B670064276D /* Reservation */,
 				2E8F98422BCD742700E9A79A /* Feed */,
 				2E8F98462BCD747B00E9A79A /* MyPage */,
 				2E38D5572BE53F560028A172 /* PostCreation */,
@@ -393,6 +408,21 @@
 				2E5C38232BCA7CDC00A006FB /* SignInViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2E7198382BE798D600C8F334 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				2E7198392BE798EF00C8F334 /* UserCode.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		2E71983F2BE7D9A900C8F334 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		2E8F98202BCD4D0B00E9A79A /* SB_Mac_Font */ = {
@@ -489,6 +519,7 @@
 				2E8F98392BCD5A6E00E9A79A /* UIFont+Aggro.swift */,
 				2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */,
 				2E8F986B2BCD900400E9A79A /* UITextField+addLeftPadding.swift */,
+				2E7198332BE78CAA00C8F334 /* String + formattedAsCurrency.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -500,6 +531,7 @@
 				2E8F98672BCD85CA00E9A79A /* PointButton.swift */,
 				2E8F98692BCD85F300E9A79A /* SignTextField.swift */,
 				2ED643012BD52A1A00722299 /* IconBtn.swift */,
+				2EB7F3322BE770390064276D /* CustomButton.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -538,6 +570,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		2EB7F3342BE77B670064276D /* Reservation */ = {
+			isa = PBXGroup;
+			children = (
+				2E71983F2BE7D9A900C8F334 /* ViewModel */,
+				2EB7F3352BE77B7A0064276D /* ViewController */,
+			);
+			path = Reservation;
+			sourceTree = "<group>";
+		};
+		2EB7F3352BE77B7A0064276D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2EB7F3362BE77B840064276D /* ReservationViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		2ED642FC2BD5271000722299 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,6 +608,7 @@
 				2E1B91DF2BE62F1000751288 /* FileModel.swift */,
 				2E1B91E52BE63F5200751288 /* UploadPostModel.swift */,
 				2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */,
+				2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -591,10 +641,10 @@
 				2E5C38282BCA7DAF00A006FB /* Alamofire */,
 				2E5C382B2BCA7DD100A006FB /* Kingfisher */,
 				2E5C382E2BCA7E0100A006FB /* SnapKit */,
-				2E5C38312BCA7E0700A006FB /* Then */,
 				2E5C38342BCA7E2400A006FB /* RxCocoa */,
 				2E5C38362BCA7E2400A006FB /* RxSwift */,
 				2EE486922BCEE3DD00D40682 /* Toast */,
+				2E7198362BE7925600C8F334 /* iamport-ios */,
 			);
 			productName = FourtyTwoCM;
 			productReference = 2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */;
@@ -628,9 +678,9 @@
 				2E5C38272BCA7DAF00A006FB /* XCRemoteSwiftPackageReference "Alamofire" */,
 				2E5C382A2BCA7DD100A006FB /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				2E5C382D2BCA7E0100A006FB /* XCRemoteSwiftPackageReference "SnapKit" */,
-				2E5C38302BCA7E0700A006FB /* XCRemoteSwiftPackageReference "Then" */,
 				2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 2E5C38022BCA72CF00A006FB /* Products */;
 			projectDirPath = "";
@@ -679,6 +729,7 @@
 				2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */,
 				2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
+				2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */,
@@ -688,6 +739,7 @@
 				2ED642FE2BD5271E00722299 /* FeedContentViewModel.swift in Sources */,
 				2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */,
 				2E5980022BD42C7A00AAAFA7 /* EmailValidationModel.swift in Sources */,
+				2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */,
 				2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E38D55F2BE55B550028A172 /* CustomTabBar.swift in Sources */,
@@ -710,9 +762,13 @@
 				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
+				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
+				2EB7F3332BE770390064276D /* CustomButton.swift in Sources */,
 				2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */,
+				2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
+				2E7198342BE78CAA00C8F334 /* String + formattedAsCurrency.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
 				2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */,
@@ -793,6 +849,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "정휘진";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -850,6 +907,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "정휘진";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -871,6 +929,10 @@
 				DEVELOPMENT_TEAM = Q37X3LG46V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FourtyTwoCM/App/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "게시글 업로드를 위해 카메라 접근이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 주변의 게시글을 필터링 하기 위해 위치 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 게시글을 필터링 하기 위해 위치 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "게시글 업로드를 위해 갤러리 접근이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -883,9 +945,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hwijin.FourtyTwoCM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -900,6 +966,10 @@
 				DEVELOPMENT_TEAM = Q37X3LG46V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FourtyTwoCM/App/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "게시글 업로드를 위해 카메라 접근이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 주변의 게시글을 필터링 하기 위해 위치 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 게시글을 필터링 하기 위해 위치 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "게시글 업로드를 위해 갤러리 접근이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -912,9 +982,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hwijin.FourtyTwoCM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -966,20 +1040,20 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		2E5C38302BCA7E0700A006FB /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.6.0;
+			};
+		};
+		2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
 			};
 		};
 		2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
@@ -1008,11 +1082,6 @@
 			package = 2E5C382D2BCA7E0100A006FB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		2E5C38312BCA7E0700A006FB /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2E5C38302BCA7E0700A006FB /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
-		};
 		2E5C38342BCA7E2400A006FB /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */;
@@ -1022,6 +1091,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		2E7198362BE7925600C8F334 /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
 		};
 		2EE486922BCEE3DD00D40682 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;

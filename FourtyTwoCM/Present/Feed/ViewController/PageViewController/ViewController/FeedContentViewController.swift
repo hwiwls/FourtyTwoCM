@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import Then
+//import Then
 import RxSwift
 import RxCocoa
 
@@ -62,11 +62,51 @@ final class FeedContentViewController: BaseViewController {
     
     private let ellipsisPostBtn = IconButton(image: "ellipsis")
     
+    let goReservationBtn = CustomButton()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        self.viewModel = FeedContentViewModel(post: post)
+        
+        goReservationBtn.addTarget(self, action: #selector(goReservationButtonTapped), for: .touchUpInside)
     }
+    
+    @objc func goReservationButtonTapped() {
+        guard let post = try? viewModel.post.value() else { return }
+//            let reservationVC = ReservationViewController()
+//
+//            // 전달할 데이터 설정
+//            reservationVC.storeName = post.creator.nick
+//            reservationVC.productDetail = post.content
+//            reservationVC.productName = post.content4
+//            reservationVC.priceValue = post.content5
+//            reservationVC.imageUrls = post.files
+//            reservationVC.postID = post.postID  // 결제 기능에 사용될 postID 저장
+//
+//            // ReservationViewController 설정
+//            reservationVC.modalPresentationStyle = .fullScreen
+//            self.present(reservationVC, animated: true, completion: nil)
+//        
+        
+        let reservationVC = ReservationViewController()
+        reservationVC.modalPresentationStyle = .overFullScreen
+        
+        reservationVC.storeName = post.creator.nick
+        reservationVC.productDetail = post.content
+        reservationVC.productName = post.content4
+        reservationVC.priceValue = post.content5
+        reservationVC.imageUrls = post.files
+        reservationVC.postID = post.postID
+        if let tabBar = self.tabBarController {
+            
+            tabBar.present(reservationVC, animated: true, completion: nil)
+        } else {
+            self.present(reservationVC, animated: true, completion: nil)
+        }
+    }
+
     
     override func viewDidLayoutSubviews() {
         userProfileImageView.layer.cornerRadius = userProfileImageView.frame.height / 2
@@ -76,6 +116,7 @@ final class FeedContentViewController: BaseViewController {
     
     func loadPost(post: Post) {
         viewModel = FeedContentViewModel(post: post)
+       
     }
 
     override func bind() {
@@ -148,6 +189,25 @@ final class FeedContentViewController: BaseViewController {
                 self?.showToast(message: message)
             })
             .disposed(by: disposeBag)
+        
+        output.goReservationVisibility
+               .drive(goReservationBtn.rx.isHidden)
+               .disposed(by: disposeBag)
+        
+        output.formattedPrice
+            .drive(onNext: { [weak self] price in
+                self?.goReservationBtn.updatePriceLabel(price: price)
+            })
+            .disposed(by: disposeBag)
+
+        output.imageUrls
+            .drive(onNext: { [weak self] urls in
+                if let firstUrl = urls.first, let url = URL(string: BaseURL.baseURL.rawValue + "/" + firstUrl) {
+                    self?.goReservationBtn.updateIconImageView(with: url)
+                }
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func showToast(message: String) {
@@ -196,6 +256,7 @@ final class FeedContentViewController: BaseViewController {
             userIDLabel,
             postContentLabel,
             btnStackView,
+            goReservationBtn
         ])
         
         btnStackView.addArrangedSubviews([
@@ -229,7 +290,7 @@ final class FeedContentViewController: BaseViewController {
         
         btnStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalTo(postContentLabel.snp.bottom).offset(-4)
         }
         
         likePostBtn.snp.makeConstraints {
@@ -257,6 +318,13 @@ final class FeedContentViewController: BaseViewController {
         userIDLabel.snp.makeConstraints {
             $0.leading.equalTo(userProfileImageView.snp.trailing).offset(8)
             $0.centerY.equalTo(userProfileImageView)
+        }
+        
+        goReservationBtn.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalTo(userProfileImageView.snp.top).offset(-20)
+            $0.height.equalTo(120)
+            $0.trailing.equalTo(btnStackView.snp.leading).offset(-20)
         }
         
         

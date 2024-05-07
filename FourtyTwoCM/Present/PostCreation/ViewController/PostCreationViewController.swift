@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import Then
+//import Then
 
 final class PostCreationViewController: BaseViewController {
     var viewModel: PostCreationViewModel!
@@ -22,7 +22,6 @@ final class PostCreationViewController: BaseViewController {
 
     private let postImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .red
         $0.clipsToBounds = true
     }
     
