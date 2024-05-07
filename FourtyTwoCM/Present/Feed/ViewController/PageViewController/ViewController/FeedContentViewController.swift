@@ -290,7 +290,7 @@ final class FeedContentViewController: BaseViewController {
         
         btnStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
-            $0.top.equalTo(goReservationBtn.snp.top).offset(4)
+            $0.bottom.equalTo(postContentLabel.snp.bottom).offset(-4)
         }
         
         likePostBtn.snp.makeConstraints {

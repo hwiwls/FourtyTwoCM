@@ -35,7 +35,7 @@ class FeedPageViewModel: ViewModelType {
         let fetchRequest = Observable.merge(
             input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "7") },
             input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "7") },
-            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "7") } // Trigger a full refresh on new post
+            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "7") }
         )
 
         let posts = fetchRequest
@@ -69,7 +69,7 @@ class FeedPageViewModel: ViewModelType {
                     let contentCondition = post.content3 == "1"
                     let contentCondition2 = post.content3 == "2"
                     
-                    return (distance <= 1000 && timeCondition) || contentCondition || contentCondition2
+                    return (distance <= 1000 && timeCondition) || contentCondition || (contentCondition2 && distance <= 1000 && timeCondition)
                 }
             }
             .asDriver(onErrorJustReturn: [])

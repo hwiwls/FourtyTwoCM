@@ -175,7 +175,6 @@ final class ReservationViewController: BaseViewController {
                         }, onFailure: { error in
                             // 결제는 성공했으나 검증 실패 시
                             let alert = UIAlertController(title: "결제 검증 실패", message: "결제는 성공했으나 검증에 실패했습니다.", preferredStyle: .alert)
-                            
                             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                                 self.dismiss(animated: true, completion: nil)
                             }))
