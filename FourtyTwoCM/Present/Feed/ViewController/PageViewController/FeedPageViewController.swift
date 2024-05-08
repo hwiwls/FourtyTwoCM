@@ -196,8 +196,8 @@ extension FeedPageViewController: UIPageViewControllerDelegate {
     }
     
     private func loadNextPage() {
-        guard viewModel.next_cursor != nil else {
-            print("더 이상 게시글이 없습니다")
+        guard let nextCursor = viewModel.next_cursor, nextCursor != "0" else {
+            print("더 이상 게시글이 없습니다.")
             return
         }
         
@@ -212,6 +212,7 @@ extension FeedPageViewController: UIPageViewControllerDelegate {
             })
             .disposed(by: disposeBag)
     }
+
 
     private func addNewViewControllers(newPosts: [Post]) {
         print("Adding new posts: \(newPosts.map { $0.postID })")
