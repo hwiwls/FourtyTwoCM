@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class FeedPageViewModel: ViewModelType {
+    
     var disposeBag = DisposeBag()
     var next_cursor: String?
     private var currentLocation: CLLocation?
@@ -32,10 +33,15 @@ final class FeedPageViewModel: ViewModelType {
     }
 
     func transform(input: Input) -> Output {
+        let initialQuery = ViewPostQuery(product_id: "ker0r0", next: nil, limit: "5")
+        
         let fetchRequest = Observable.merge(
-            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "5") },
+            input.trigger.map { _ in initialQuery },
             input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "5") },
-            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "5") }
+            input.newPostAdded.map { _ -> ViewPostQuery in
+                self.next_cursor = nil  // 새 게시글 추가 시 커서 리셋
+                return initialQuery
+            }
         )
 
         let posts = fetchRequest
@@ -51,12 +57,16 @@ final class FeedPageViewModel: ViewModelType {
                         let filteredPosts = feedModel.data.filter { self.isValid(post: $0) }
                         return self.fetchPostsIfNeeded(currentPosts: filteredPosts)
                     }
-                    .catchAndReturn([])
+                    .catch { error -> Observable<[Post]> in
+                        print("Error: \(error.localizedDescription)")
+                        return .just([])
+                    }
             }
             .asDriver(onErrorJustReturn: [])
 
         return Output(posts: posts)
     }
+
 
     private func performRequestWithQuery(_ query: ViewPostQuery) -> Single<FeedModel> {
         return NetworkManager.performRequest(route: Router.viewPost(query: query), dataType: FeedModel.self)
