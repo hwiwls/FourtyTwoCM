@@ -10,11 +10,12 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 
-class FeedPageViewModel: ViewModelType {
+final class FeedPageViewModel: ViewModelType {
+    
     var disposeBag = DisposeBag()
     var next_cursor: String?
-    private var isFetching = BehaviorSubject<Bool>(value: false)
     private var currentLocation: CLLocation?
+    private var minimumRequiredPosts = 30 // 최소로 가져와야 하는 포스트 수를 지정.
 
     struct Input {
         let trigger: Observable<Void>
@@ -28,53 +29,96 @@ class FeedPageViewModel: ViewModelType {
 
     func setCurrentLocation(_ location: CLLocation) {
         currentLocation = location
-        print("Current location updated: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+        print("현재 위치 위도: \(location.coordinate.latitude), 현재 위치 경도: \(location.coordinate.longitude)")
     }
 
     func transform(input: Input) -> Output {
+        let initialQuery = ViewPostQuery(product_id: "ker0r0", next: nil, limit: "5")
+        
         let fetchRequest = Observable.merge(
-            input.trigger.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "7") },
-            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "7") },
-            input.newPostAdded.map { _ in ViewPostQuery(product_id: "ker0r0", next: nil, limit: "7") }
+            input.trigger.map { _ in initialQuery },
+            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "5") },
+            input.newPostAdded.map { _ -> ViewPostQuery in
+                self.next_cursor = nil  // 새 게시글 추가 시 커서 리셋
+                return initialQuery
+            }
         )
 
         let posts = fetchRequest
-            .flatMapLatest { query -> Observable<FeedModel> in
-                self.isFetching.onNext(true)
-                return NetworkManager.performRequest(route: Router.viewPost(query: query), dataType: FeedModel.self)
+            .flatMapLatest { query -> Observable<[Post]> in
+                self.performRequestWithQuery(query)
                     .asObservable()
-                    .catchAndReturn(FeedModel(data: [], nextCursor: nil))
-            }
-            .do(onNext: { [weak self] feedModel in
-                if let nextCursor = feedModel.nextCursor, nextCursor != "0" {
-                    self?.next_cursor = nextCursor
-                } else {
-                    self?.next_cursor = nil  // "0" 또는 유효하지 않은 커서를 nil로 설정
-                }
-                self?.isFetching.onNext(false)
-            })
-            .map { feedModel -> [Post] in
-                guard let currentLocation = self.currentLocation else { return [] }
-                return feedModel.data.filter { post in
-                    guard let lat = Double(post.content1 ?? ""), let lon = Double(post.content2 ?? "") else { return false }
-                    let postLocation = CLLocation(latitude: lat, longitude: lon)
-                    let distance = postLocation.distance(from: currentLocation)
-                    guard let postDate = post.createdAt.toDate() else { return false }
-                    let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: postDate, to: Date())
-                    let timeDiff = (timeComponents.hour ?? 0) * 60 + (timeComponents.minute ?? 0)
-                    
-                    print("Post \(post.postID) time difference: \(timeDiff) minutes")
-
-                    let timeCondition = timeDiff <= (23 * 60 + 59)
-                    let contentCondition = post.content3 == "1"
-                    let contentCondition2 = post.content3 == "2"
-                    
-                    return (distance <= 1000 && timeCondition) || contentCondition || (contentCondition2 && distance <= 1000 && timeCondition)
-                }
+                    .flatMap { feedModel -> Observable<[Post]> in
+                        if let nextCursor = feedModel.nextCursor, nextCursor != "0" {
+                            self.next_cursor = nextCursor
+                        } else {
+                            self.next_cursor = nil
+                        }
+                        let filteredPosts = feedModel.data.filter { self.isValid(post: $0) }
+                        return self.fetchPostsIfNeeded(currentPosts: filteredPosts)
+                    }
+                    .catch { error -> Observable<[Post]> in
+                        print("Error: \(error.localizedDescription)")
+                        return .just([])
+                    }
             }
             .asDriver(onErrorJustReturn: [])
 
         return Output(posts: posts)
+    }
+
+
+    private func performRequestWithQuery(_ query: ViewPostQuery) -> Single<FeedModel> {
+        return NetworkManager.performRequest(route: Router.viewPost(query: query), dataType: FeedModel.self)
+            .map { feedModel -> FeedModel in
+                if let nextCursor = feedModel.nextCursor, nextCursor != "0" {
+                    self.next_cursor = nextCursor
+                } else {
+                    self.next_cursor = nil  // 여기에서 커서를 nil로 설정
+                }
+                return feedModel
+            }
+    }
+
+    private func fetchPostsIfNeeded(currentPosts: [Post]) -> Observable<[Post]> {
+        if currentPosts.count < minimumRequiredPosts && next_cursor != nil {
+            return fetchMorePosts().map { currentPosts + $0 }
+        } else {
+            return .just(currentPosts)
+        }
+    }
+
+    private func fetchMorePosts() -> Observable<[Post]> {
+        guard let nextCursor = next_cursor, nextCursor != "0" else {
+            return .just([])  // 여기에서 빈 배열 반환하도록 수정
+        }
+        let query = ViewPostQuery(product_id: "ker0r0", next: nextCursor, limit: "5")
+        return performRequestWithQuery(query)
+            .asObservable()
+            .map { feedModel -> [Post] in
+                return feedModel.data.filter { self.isValid(post: $0) }
+            }
+            .catchAndReturn([])
+    }
+
+    private func isValid(post: Post) -> Bool {
+        guard let lat = Double(post.content1 ?? ""), let lon = Double(post.content2 ?? ""),
+              let currentLocation = self.currentLocation else {
+            return false
+        }
+        let postLocation = CLLocation(latitude: lat, longitude: lon)
+        let distance = postLocation.distance(from: currentLocation)
+        guard let postDate = post.createdAt.toDate() else {
+            return false
+        }
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: postDate, to: Date())
+        let timeDiff = (timeComponents.hour ?? 0) * 60 + (timeComponents.minute ?? 0)
+
+        let timeCondition = timeDiff <= (23 * 60 + 59)
+        let contentCondition = post.content3 == "1"
+        let contentCondition2 = post.content3 == "2"
+
+        return (distance <= 1000 && timeCondition) || contentCondition || (contentCondition2 && distance <= 1000 && timeCondition)
     }
 }
 
@@ -85,4 +129,3 @@ extension String {
         return formatter.date(from: self)
     }
 }
-
