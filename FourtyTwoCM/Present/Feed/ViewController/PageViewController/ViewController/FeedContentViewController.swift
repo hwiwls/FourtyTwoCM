@@ -211,6 +211,9 @@ final class FeedContentViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
 
+        output.isFollowButtonHidden
+            .drive(followBtn.rx.isHidden)
+            .disposed(by: disposeBag)
     }
     
     private func showToast(message: String) {
