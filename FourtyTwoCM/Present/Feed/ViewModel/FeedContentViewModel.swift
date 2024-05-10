@@ -10,6 +10,12 @@ import RxSwift
 import RxCocoa
 import Alamofire
 
+struct FollowButtonState {
+    let title: String
+    let backgroundColor: UIColor
+    let titleColor: UIColor
+}
+
 class FeedContentViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
@@ -21,10 +27,13 @@ class FeedContentViewModel: ViewModelType {
     
     var errorMessage = PublishSubject<String>()
     
+    private var followingStatus = BehaviorSubject<Bool>(value: false)
+    
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
         let likeBtnTapped: Observable<Void>
         let ellipsisBtnTapped: Observable<Void>
+        let followBtnTapped: Observable<Void>
     }
 
     struct Output {
@@ -39,6 +48,7 @@ class FeedContentViewModel: ViewModelType {
         let showActionSheet: Driver<Void>
         let formattedPrice: Driver<String>
         let imageUrls: Driver<[String]>
+        let followState: Driver<Bool>
     }
 
     init(post: Post) {
@@ -69,7 +79,7 @@ class FeedContentViewModel: ViewModelType {
             .map { $0 ? "heart.fill" : "heart" }
             .asDriver(onErrorJustReturn: "heart")
         
-        let ellipsisVisibility = post.map { $0.creator.userID != userID } // isHidden의 default가 true라서 반대로 넘겨줌
+        let ellipsisVisibility = post.map { $0.creator.userID != userID } 
             .asDriver(onErrorJustReturn: false)
 
         let content = post.map { $0.content }.asDriver(onErrorJustReturn: "")
@@ -97,6 +107,41 @@ class FeedContentViewModel: ViewModelType {
 
         let imageUrls = post.map { $0.files }
             .asDriver(onErrorJustReturn: [])
+        
+        let myProfile = input.viewDidLoadTrigger
+            .flatMapLatest { _ -> Single<MyProfileModel> in
+                NetworkManager.performRequest(route: Router.myProfile, dataType: MyProfileModel.self)
+            }
+            .share(replay: 1, scope: .whileConnected)
+
+        let initialFollowState = myProfile
+            .withLatestFrom(post) { profile, post in
+                profile.following.contains { $0.userID == post.creator.userID }
+            }
+            .do(onNext: { [weak self] isFollowing in
+                self?.followingStatus.onNext(isFollowing)  // 초기 팔로우 상태 설정
+            })
+
+        let followStateChanges = input.followBtnTapped
+            .withLatestFrom(followingStatus)
+            .flatMapLatest { [weak self] isFollowing -> Single<Bool> in
+                guard let self = self else { return Single.just(isFollowing) }
+                let userID = try self.post.value().creator.userID
+                let route = isFollowing ? Router.unfollowUser(userId: userID) : Router.followUser(userId: userID)
+                return NetworkManager.performRequest(route: route, dataType: FollowModel.self)
+                    .map { $0.followingStatus }
+                    .catchAndReturn(isFollowing)
+            }
+            .share(replay: 1, scope: .whileConnected)
+
+        followStateChanges
+            .subscribe(onNext: { [weak self] newState in
+                self?.followingStatus.onNext(newState)
+            })
+            .disposed(by: disposeBag)
+
+        let followState = Observable.merge(initialFollowState, followStateChanges)
+            .asDriver(onErrorJustReturn: false)
 
         return Output(
             content: content,
@@ -109,7 +154,8 @@ class FeedContentViewModel: ViewModelType {
             goReservationVisibility: goReservationVisibility,
             showActionSheet: showActionSheet,
             formattedPrice: formattedPrice,
-            imageUrls: imageUrls
+            imageUrls: imageUrls,
+            followState: followState
         )
     }
     
