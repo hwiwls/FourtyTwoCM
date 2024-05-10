@@ -20,6 +20,8 @@ enum Router {
     case uploadPost(query: UploadPostQuery)
     case myProfile
     case paymentValidation(query: PaymentsValidationQuery)
+    case followUser(userId: String)
+    case unfollowUser(userId: String)
 }
 
 extension Router: TargetType {
@@ -51,6 +53,10 @@ extension Router: TargetType {
             return .get
         case .paymentValidation:
             return .post
+        case .followUser:
+            return .post
+        case .unfollowUser:
+            return .delete
         }
     }
     
@@ -78,6 +84,10 @@ extension Router: TargetType {
             return "users/me/profile"
         case .paymentValidation:
             return "payments/validation"
+        case .followUser(let userId):
+            return "follow/\(userId)"
+        case .unfollowUser(userId: let userId):
+            return "follow/\(userId)"
         }
     }
     
@@ -293,6 +303,46 @@ extension Router: TargetType {
                 HTTPHeader.sesacKey.rawValue: sesacKey,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue
             ]
+        case .followUser(userId: let userId):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("Error retrieving access token: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .unfollowUser(userId: let userId):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("Error retrieving access token: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
         }
     }
     
@@ -330,7 +380,7 @@ extension Router: TargetType {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return try? encoder.encode(query)
-        case .viewPost(_):
+        case .viewPost:
             return nil
         case .likePost(postId: _, query: let query):
             let encoder = JSONEncoder()
@@ -350,6 +400,10 @@ extension Router: TargetType {
         case .paymentValidation(query: let query):
             let encoder = JSONEncoder()
             return try? encoder.encode(query)
+        case .followUser:
+            return nil
+        case .unfollowUser:
+            return nil
         }
     }
 }

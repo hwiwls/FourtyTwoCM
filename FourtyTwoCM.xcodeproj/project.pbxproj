@@ -78,6 +78,7 @@
 		2E988E182BE2711900F48CF4 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E172BE2711900F48CF4 /* Permission.swift */; };
 		2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */; };
 		2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA15DA42BE2C6AE002DB338 /* APIError.swift */; };
+		2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAF064B2BEE611B00E77A3D /* FollowModel.swift */; };
 		2EB7F3332BE770390064276D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3322BE770390064276D /* CustomButton.swift */; };
 		2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3362BE77B840064276D /* ReservationViewController.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
@@ -158,6 +159,7 @@
 		2E988E172BE2711900F48CF4 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		2EA15DA42BE2C6AE002DB338 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		2EAF064B2BEE611B00E77A3D /* FollowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowModel.swift; sourceTree = "<group>"; };
 		2EB7F3322BE770390064276D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		2EB7F3362BE77B840064276D /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				2E1B91E52BE63F5200751288 /* UploadPostModel.swift */,
 				2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */,
 				2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */,
+				2EAF064B2BEE611B00E77A3D /* FollowModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -765,6 +768,7 @@
 				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
 				2EB7F3332BE770390064276D /* CustomButton.swift in Sources */,
+				2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */,
 				2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */,
 				2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,

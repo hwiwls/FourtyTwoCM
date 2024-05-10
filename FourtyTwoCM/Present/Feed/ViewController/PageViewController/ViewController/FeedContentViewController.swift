@@ -64,31 +64,27 @@ final class FeedContentViewController: BaseViewController {
     
     let goReservationBtn = CustomButton()
     
+    private let followBtn = UIButton().then {
+        $0.setTitle("팔로우", for: .normal)
+        $0.setTitleColor(.offWhite, for: .normal)
+        $0.backgroundColor = .clear
+        $0.layer.borderColor = UIColor.offWhite.cgColor
+        $0.layer.cornerRadius = 5
+        $0.layer.masksToBounds = true
+        $0.titleLabel?.font = .boldSystemFont(ofSize: 11)
+        $0.layer.borderWidth = 0.5
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.viewModel = FeedContentViewModel(post: post)
         
         goReservationBtn.addTarget(self, action: #selector(goReservationButtonTapped), for: .touchUpInside)
     }
     
     @objc func goReservationButtonTapped() {
         guard let post = try? viewModel.post.value() else { return }
-//            let reservationVC = ReservationViewController()
-//
-//            // 전달할 데이터 설정
-//            reservationVC.storeName = post.creator.nick
-//            reservationVC.productDetail = post.content
-//            reservationVC.productName = post.content4
-//            reservationVC.priceValue = post.content5
-//            reservationVC.imageUrls = post.files
-//            reservationVC.postID = post.postID  // 결제 기능에 사용될 postID 저장
-//
-//            // ReservationViewController 설정
-//            reservationVC.modalPresentationStyle = .fullScreen
-//            self.present(reservationVC, animated: true, completion: nil)
-//        
+
         
         let reservationVC = ReservationViewController()
         reservationVC.modalPresentationStyle = .overFullScreen
@@ -125,7 +121,8 @@ final class FeedContentViewController: BaseViewController {
         let input = FeedContentViewModel.Input(
             viewDidLoadTrigger: .just(()),
             likeBtnTapped: likePostBtn.rx.tap.asObservable(),
-            ellipsisBtnTapped: ellipsisPostBtn.rx.tap.asObservable()
+            ellipsisBtnTapped: ellipsisPostBtn.rx.tap.asObservable(),
+            followBtnTapped: followBtn.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -208,6 +205,12 @@ final class FeedContentViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        output.followState
+            .drive(onNext: { [weak self] isFollowing in
+                self?.followBtn.setTitle(isFollowing ? "팔로잉" : "팔로우", for: .normal)
+            })
+            .disposed(by: disposeBag)
+
     }
     
     private func showToast(message: String) {
@@ -256,7 +259,8 @@ final class FeedContentViewController: BaseViewController {
             userIDLabel,
             postContentLabel,
             btnStackView,
-            goReservationBtn
+            goReservationBtn,
+            followBtn
         ])
         
         btnStackView.addArrangedSubviews([
@@ -327,8 +331,11 @@ final class FeedContentViewController: BaseViewController {
             $0.trailing.equalTo(btnStackView.snp.leading).offset(-20)
         }
         
-        
+        followBtn.snp.makeConstraints {
+            $0.leading.equalTo(userIDLabel.snp.trailing).offset(12)
+            $0.top.bottom.equalTo(userIDLabel)
+            $0.width.equalTo(48)
+            $0.height.equalTo(24)
+        }
     }
-    
-
 }
