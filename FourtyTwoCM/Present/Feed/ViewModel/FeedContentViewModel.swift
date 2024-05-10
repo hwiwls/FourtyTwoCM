@@ -10,12 +10,6 @@ import RxSwift
 import RxCocoa
 import Alamofire
 
-struct FollowButtonState {
-    let title: String
-    let backgroundColor: UIColor
-    let titleColor: UIColor
-}
-
 class FeedContentViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
@@ -49,6 +43,7 @@ class FeedContentViewModel: ViewModelType {
         let formattedPrice: Driver<String>
         let imageUrls: Driver<[String]>
         let followState: Driver<Bool>
+        let isFollowButtonHidden: Driver<Bool>
     }
 
     init(post: Post) {
@@ -143,6 +138,10 @@ class FeedContentViewModel: ViewModelType {
         let followState = Observable.merge(initialFollowState, followStateChanges)
             .asDriver(onErrorJustReturn: false)
 
+        let isFollowButtonHidden = post
+            .map { $0.creator.userID == userID }
+            .asDriver(onErrorJustReturn: false)
+
         return Output(
             content: content,
             nickname: nickname,
@@ -155,7 +154,8 @@ class FeedContentViewModel: ViewModelType {
             showActionSheet: showActionSheet,
             formattedPrice: formattedPrice,
             imageUrls: imageUrls,
-            followState: followState
+            followState: followState,
+            isFollowButtonHidden: isFollowButtonHidden
         )
     }
     
