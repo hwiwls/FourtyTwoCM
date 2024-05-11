@@ -43,8 +43,8 @@ class APIInterceptor: RequestInterceptor {
             
             AF.request(urlRequest).responseDecodable(of: RefreshModel.self) { response in
                 
-                guard let responseData = response.response else { return }
-                let statusCode = responseData.statusCode
+//                guard let responseData = response.response else { return }
+//                let statusCode = responseData.statusCode
                 
                 switch response.result {
                     

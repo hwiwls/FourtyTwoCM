@@ -9,13 +9,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class CommentViewModel: ViewModelType {
+final class CommentViewModel: ViewModelType {
     struct Input {
         let closeTrigger: Observable<Void>
+        let textInput: Observable<String>
+        let keyboardDismissalTrigger: Observable<Void>
     }
 
     struct Output {
         let dismiss: Driver<Void>
+        let submitButtonVisible: Driver<Bool>
+        let keyboardDismiss: Driver<Void>
     }
     
     var disposeBag = DisposeBag()
@@ -23,8 +27,16 @@ class CommentViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let dismissAction = input.closeTrigger
             .asDriver(onErrorJustReturn: ())
+
+        let submitButtonVisible = input.textInput
+            .map { !$0.isEmpty }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: false)
         
-        return Output(dismiss: dismissAction)
+        let keyboardDismiss = input.keyboardDismissalTrigger
+                    .asDriver(onErrorJustReturn: ())
+
+        return Output(dismiss: dismissAction, submitButtonVisible: submitButtonVisible, keyboardDismiss: keyboardDismiss)
+            
     }
 }
-

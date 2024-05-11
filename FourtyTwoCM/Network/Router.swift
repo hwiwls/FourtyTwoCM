@@ -303,7 +303,7 @@ extension Router: TargetType {
                 HTTPHeader.sesacKey.rawValue: sesacKey,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue
             ]
-        case .followUser(userId: let userId):
+        case .followUser:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -323,7 +323,7 @@ extension Router: TargetType {
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .unfollowUser(userId: let userId):
+        case .unfollowUser:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]

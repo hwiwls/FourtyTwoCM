@@ -149,7 +149,7 @@ class FeedContentViewModel: ViewModelType {
                     guard let self = self, let postComments = try? self.post.value().comments else {
                         return .just([])
                     }
-                    return .just(postComments ?? [])
+                    return .just(postComments)
                 }
                 .asDriver(onErrorJustReturn: [])
 

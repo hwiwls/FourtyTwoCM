@@ -82,6 +82,7 @@
 		2EB444352BEF709D009D7684 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444342BEF709D009D7684 /* CommentViewController.swift */; };
 		2EB444392BEF7240009D7684 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */; };
 		2EB4443B2BEF7A2D009D7684 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4443A2BEF7A2D009D7684 /* CommentViewModel.swift */; };
+		2EB4443D2BEF8557009D7684 /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4443C2BEF8557009D7684 /* PaddingTextField.swift */; };
 		2EB7F3332BE770390064276D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3322BE770390064276D /* CustomButton.swift */; };
 		2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3362BE77B840064276D /* ReservationViewController.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
@@ -166,6 +167,7 @@
 		2EB444342BEF709D009D7684 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		2EB4443A2BEF7A2D009D7684 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
+		2EB4443C2BEF8557009D7684 /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		2EB7F3322BE770390064276D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		2EB7F3362BE77B840064276D /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				2E8F98692BCD85F300E9A79A /* SignTextField.swift */,
 				2ED643012BD52A1A00722299 /* IconBtn.swift */,
 				2EB7F3322BE770390064276D /* CustomButton.swift */,
+				2EB4443C2BEF8557009D7684 /* PaddingTextField.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -806,6 +809,7 @@
 				2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */,
 				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
+				2EB4443D2BEF8557009D7684 /* PaddingTextField.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
