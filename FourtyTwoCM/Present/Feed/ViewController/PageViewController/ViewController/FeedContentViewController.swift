@@ -220,6 +220,7 @@ final class FeedContentViewController: BaseViewController {
             .drive(onNext: { [weak self] comments in
                 guard let self = self else { return }
                 let commentsVC = CommentViewController()
+                commentsVC.viewModel = CommentViewModel(postId: self.viewModel.currentPostId ?? "") 
                 commentsVC.comments.onNext(comments)
                 commentsVC.modalPresentationStyle = .overFullScreen
                 self.present(commentsVC, animated: true, completion: nil)

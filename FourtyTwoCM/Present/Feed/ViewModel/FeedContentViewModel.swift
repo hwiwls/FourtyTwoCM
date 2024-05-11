@@ -23,6 +23,10 @@ class FeedContentViewModel: ViewModelType {
     
     private var followingStatus = BehaviorSubject<Bool>(value: false)
     
+    var currentPostId: String? {
+        try? post.value().postID
+    }
+    
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
         let likeBtnTapped: Observable<Void>

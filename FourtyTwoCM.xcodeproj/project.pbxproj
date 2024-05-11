@@ -52,6 +52,8 @@
 		2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7198392BE798EF00C8F334 /* UserCode.swift */; };
 		2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */; };
 		2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */; };
+		2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */; };
+		2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */; };
 		2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */; };
 		2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */; };
 		2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */; };
@@ -137,6 +139,8 @@
 		2E7198392BE798EF00C8F334 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
 		2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationQuery.swift; sourceTree = "<group>"; };
 		2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationModel.swift; sourceTree = "<group>"; };
+		2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentQuery.swift; sourceTree = "<group>"; };
+		2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF B.otf"; sourceTree = "<group>"; };
 		2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF L.otf"; sourceTree = "<group>"; };
 		2E8F981F2BCD4D0B00E9A79A /* SB 어그로OTF M.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF M.otf"; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 				2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */,
 				2E1B91E72BE64EB300751288 /* UploadImageQuery.swift */,
 				2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */,
+				2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -656,6 +661,7 @@
 				2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */,
 				2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */,
 				2EAF064B2BEE611B00E77A3D /* FollowModel.swift */,
+				2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -807,10 +813,12 @@
 				2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
 				2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */,
+				2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */,
 				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2EB4443D2BEF8557009D7684 /* PaddingTextField.swift in Sources */,
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
+				2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */,
 				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
 				2EB7F3332BE770390064276D /* CustomButton.swift in Sources */,

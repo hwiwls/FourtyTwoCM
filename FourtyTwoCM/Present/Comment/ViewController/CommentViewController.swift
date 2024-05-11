@@ -12,7 +12,7 @@ import RxCocoa
 
 final class CommentViewController: BaseViewController {
     
-    private let viewModel = CommentViewModel()
+    var viewModel = CommentViewModel(postId: "")
     
     var comments = BehaviorSubject<[Comment]>(value: [])
     
@@ -57,36 +57,78 @@ final class CommentViewController: BaseViewController {
         initialVisibilityCheck()
     }
  
+    override func bind() {
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        
+        let input = CommentViewModel.Input(
+            closeTrigger: closeButton.rx.tap.asObservable(),
+            textInput: commentTextField.rx.text.orEmpty.asObservable(),
+            keyboardDismissalTrigger: tapGesture.rx.event.map { _ in }.asObservable(),
+            submitCommentTrigger: submitButton.rx.tap.asObservable(),
+            commentText: commentTextField.rx.text.orEmpty.asObservable()
+        )
+            
+        let output = viewModel.transform(input: input)
+            
+        output.dismiss
+            .drive(onNext: { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        output.submitButtonVisible
+            .drive(onNext: { [weak self] isVisible in
+                self?.commentTextField.rightView?.isHidden = !isVisible
+            })
+            .disposed(by: disposeBag)
+        
+        
+        comments.asObservable()
+            .map { $0.reversed() }
+            .bind(to: commentTableView.rx.items(cellIdentifier: "CommentTableViewCell", cellType: CommentTableViewCell.self)) { _, comment, cell in
+                cell.configure(with: comment)
+                cell.selectionStyle = .none
+            }
+            .disposed(by: disposeBag)
+        
+        
+        output.keyboardDismiss
+                    .drive(onNext: { [weak self] _ in
+                        self?.view.endEditing(true)
+                    })
+                    .disposed(by: disposeBag)
+        
+        
+        output.commentSubmitted
+               .drive(onNext: { [weak self] newComment in
+                   self?.commentTextField.resignFirstResponder()
+                   self?.addComment(newComment)
+               })
+               .disposed(by: disposeBag)
+
+           output.errors
+               .drive(onNext: { [weak self] error in
+                   self?.showError(error)
+               })
+               .disposed(by: disposeBag)
+    }
+
+    private func addComment(_ comment: Comment) {
+        var currentComments = (try? comments.value()) ?? []
+        currentComments.append(comment)
+        comments.onNext(currentComments)
+        fetchCommentsFromServer()
+    }
     
-    private func initialVisibilityCheck() {
-        submitButton.isHidden = commentTextField.text?.isEmpty ?? true
+    private func fetchCommentsFromServer() {
+        
     }
+       
 
-    private func setupKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc private func keyboardWillShow(notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardHeight = keyboardFrame.cgRectValue.height - view.safeAreaInsets.bottom
-        textFieldBottomConstraint?.update(inset: keyboardHeight + 20)
-        view.layoutIfNeeded()
-    }
-
-    @objc private func keyboardWillHide(notification: Notification) {
-        textFieldBottomConstraint?.update(inset: 20)
-        view.layoutIfNeeded()
+    private func showError(_ error: Error) {
+        // Handle error
+        print("Error occurred: \(error)")
     }
     
     private func setupViews() {
@@ -110,14 +152,14 @@ final class CommentViewController: BaseViewController {
     override func configLayout() {
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
-            $0.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-10)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.right).offset(10)
             $0.width.height.equalTo(30)
         }
         
         commentTableView.snp.makeConstraints {
             $0.top.equalTo(closeButton.snp.bottom).offset(12)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalTo(commentTextField.snp.top).offset(-12)
-            $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
         commentTextField.snp.makeConstraints {
@@ -127,50 +169,37 @@ final class CommentViewController: BaseViewController {
         }
     }
     
-    override func bind() {
-        let tapGesture = UITapGestureRecognizer()
-        view.addGestureRecognizer(tapGesture)
-        
-        let input = CommentViewModel.Input(
-            closeTrigger: closeButton.rx.tap.asObservable(),
-            textInput: commentTextField.rx.text.orEmpty.asObservable(),
-            keyboardDismissalTrigger: tapGesture.rx.event.map { _ in }.asObservable()
-        )
-            
-        let output = viewModel.transform(input: input)
-            
-        output.dismiss
-            .drive(onNext: { [weak self] in
-                self?.dismiss(animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
-        
-        output.submitButtonVisible
-            .drive(onNext: { [weak self] isVisible in
-                self?.commentTextField.rightView?.isHidden = !isVisible
-            })
-            .disposed(by: disposeBag)
-        
-        submitButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                self?.commentTextField.resignFirstResponder()
-            })
-            .disposed(by: disposeBag)
-        
-        comments.asObservable()
-            .map { $0.reversed() }
-            .bind(to: commentTableView.rx.items(cellIdentifier: "CommentTableViewCell", cellType: CommentTableViewCell.self)) { _, comment, cell in
-                cell.configure(with: comment)
-                cell.selectionStyle = .none
-            }
-            .disposed(by: disposeBag)
-        
-        
-        output.keyboardDismiss
-                    .drive(onNext: { [weak self] _ in
-                        self?.view.endEditing(true)
-                    })
-                    .disposed(by: disposeBag)
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+// MARK: 키보드 관련 처리
+extension CommentViewController {
+    private func initialVisibilityCheck() {
+        submitButton.isHidden = commentTextField.text?.isEmpty ?? true
     }
 
+    private func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardHeight = keyboardFrame.cgRectValue.height - view.safeAreaInsets.bottom
+        textFieldBottomConstraint?.update(inset: keyboardHeight + 20)
+        view.layoutIfNeeded()
+    }
+
+    @objc private func keyboardWillHide(notification: Notification) {
+        textFieldBottomConstraint?.update(inset: 20)
+        view.layoutIfNeeded()
+    }
 }

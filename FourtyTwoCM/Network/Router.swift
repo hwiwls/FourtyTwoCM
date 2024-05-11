@@ -22,6 +22,7 @@ enum Router {
     case paymentValidation(query: PaymentsValidationQuery)
     case followUser(userId: String)
     case unfollowUser(userId: String)
+    case writeComment(postId: String, query: WriteCommentQuery)
 }
 
 extension Router: TargetType {
@@ -57,6 +58,8 @@ extension Router: TargetType {
             return .post
         case .unfollowUser:
             return .delete
+        case .writeComment:
+            return .post
         }
     }
     
@@ -88,6 +91,8 @@ extension Router: TargetType {
             return "follow/\(userId)"
         case .unfollowUser(userId: let userId):
             return "follow/\(userId)"
+        case .writeComment(postId: let postId, query: let query):
+            return "posts/\(postId)/comments"
         }
     }
     
@@ -343,6 +348,27 @@ extension Router: TargetType {
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
+        case .writeComment(postId: let postId, query: let query):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("writeCommen에서 액세스 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
         }
     }
     
@@ -404,6 +430,9 @@ extension Router: TargetType {
             return nil
         case .unfollowUser:
             return nil
+        case .writeComment(postId: let postId, query: let query):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(query)
         }
     }
 }
