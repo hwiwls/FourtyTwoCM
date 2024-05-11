@@ -28,6 +28,7 @@ class FeedContentViewModel: ViewModelType {
         let likeBtnTapped: Observable<Void>
         let ellipsisBtnTapped: Observable<Void>
         let followBtnTapped: Observable<Void>
+        let commentPostBtnTapped: Observable<Void>
     }
 
     struct Output {
@@ -44,6 +45,7 @@ class FeedContentViewModel: ViewModelType {
         let imageUrls: Driver<[String]>
         let followState: Driver<Bool>
         let isFollowButtonHidden: Driver<Bool>
+        let comments: Driver<[Comment]>
     }
 
     init(post: Post) {
@@ -141,6 +143,15 @@ class FeedContentViewModel: ViewModelType {
         let isFollowButtonHidden = post
             .map { $0.creator.userID == userID }
             .asDriver(onErrorJustReturn: false)
+        
+        let comments = input.commentPostBtnTapped
+                .flatMapLatest { [weak self] _ -> Observable<[Comment]> in
+                    guard let self = self, let postComments = try? self.post.value().comments else {
+                        return .just([])
+                    }
+                    return .just(postComments ?? [])
+                }
+                .asDriver(onErrorJustReturn: [])
 
         return Output(
             content: content,
@@ -155,7 +166,8 @@ class FeedContentViewModel: ViewModelType {
             formattedPrice: formattedPrice,
             imageUrls: imageUrls,
             followState: followState,
-            isFollowButtonHidden: isFollowButtonHidden
+            isFollowButtonHidden: isFollowButtonHidden,
+            comments: comments
         )
     }
     

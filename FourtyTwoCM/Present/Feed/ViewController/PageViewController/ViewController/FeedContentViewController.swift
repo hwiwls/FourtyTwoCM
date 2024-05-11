@@ -122,7 +122,8 @@ final class FeedContentViewController: BaseViewController {
             viewDidLoadTrigger: .just(()),
             likeBtnTapped: likePostBtn.rx.tap.asObservable(),
             ellipsisBtnTapped: ellipsisPostBtn.rx.tap.asObservable(),
-            followBtnTapped: followBtn.rx.tap.asObservable()
+            followBtnTapped: followBtn.rx.tap.asObservable(),
+            commentPostBtnTapped: commentPostBtn.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -213,6 +214,16 @@ final class FeedContentViewController: BaseViewController {
 
         output.isFollowButtonHidden
             .drive(followBtn.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.comments
+            .drive(onNext: { [weak self] comments in
+                guard let self = self else { return }
+                let commentsVC = CommentViewController()
+                commentsVC.comments.onNext(comments)
+                commentsVC.modalPresentationStyle = .overFullScreen
+                self.present(commentsVC, animated: true, completion: nil)
+            })
             .disposed(by: disposeBag)
     }
     
