@@ -46,7 +46,7 @@ final class MyPageViewController: BaseViewController {
     private let followingLabel = UILabel().then {
         $0.text = "0 following"
         $0.textColor = .offWhite
-        $0.font = .aggro.aggroLight16
+        $0.font = .aggro.aggroLight14
         $0.textAlignment = .center
     }
     

@@ -96,6 +96,12 @@
 		2ED643022BD52A1A00722299 /* IconBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED643012BD52A1A00722299 /* IconBtn.swift */; };
 		2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE34D572BCE725900DE3EF7 /* KeyChain.swift */; };
 		2EE486932BCEE3DD00D40682 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 2EE486922BCEE3DD00D40682 /* Toast */; };
+		2EEAC02E2BF0DEF400F56645 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 2EEAC02D2BF0DEF400F56645 /* Tabman */; };
+		2EEAC0322BF0DF5B00F56645 /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0312BF0DF5B00F56645 /* MyPostsViewController.swift */; };
+		2EEAC0342BF0DF7B00F56645 /* MyLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0332BF0DF7B00F56645 /* MyLikesViewController.swift */; };
+		2EEAC03B2BF0DFEE00F56645 /* MyLikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */; };
+		2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */; };
+		2EEAC0412BF0F9C500F56645 /* MyPageTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -183,6 +189,11 @@
 		2ED642FF2BD5272500722299 /* FeedPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewModel.swift; sourceTree = "<group>"; };
 		2ED643012BD52A1A00722299 /* IconBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBtn.swift; sourceTree = "<group>"; };
 		2EE34D572BCE725900DE3EF7 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		2EEAC0312BF0DF5B00F56645 /* MyPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsViewController.swift; sourceTree = "<group>"; };
+		2EEAC0332BF0DF7B00F56645 /* MyLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLikesViewController.swift; sourceTree = "<group>"; };
+		2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLikesViewModel.swift; sourceTree = "<group>"; };
+		2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsViewModel.swift; sourceTree = "<group>"; };
+		2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTabmanViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E5C38372BCA7E2400A006FB /* RxSwift in Frameworks */,
+				2EEAC02E2BF0DEF400F56645 /* Tabman in Frameworks */,
 				2E5C382F2BCA7E0100A006FB /* SnapKit in Frameworks */,
 				2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */,
 				2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */,
@@ -498,6 +510,8 @@
 		2E8F98462BCD747B00E9A79A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				2EEAC0302BF0DF4800F56645 /* WhatILike */,
+				2EEAC02F2BF0DF4100F56645 /* MyPost */,
 				2E1E93292BE6D4ED00E9F9A5 /* ViewModel */,
 				2E8F984B2BCD749700E9A79A /* ViewController */,
 			);
@@ -524,6 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				2E8F984C2BCD74A100E9A79A /* MyPageViewController.swift */,
+				2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -677,6 +692,24 @@
 			path = KeyChain;
 			sourceTree = "<group>";
 		};
+		2EEAC02F2BF0DF4100F56645 /* MyPost */ = {
+			isa = PBXGroup;
+			children = (
+				2EEAC0312BF0DF5B00F56645 /* MyPostsViewController.swift */,
+				2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */,
+			);
+			path = MyPost;
+			sourceTree = "<group>";
+		};
+		2EEAC0302BF0DF4800F56645 /* WhatILike */ = {
+			isa = PBXGroup;
+			children = (
+				2EEAC0332BF0DF7B00F56645 /* MyLikesViewController.swift */,
+				2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */,
+			);
+			path = WhatILike;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -701,6 +734,7 @@
 				2E5C38362BCA7E2400A006FB /* RxSwift */,
 				2EE486922BCEE3DD00D40682 /* Toast */,
 				2E7198362BE7925600C8F334 /* iamport-ios */,
+				2EEAC02D2BF0DEF400F56645 /* Tabman */,
 			);
 			productName = FourtyTwoCM;
 			productReference = 2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */;
@@ -737,6 +771,7 @@
 				2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */,
+				2EEAC02C2BF0DEF400F56645 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 2E5C38022BCA72CF00A006FB /* Products */;
 			projectDirPath = "";
@@ -769,6 +804,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EEAC0412BF0F9C500F56645 /* MyPageTabmanViewController.swift in Sources */,
+				2EEAC0342BF0DF7B00F56645 /* MyLikesViewController.swift in Sources */,
 				2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */,
 				2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */,
 				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
@@ -786,6 +823,7 @@
 				2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
 				2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */,
+				2EEAC0322BF0DF5B00F56645 /* MyPostsViewController.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */,
@@ -817,6 +855,7 @@
 				2E8F986E2BCD937A00E9A79A /* SignInModel.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
 				2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */,
+				2EEAC03B2BF0DFEE00F56645 /* MyLikesViewModel.swift in Sources */,
 				2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */,
 				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
@@ -824,6 +863,7 @@
 				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */,
 				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
+				2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
 				2EB7F3332BE770390064276D /* CustomButton.swift in Sources */,
 				2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */,
@@ -1128,6 +1168,14 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		2EEAC02C2BF0DEF400F56645 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1165,6 +1213,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		2EEAC02D2BF0DEF400F56645 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EEAC02C2BF0DEF400F56645 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

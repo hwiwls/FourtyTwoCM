@@ -26,6 +26,7 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
         super.viewDidLoad()
         tabBarConfig()
         setupMiddleButton()
+        view.backgroundColor = .backgroundBlack
     }
     
     private func tabBarConfig() {
