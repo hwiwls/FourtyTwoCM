@@ -221,7 +221,7 @@ final class ReservationViewController: BaseViewController {
         }
         
         closeButton.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
+            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.size.equalTo(24)
         }
         

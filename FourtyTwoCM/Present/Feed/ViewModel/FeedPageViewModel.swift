@@ -81,12 +81,44 @@ final class FeedPageViewModel: ViewModelType {
     }
 
     private func fetchPostsIfNeeded(currentPosts: [Post]) -> Observable<[Post]> {
-        if currentPosts.count < minimumRequiredPosts && next_cursor != nil {
-            return fetchMorePosts().map { currentPosts + $0 }
-        } else {
-            return .just(currentPosts)
+        let requiredPostsCount = minimumRequiredPosts
+        return Observable.create { [weak self] observer in
+            var accumulatedPosts = currentPosts
+
+            func loadNextPage() {
+                guard let self = self,
+                      let nextCursor = self.next_cursor,
+                      nextCursor != "0" else {
+                    observer.onNext(accumulatedPosts)
+                    observer.onCompleted()
+                    return
+                }
+
+                let query = ViewPostQuery(product_id: "ker0r0", next: nextCursor, limit: "5")
+                self.performRequestWithQuery(query)
+                    .asObservable()
+                    .subscribe(onNext: { feedModel in
+                        let validPosts = feedModel.data.filter { self.isValid(post: $0) }
+                        accumulatedPosts.append(contentsOf: validPosts)
+
+                        if accumulatedPosts.count >= requiredPostsCount || feedModel.nextCursor == "0" {
+                            observer.onNext(accumulatedPosts)
+                            observer.onCompleted()
+                        } else {
+                            self.next_cursor = feedModel.nextCursor
+                            loadNextPage()
+                        }
+                    }, onError: { error in
+                        observer.onError(error)
+                    })
+                    .disposed(by: self.disposeBag)
+            }
+
+            loadNextPage()
+            return Disposables.create()
         }
     }
+
 
     private func fetchMorePosts() -> Observable<[Post]> {
         guard let nextCursor = next_cursor, nextCursor != "0" else {
@@ -116,7 +148,6 @@ final class FeedPageViewModel: ViewModelType {
 
         let timeCondition = timeDiff <= (23 * 60 + 59)
         let contentCondition = post.content3 == "1"
-        let contentCondition2 = post.content3 == "2"
 
         return (distance <= 1000 && timeCondition) || contentCondition
     }

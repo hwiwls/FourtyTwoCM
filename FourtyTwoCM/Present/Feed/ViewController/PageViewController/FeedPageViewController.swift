@@ -134,7 +134,9 @@ final class FeedPageViewController: UIPageViewController {
             }
             resetTimerAndProgress()  // 새 페이지로 전환 시 프로그레스 바와 타이머 재설정
         } else {
-            contentViewControllers[currentIndex].updateProgressBar(progress: elapsedTime / progressBarMaxValue)
+            if currentIndex < contentViewControllers.count {
+                        contentViewControllers[currentIndex].updateProgressBar(progress: elapsedTime / progressBarMaxValue)
+                    }
         }
     }
 
