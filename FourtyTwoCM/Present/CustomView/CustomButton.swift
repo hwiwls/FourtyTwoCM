@@ -55,25 +55,23 @@ class CustomButton: UIControl {
         setupViews()
     }
 
-    private func setupViews() {
+    private func setupViews() {        addSubviews([
+            iconImageView,
+            priceLabel,
+            moreInfoView
+        ])
         
-        // 뷰 추가
-        addSubview(iconImageView)
-        addSubview(priceLabel)
-        addSubview(moreInfoView)
         moreInfoView.addSubview(moreInfoLabel)
         moreInfoView.addSubview(chevronImageView)
         
         self.layer.cornerRadius = 10
-            self.clipsToBounds = true
+        self.clipsToBounds = true
 
-        // 아이콘 레이아웃
         iconImageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(12)
             $0.size.equalTo(40)
         }
 
-        // 가격 레이블 레이아웃
         priceLabel.snp.makeConstraints {
             $0.leading.equalTo(iconImageView.snp.trailing).offset(8)
             $0.trailing.equalToSuperview().inset(8)
@@ -86,13 +84,11 @@ class CustomButton: UIControl {
             $0.height.equalTo(36)
         }
 
-        // 더 알아보기 뷰 레이아웃
         moreInfoLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(8)
         }
 
-        // Chevron 아이콘 레이아웃
         chevronImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(8)

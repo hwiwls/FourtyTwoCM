@@ -22,6 +22,8 @@ enum Router {
     case paymentValidation(query: PaymentsValidationQuery)
     case followUser(userId: String)
     case unfollowUser(userId: String)
+    case writeComment(postId: String, query: WriteCommentQuery)
+    case viewCertainPost(postId: String)
 }
 
 extension Router: TargetType {
@@ -57,6 +59,10 @@ extension Router: TargetType {
             return .post
         case .unfollowUser:
             return .delete
+        case .writeComment:
+            return .post
+        case .viewCertainPost(postId: let postId):
+            return .get
         }
     }
     
@@ -88,6 +94,10 @@ extension Router: TargetType {
             return "follow/\(userId)"
         case .unfollowUser(userId: let userId):
             return "follow/\(userId)"
+        case .writeComment(postId: let postId, query: let query):
+            return "posts/\(postId)/comments"
+        case .viewCertainPost(postId: let postId):
+            return "posts/\(postId)"
         }
     }
     
@@ -303,7 +313,7 @@ extension Router: TargetType {
                 HTTPHeader.sesacKey.rawValue: sesacKey,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue
             ]
-        case .followUser(userId: let userId):
+        case .followUser:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -323,7 +333,7 @@ extension Router: TargetType {
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .unfollowUser(userId: let userId):
+        case .unfollowUser:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -337,6 +347,47 @@ extension Router: TargetType {
                 accessToken = try Keychain.shared.getToken(kind: .accessToken)
             } catch {
                 print("Error retrieving access token: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .writeComment(postId: let postId, query: let query):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("writeCommen에서 액세스 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .viewCertainPost(postId: let postId):
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("viewCertainPost의 access token을 가져오지 못함: \(error)")
             }
             
             return [
@@ -403,6 +454,11 @@ extension Router: TargetType {
         case .followUser:
             return nil
         case .unfollowUser:
+            return nil
+        case .writeComment(postId: let postId, query: let query):
+            let encoder = JSONEncoder()
+            return try? encoder.encode(query)
+        case .viewCertainPost(postId: let postId):
             return nil
         }
     }

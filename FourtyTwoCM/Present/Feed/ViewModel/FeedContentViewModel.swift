@@ -23,11 +23,16 @@ class FeedContentViewModel: ViewModelType {
     
     private var followingStatus = BehaviorSubject<Bool>(value: false)
     
+    var currentPostId: String? {
+        try? post.value().postID
+    }
+    
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
         let likeBtnTapped: Observable<Void>
         let ellipsisBtnTapped: Observable<Void>
         let followBtnTapped: Observable<Void>
+        let commentPostBtnTapped: Observable<Void>
     }
 
     struct Output {
@@ -44,6 +49,7 @@ class FeedContentViewModel: ViewModelType {
         let imageUrls: Driver<[String]>
         let followState: Driver<Bool>
         let isFollowButtonHidden: Driver<Bool>
+        let comments: Driver<[Comment]>
     }
 
     init(post: Post) {
@@ -141,6 +147,15 @@ class FeedContentViewModel: ViewModelType {
         let isFollowButtonHidden = post
             .map { $0.creator.userID == userID }
             .asDriver(onErrorJustReturn: false)
+        
+        let comments = input.commentPostBtnTapped
+                .flatMapLatest { [weak self] _ -> Observable<[Comment]> in
+                    guard let self = self, let postComments = try? self.post.value().comments else {
+                        return .just([])
+                    }
+                    return .just(postComments)
+                }
+                .asDriver(onErrorJustReturn: [])
 
         return Output(
             content: content,
@@ -155,35 +170,70 @@ class FeedContentViewModel: ViewModelType {
             formattedPrice: formattedPrice,
             imageUrls: imageUrls,
             followState: followState,
-            isFollowButtonHidden: isFollowButtonHidden
+            isFollowButtonHidden: isFollowButtonHidden,
+            comments: comments
         )
     }
     
+//    private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
+//        let query = LikeQuery(like_status: newStatus)
+//        return NetworkManager.performRequest(route: Router.likePost(postId: postID, query: query), dataType: LikeModel.self)
+//            .map { $0.likeStatus }
+//            .asObservable()
+//            .catch { [weak self] error -> Observable<Bool> in
+//                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
+//                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+//                }
+//                return .just(false)
+//            }
+//    }
+//    
+//    func confirmDeletion() {
+//        guard let postID = try? post.value().postID else { return }
+//        NetworkManager.requestDeletePost(postID: postID)
+//            .subscribe(onSuccess: { [weak self] _ in
+//                self?.postDeleteSuccess.onNext(())
+//            }, onFailure: { [weak self] error in
+//                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
+//                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+//                }
+//            })
+//            .disposed(by: disposeBag)
+//    }
+    
+    // 다른 파일에서 APIError 사용하는 부분 수정
     private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
         let query = LikeQuery(like_status: newStatus)
         return NetworkManager.performRequest(route: Router.likePost(postId: postID, query: query), dataType: LikeModel.self)
             .map { $0.likeStatus }
             .asObservable()
-            .catch { [weak self] error -> Observable<Bool> in
-                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
-                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+            .catch { error -> Observable<Bool> in
+                if let apiError = error as? APIError {
+                    self.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
                 }
                 return .just(false)
             }
     }
-    
+
+
     func confirmDeletion() {
         guard let postID = try? post.value().postID else { return }
         NetworkManager.requestDeletePost(postID: postID)
             .subscribe(onSuccess: { [weak self] _ in
                 self?.postDeleteSuccess.onNext(())
             }, onFailure: { [weak self] error in
-                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
-                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+                if let apiError = error as? APIError {
+                    self?.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
                 }
             })
             .disposed(by: disposeBag)
     }
+
+
 
 }
 

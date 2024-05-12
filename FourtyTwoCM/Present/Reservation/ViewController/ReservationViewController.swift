@@ -150,9 +150,9 @@ final class ReservationViewController: BaseViewController {
                 let success = iamportResponse?.success
                 let impUid = iamportResponse?.imp_uid
 
-                if success == true, let impUid = impUid {
+                if success == true {
                     // 결제 검증을 위한 쿼리 준비
-                    guard let price = Int(self.priceValue ?? "0"), let postID = self.postID, let productName = self.productName else {
+                    guard self.productName != nil else {
                         print("필요한 정보를 불러오는데 실패했습니다.")
                         return
                     }
@@ -221,7 +221,7 @@ final class ReservationViewController: BaseViewController {
         }
         
         closeButton.snp.makeConstraints {
-            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.top.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
             $0.size.equalTo(24)
         }
         
