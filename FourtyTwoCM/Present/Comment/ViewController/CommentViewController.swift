@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Toast
 
 final class CommentViewController: BaseViewController {
     
@@ -109,26 +110,33 @@ final class CommentViewController: BaseViewController {
         
         output.commentSubmitted
             .drive(onNext: { [weak self] newComment in
-                guard let strongSelf = self else { return }
+                guard let self = self else { return }
                 
-                var currentComments = (try? strongSelf.comments.value()) ?? []
+                var currentComments = (try? self.comments.value()) ?? []
                 currentComments.append(newComment)
-                strongSelf.comments.onNext(currentComments)
-                strongSelf.commentTableView.reloadData()
-                strongSelf.commentTextField.text = ""
+                self.comments.onNext(currentComments)
+                self.commentTextField.text = ""
             })
             .disposed(by: disposeBag)
-
-           output.errors
-               .drive(onNext: { [weak self] error in
-                   self?.showError(error)
-               })
-               .disposed(by: disposeBag)
+        
+        output.errors
+            .drive(onNext: { [weak self] error in
+                self?.showError(error)
+            })
+            .disposed(by: disposeBag)
     }
 
     
     private func showError(_ error: Error) {
-        print("Error occurred: \(error)")
+        if let apiError = error as? APIError {
+            self.view.makeToast(apiError.errorMessage, duration: 2.0, position: .top)
+        } else {
+            self.view.makeToast("알 수 없는 오류가 발생했습니다: \(error)", duration: 2.0, position: .top)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.dismiss(animated: true)
+        }
     }
     
     private func setupViews() {

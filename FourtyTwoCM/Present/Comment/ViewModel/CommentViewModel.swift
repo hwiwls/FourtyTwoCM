@@ -48,38 +48,39 @@ final class CommentViewModel: ViewModelType {
                     .asDriver(onErrorJustReturn: ())
         
         let errors = PublishSubject<Error>()
+        
         let errorDriver = errors
-                .asDriver(onErrorJustReturn: NSError(domain: "CommentError", code: -1, userInfo: nil) as Error)  // 에러도 Driver로 변환
+                .asDriver(onErrorJustReturn: NSError(domain: "CommentError", code: -1, userInfo: nil) as Error)
         
         let commentSubmitted = input.submitCommentTrigger
-                        .withLatestFrom(input.commentText)
-                        .flatMapLatest { text -> Observable<Comment> in
-                            let query = WriteCommentQuery(content: text)
-                            return NetworkManager.performRequest(
-                                route: .writeComment(postId: self.postId, query: query),
-                                dataType: Comment.self
-                            )
-                            .asObservable()
-                            .catch { error -> Observable<Comment> in
-                                errors.onNext(error)
-                                return Observable.empty()
-                            }
-                        }
-                        .asDriver(onErrorDriveWith: Driver.empty())
-
-                // 새 댓글 추가 후 댓글 리스트 새로고침
-                let refreshComments = commentSubmitted
-                    .flatMapLatest { _ -> Driver<[Comment]> in
-                        NetworkManager.performRequest(
-                            route: .viewCertainPost(postId: self.postId),
-                            dataType: ViewCertainPostModel.self
-                        )
-                        .do(onSuccess: { viewCertainPostModel in
-                            print("Fetched comments: \(viewCertainPostModel.comments)")
-                        })
-                        .map { $0.comments }
-                        .asDriver(onErrorJustReturn: [])
-                    }
+            .withLatestFrom(input.commentText)
+            .flatMapLatest { text -> Observable<Comment> in
+                let query = WriteCommentQuery(content: text)
+                return NetworkManager.performRequest(
+                    route: .writeComment(postId: self.postId, query: query),
+                    dataType: Comment.self
+                )
+                .asObservable()
+                .catch { error -> Observable<Comment> in
+                    errors.onNext(error)
+                    return Observable.empty()
+                }
+            }
+            .asDriver(onErrorDriveWith: Driver.empty())
+        
+        // 새 댓글 추가 후 댓글 리스트 새로고침
+        let refreshComments = commentSubmitted
+            .flatMapLatest { _ -> Driver<[Comment]> in
+                NetworkManager.performRequest(
+                    route: .viewCertainPost(postId: self.postId),
+                    dataType: ViewCertainPostModel.self
+                )
+                .do(onSuccess: { viewCertainPostModel in
+                    print("Fetched comments: \(viewCertainPostModel.comments)")
+                })
+                .map { $0.comments }
+                .asDriver(onErrorJustReturn: [])
+            }
         
         return Output(
             dismiss: dismissAction,

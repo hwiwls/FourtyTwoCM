@@ -175,31 +175,65 @@ class FeedContentViewModel: ViewModelType {
         )
     }
     
+//    private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
+//        let query = LikeQuery(like_status: newStatus)
+//        return NetworkManager.performRequest(route: Router.likePost(postId: postID, query: query), dataType: LikeModel.self)
+//            .map { $0.likeStatus }
+//            .asObservable()
+//            .catch { [weak self] error -> Observable<Bool> in
+//                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
+//                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+//                }
+//                return .just(false)
+//            }
+//    }
+//    
+//    func confirmDeletion() {
+//        guard let postID = try? post.value().postID else { return }
+//        NetworkManager.requestDeletePost(postID: postID)
+//            .subscribe(onSuccess: { [weak self] _ in
+//                self?.postDeleteSuccess.onNext(())
+//            }, onFailure: { [weak self] error in
+//                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
+//                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+//                }
+//            })
+//            .disposed(by: disposeBag)
+//    }
+    
+    // 다른 파일에서 APIError 사용하는 부분 수정
     private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
         let query = LikeQuery(like_status: newStatus)
         return NetworkManager.performRequest(route: Router.likePost(postId: postID, query: query), dataType: LikeModel.self)
             .map { $0.likeStatus }
             .asObservable()
-            .catch { [weak self] error -> Observable<Bool> in
-                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
-                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+            .catch { error -> Observable<Bool> in
+                if let apiError = error as? APIError {
+                    self.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
                 }
                 return .just(false)
             }
     }
-    
+
+
     func confirmDeletion() {
         guard let postID = try? post.value().postID else { return }
         NetworkManager.requestDeletePost(postID: postID)
             .subscribe(onSuccess: { [weak self] _ in
                 self?.postDeleteSuccess.onNext(())
             }, onFailure: { [weak self] error in
-                if let apiError = error as? APIError, apiError.checkAccessTokenError() {
-                    self?.errorMessage.onNext("인증 오류가 발생했습니다.")
+                if let apiError = error as? APIError {
+                    self?.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
                 }
             })
             .disposed(by: disposeBag)
     }
+
+
 
 }
 
