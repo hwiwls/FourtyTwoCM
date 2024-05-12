@@ -99,13 +99,25 @@ final class CommentViewController: BaseViewController {
                     })
                     .disposed(by: disposeBag)
         
+        output.refreshComments
+            .drive(onNext: { [weak self] newComments in
+                print("Updating comments table with: \(newComments)")
+                self?.comments.onNext(newComments)
+                self?.commentTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
         
         output.commentSubmitted
-               .drive(onNext: { [weak self] newComment in
-                   self?.commentTextField.resignFirstResponder()
-                   self?.addComment(newComment)
-               })
-               .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] newComment in
+                guard let strongSelf = self else { return }
+                
+                var currentComments = (try? strongSelf.comments.value()) ?? []
+                currentComments.append(newComment)
+                strongSelf.comments.onNext(currentComments)
+                strongSelf.commentTableView.reloadData()
+                strongSelf.commentTextField.text = ""
+            })
+            .disposed(by: disposeBag)
 
            output.errors
                .drive(onNext: { [weak self] error in
@@ -114,20 +126,8 @@ final class CommentViewController: BaseViewController {
                .disposed(by: disposeBag)
     }
 
-    private func addComment(_ comment: Comment) {
-        var currentComments = (try? comments.value()) ?? []
-        currentComments.append(comment)
-        comments.onNext(currentComments)
-        fetchCommentsFromServer()
-    }
     
-    private func fetchCommentsFromServer() {
-        
-    }
-       
-
     private func showError(_ error: Error) {
-        // Handle error
         print("Error occurred: \(error)")
     }
     
@@ -152,7 +152,7 @@ final class CommentViewController: BaseViewController {
     override func configLayout() {
         closeButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
-            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.right).offset(10)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
             $0.width.height.equalTo(30)
         }
         
