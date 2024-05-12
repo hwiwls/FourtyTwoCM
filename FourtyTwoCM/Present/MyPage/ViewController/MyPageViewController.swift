@@ -64,33 +64,37 @@ final class MyPageViewController: BaseViewController {
     
     override func bind() {
         let input = MyPageViewModel.Input(loadProfileTrigger: .just(()))
-                let output = viewModel.transform(input: input)
+        let output = viewModel.transform(input: input)
                 
-                output.profileImageURL
-                    .drive(onNext: { [weak self] url in
-                        guard let urlString = url?.absoluteString, let url = URL(string: BaseURL.baseURL.rawValue + "/" + urlString) else { return }
-                        print("mypage url: \(url)")
-                        self?.profileImageView.loadImage(from: url)
-                    })
-                    .disposed(by: disposeBag)
+        output.profileImageURL
+            .drive(onNext: { [weak self] url in
+                if let urlString = url?.absoluteString, let url = URL(string: BaseURL.baseURL.rawValue + "/" + urlString) {
+                    print("mypage url: \(url)")
+                    self?.profileImageView.loadImage(from: url, placeHolderImage: UIImage(named: "defaultprofile"))
+                } else {
+                    self?.profileImageView.image = UIImage(named: "defaultprofile")
+                }
+            })
+            .disposed(by: disposeBag)
+
                 
-                output.username
-                    .drive(usernameLabel.rx.text)
-                    .disposed(by: disposeBag)
-                
-                output.followerCount
-                    .drive(followerLabel.rx.text)
-                    .disposed(by: disposeBag)
-                
-                output.followingCount
-                    .drive(followingLabel.rx.text)
-                    .disposed(by: disposeBag)
-                
-                output.error
-                    .drive(onNext: { error in
-                        print("An error occurred: \(error.localizedDescription)")
-                    })
-                    .disposed(by: disposeBag)
+        output.username
+            .drive(usernameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.followerCount
+            .drive(followerLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.followingCount
+            .drive(followingLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.error
+            .drive(onNext: { error in
+                print("An error occurred: \(error.localizedDescription)")
+            })
+            .disposed(by: disposeBag)
     }
     
     override func configView() {

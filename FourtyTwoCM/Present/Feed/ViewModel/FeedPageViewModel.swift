@@ -118,7 +118,7 @@ final class FeedPageViewModel: ViewModelType {
         let contentCondition = post.content3 == "1"
         let contentCondition2 = post.content3 == "2"
 
-        return (distance <= 1000 && timeCondition) || contentCondition || (contentCondition2 && distance <= 1000 && timeCondition)
+        return (distance <= 1000 && timeCondition) || contentCondition
     }
 }
 
