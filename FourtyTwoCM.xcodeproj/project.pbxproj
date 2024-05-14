@@ -20,6 +20,7 @@
 		2E38D55B2BE53F770028A172 /* PostCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D55A2BE53F770028A172 /* PostCreationViewController.swift */; };
 		2E38D55D2BE53F7E0028A172 /* PostCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D55C2BE53F7E0028A172 /* PostCreationViewModel.swift */; };
 		2E38D55F2BE55B550028A172 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D55E2BE55B550028A172 /* CustomTabBar.swift */; };
+		2E520B112BF308E80034C2F2 /* UIViewController+RxLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E520B102BF308E80034C2F2 /* UIViewController+RxLifecycle.swift */; };
 		2E56664B2BD663FE0018E8E7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664A2BD663FE0018E8E7 /* GradientView.swift */; };
 		2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56664E2BD6815E0018E8E7 /* FeedModel.swift */; };
 		2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */; };
@@ -121,6 +122,7 @@
 		2E38D55A2BE53F770028A172 /* PostCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCreationViewController.swift; sourceTree = "<group>"; };
 		2E38D55C2BE53F7E0028A172 /* PostCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCreationViewModel.swift; sourceTree = "<group>"; };
 		2E38D55E2BE55B550028A172 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		2E520B102BF308E80034C2F2 /* UIViewController+RxLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxLifecycle.swift"; sourceTree = "<group>"; };
 		2E56664A2BD663FE0018E8E7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		2E56664E2BD6815E0018E8E7 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		2E597FFB2BD3AD8700AAAFA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 				2E8F98632BCD7F5000E9A79A /* UI */,
 				2E8F98642BCD803300E9A79A /* Bundle.swift */,
 				2E5D7B922BD82C2200E25B26 /* loadImage.swift */,
+				2E520B102BF308E80034C2F2 /* UIViewController+RxLifecycle.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
 				2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */,
 				2E988E182BE2711900F48CF4 /* Permission.swift in Sources */,
+				2E520B112BF308E80034C2F2 /* UIViewController+RxLifecycle.swift in Sources */,
 				2EB7F3332BE770390064276D /* CustomButton.swift in Sources */,
 				2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */,
 				2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */,
