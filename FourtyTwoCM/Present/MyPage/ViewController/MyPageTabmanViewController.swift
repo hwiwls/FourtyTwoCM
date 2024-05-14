@@ -38,15 +38,17 @@ class MyPageTabmanViewController: TabmanViewController {
         bar.layout.contentMode = .fit
         bar.layout.interButtonSpacing = 20
         
-        bar.backgroundView.style = .blur(style: .light)
-        
+        bar.backgroundView.style = .clear
+
         bar.buttons.customize { (button) in
-            button.selectedTintColor = .black
+            button.tintColor = .white
+            button.selectedTintColor = .white
             button.font = UIFont.systemFont(ofSize: 17)
             button.selectedFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
         }
-        
+
         bar.indicator.weight = .custom(value: 3)
+        bar.indicator.tintColor = .white 
     }
 }
 

@@ -7,13 +7,14 @@
 
 import UIKit
 import SnapKit
-//import Then
 import RxSwift
 import RxCocoa
 
 final class MyPageViewController: BaseViewController {
     
     private let viewModel = MyPageViewModel()
+    
+    var myPageTabmanController: MyPageTabmanViewController!
     
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -32,21 +33,21 @@ final class MyPageViewController: BaseViewController {
     private let followerLabel = UILabel().then {
         $0.text = "0 follower"
         $0.textColor = .offWhite
-        $0.font = .aggro.aggroLight14
+        $0.font = .aggro.aggroLight15
         $0.textAlignment = .center
     }
     
     private let borderlabel = UILabel().then {
         $0.text = "|"
         $0.textColor = .offWhite
-        $0.font = .aggro.aggroLight14
+        $0.font = .aggro.aggroLight15
         $0.textAlignment = .center
     }
     
     private let followingLabel = UILabel().then {
         $0.text = "0 following"
         $0.textColor = .offWhite
-        $0.font = .aggro.aggroLight14
+        $0.font = .aggro.aggroLight15
         $0.textAlignment = .center
     }
     
@@ -98,6 +99,15 @@ final class MyPageViewController: BaseViewController {
     }
     
     override func configView() {
+        myPageTabmanController = MyPageTabmanViewController()
+        addChild(myPageTabmanController)
+        view.addSubview(myPageTabmanController.view)
+        myPageTabmanController.didMove(toParent: self)
+
+        myPageTabmanController.view.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    override func configHierarchy() {
         view.addSubviews([
             profileImageView,
             usernameLabel,
@@ -140,6 +150,12 @@ final class MyPageViewController: BaseViewController {
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(28)
             $0.width.equalTo(68)
+        }
+        
+        myPageTabmanController.view.snp.makeConstraints { 
+            $0.top.equalTo(followingLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(view)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
