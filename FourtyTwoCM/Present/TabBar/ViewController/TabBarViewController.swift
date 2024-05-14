@@ -67,10 +67,10 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
         middleButton.addTarget(self, action: #selector(middleButtonAction), for: .touchUpInside)
         view.addSubview(middleButton)
         
-        middleButton.snp.makeConstraints { make in
-            make.centerX.equalTo(tabBar.snp.centerX)
-            make.top.equalTo(tabBar.snp.top).offset(-20)
-            make.width.height.equalTo(52)
+        middleButton.snp.makeConstraints {
+            $0.centerX.equalTo(tabBar.snp.centerX)
+            $0.top.equalTo(tabBar.snp.top).offset(-20)
+            $0.width.height.equalTo(52)
         }
     }
     
