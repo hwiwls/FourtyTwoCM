@@ -12,7 +12,6 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     private let postImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
-        $0.image = UIImage(named: "SampleImg2")
     }
     
     private let postGradientView = LightGradientView()
@@ -20,7 +19,6 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
-        $0.image = UIImage(named: "SampleImg2")
     }
     
     private let userIdLabel = UILabel().then {
@@ -35,6 +33,11 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        postImageView.image = nil
     }
 
     override func configView() {

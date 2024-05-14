@@ -83,6 +83,7 @@
 		2E988E182BE2711900F48CF4 /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E172BE2711900F48CF4 /* Permission.swift */; };
 		2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */; };
 		2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA15DA42BE2C6AE002DB338 /* APIError.swift */; };
+		2EA184712BF3275700A84FEA /* UICollectionView+ReachedBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */; };
 		2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAF064B2BEE611B00E77A3D /* FollowModel.swift */; };
 		2EB444352BEF709D009D7684 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444342BEF709D009D7684 /* CommentViewController.swift */; };
 		2EB444392BEF7240009D7684 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */; };
@@ -181,6 +182,7 @@
 		2E988E172BE2711900F48CF4 /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		2E988E192BE2713E00F48CF4 /* PermissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewController.swift; sourceTree = "<group>"; };
 		2EA15DA42BE2C6AE002DB338 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReachedBottom.swift"; sourceTree = "<group>"; };
 		2EAF064B2BEE611B00E77A3D /* FollowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowModel.swift; sourceTree = "<group>"; };
 		2EB444342BEF709D009D7684 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				2E8F98642BCD803300E9A79A /* Bundle.swift */,
 				2E5D7B922BD82C2200E25B26 /* loadImage.swift */,
 				2E520B102BF308E80034C2F2 /* UIViewController+RxLifecycle.swift */,
+				2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 				2EEAC0322BF0DF5B00F56645 /* MyPostsViewController.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
+				2EA184712BF3275700A84FEA /* UICollectionView+ReachedBottom.swift in Sources */,
 				2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */,
 				2ED643022BD52A1A00722299 /* IconBtn.swift in Sources */,
 				2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */,

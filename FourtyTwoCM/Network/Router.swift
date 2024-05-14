@@ -463,7 +463,14 @@ extension Router: TargetType {
             return items
             
         case .viewMyPosts(_, let query):
-            return [URLQueryItem(name: "product_id", value: query.product_id)]
+            var items = [
+                URLQueryItem(name: "product_id", value: query.product_id),
+                URLQueryItem(name: "limit", value: query.limit)
+            ]
+            if let next = query.next {
+                items.append(URLQueryItem(name: "next", value: next))
+            }
+            return items
         default:
             return nil
         }

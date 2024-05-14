@@ -20,19 +20,26 @@ final class MyPostsViewController: BaseViewController {
     }
     
     override func bind() {
-        let input = MyPostsViewModel.Input(trigger: Observable.just(()))
+        let loadNextPageTrigger = collectionView.rx.reachedBottom.asObservable()
+
+        let input = MyPostsViewModel.Input(trigger: Observable.just(()), loadNextPage: loadNextPageTrigger)
         let output = viewModel.transform(input: input)
-        
+
         output.posts
-            .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { index, post, cell in
-                print("Configuring cell")
+            .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { row, post, cell in
                 cell.configure(with: post)
             }
             .disposed(by: disposeBag)
 
         output.errors
             .drive(onNext: { error in
-                print("Error: \(error.localizedDescription)")
+                print("Error: \(error)")
+            })
+            .disposed(by: disposeBag)
+
+        output.isLoading
+            .drive(onNext: { isLoading in
+                print(isLoading ? "Loading more items..." : "Finished loading.")
             })
             .disposed(by: disposeBag)
     }
