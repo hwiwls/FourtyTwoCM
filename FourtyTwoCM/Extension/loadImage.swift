@@ -36,7 +36,6 @@ import Kingfisher
 extension UIImageView {
     func loadImage(from url: URL, placeHolderImage: UIImage? = nil, completion: (() -> Void)? = nil) {
         var accessToken: String = ""
-        
         do {
             accessToken = try Keychain.shared.getToken(kind: .accessToken)
         } catch {
@@ -58,13 +57,14 @@ extension UIImageView {
         self.kf.setImage(
             with: url,
             placeholder: placeHolderImage,
-            options: [.requestModifier(modifier), .forceRefresh],
+            options: [.requestModifier(modifier)], // .forceRefresh 제거
             completionHandler: { result in
                 switch result {
                 case .success(_):
                     completion?()
                 case .failure(let error):
                     print("이미지 로딩 실패: \(error)")
+                    self.loadImage(from: url, placeHolderImage: placeHolderImage, completion: completion) // 재시도 로직 추가
                 }
             }
         )
