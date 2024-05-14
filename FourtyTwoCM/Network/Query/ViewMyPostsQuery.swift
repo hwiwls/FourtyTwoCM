@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct ViewMyPostsQuery: Encodable {
+    let product_id: String
+}

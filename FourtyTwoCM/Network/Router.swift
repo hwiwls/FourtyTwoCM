@@ -24,6 +24,8 @@ enum Router {
     case unfollowUser(userId: String)
     case writeComment(postId: String, query: WriteCommentQuery)
     case viewCertainPost(postId: String)
+    case viewMyPosts(userID: String, query: ViewMyPostsQuery)
+    case viewMyLikes
 }
 
 extension Router: TargetType {
@@ -61,7 +63,11 @@ extension Router: TargetType {
             return .delete
         case .writeComment:
             return .post
-        case .viewCertainPost(postId: let postId):
+        case .viewCertainPost:
+            return .get
+        case .viewMyPosts:
+            return .get
+        case .viewMyLikes:
             return .get
         }
     }
@@ -94,10 +100,14 @@ extension Router: TargetType {
             return "follow/\(userId)"
         case .unfollowUser(userId: let userId):
             return "follow/\(userId)"
-        case .writeComment(postId: let postId, query: let query):
+        case .writeComment(postId: let postId, query: _):
             return "posts/\(postId)/comments"
         case .viewCertainPost(postId: let postId):
             return "posts/\(postId)"
+        case .viewMyPosts(let userID, _):
+            return "posts/users/\(userID)"
+        case .viewMyLikes:
+            return "posts/likes/me"
         }
     }
     
@@ -353,7 +363,7 @@ extension Router: TargetType {
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .writeComment(postId: let postId, query: let query):
+        case .writeComment:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -374,7 +384,7 @@ extension Router: TargetType {
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .viewCertainPost(postId: let postId):
+        case .viewCertainPost:
             guard let sesacKey = Bundle.main.sesacKey else {
                 print("sesacKey를 로드하지 못했습니다.")
                 return [:]
@@ -388,6 +398,46 @@ extension Router: TargetType {
                 accessToken = try Keychain.shared.getToken(kind: .accessToken)
             } catch {
                 print("viewCertainPost의 access token을 가져오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .viewMyPosts:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("게시글 좋아요에서 액세스 토큰을 가지고 오지 못함: \(error)")
+            }
+            
+            return [
+                HTTPHeader.authorization.rawValue: accessToken,
+                HTTPHeader.sesacKey.rawValue: sesacKey
+            ]
+        case .viewMyLikes:
+            guard let sesacKey = Bundle.main.sesacKey else {
+                print("sesacKey를 로드하지 못했습니다.")
+                return [:]
+            }
+            
+            print("sesacKey: \(sesacKey)")
+            
+            var accessToken: String = ""
+            
+            do {
+                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+            } catch {
+                print("게시글 좋아요에서 액세스 토큰을 가지고 오지 못함: \(error)")
             }
             
             return [
@@ -411,6 +461,9 @@ extension Router: TargetType {
                 items.append(URLQueryItem(name: "next", value: next))
             }
             return items
+            
+        case .viewMyPosts(_, let query):
+            return [URLQueryItem(name: "product_id", value: query.product_id)]
         default:
             return nil
         }
@@ -455,10 +508,14 @@ extension Router: TargetType {
             return nil
         case .unfollowUser:
             return nil
-        case .writeComment(postId: let postId, query: let query):
+        case .writeComment(postId: _, query: let query):
             let encoder = JSONEncoder()
             return try? encoder.encode(query)
-        case .viewCertainPost(postId: let postId):
+        case .viewCertainPost(postId: _):
+            return nil
+        case .viewMyPosts:
+            return nil
+        case .viewMyLikes:
             return nil
         }
     }
