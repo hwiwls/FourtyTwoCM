@@ -309,6 +309,7 @@ final class FeedContentViewController: BaseViewController {
         btnStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(postContentLabel.snp.bottom).offset(-4)
+            $0.width.equalTo(40)
         }
         
         likePostBtn.snp.makeConstraints {

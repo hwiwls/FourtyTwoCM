@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toast
 
 class MyLikesViewController: BaseViewController {
     var viewModel = MyLikesViewModel()
@@ -31,10 +32,9 @@ class MyLikesViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-
-        output.isLoading
-            .drive(onNext: { isLoading in
-                print(isLoading ? "Loading more items..." : "Finished loading.")
+        output.errorMessage
+            .drive(onNext: { [weak self] message in
+                self?.view.makeToast(message, duration: 2.0, position: .center)
             })
             .disposed(by: disposeBag)
     }

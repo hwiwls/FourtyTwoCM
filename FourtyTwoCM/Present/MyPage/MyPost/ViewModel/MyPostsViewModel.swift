@@ -13,7 +13,7 @@ final class MyPostsViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     private let currentPage = BehaviorSubject<String?>(value: nil)
     private let isLoading = BehaviorSubject<Bool>(value: false)
-    private let errors = PublishSubject<Error>()
+    let errorMessage = PublishSubject<String>()
 
     struct Input {
         let trigger: Observable<Void>
@@ -22,8 +22,7 @@ final class MyPostsViewModel: ViewModelType {
 
     struct Output {
         let posts: Driver<[Post]>
-        let errors: Driver<Error>
-        let isLoading: Driver<Bool>
+        let errorMessage: Driver<String>
     }
 
     func transform(input: Input) -> Output {
@@ -40,8 +39,7 @@ final class MyPostsViewModel: ViewModelType {
 
         return Output(
             posts: posts.asDriver(onErrorJustReturn: []),
-            errors: errors.asDriver(onErrorJustReturn: NSError(domain: "Network", code: -1, userInfo: nil)),
-            isLoading: isLoading.asDriver(onErrorJustReturn: false)
+            errorMessage: errorMessage.asDriver(onErrorJustReturn: "")
         )
     }
 
@@ -56,19 +54,21 @@ final class MyPostsViewModel: ViewModelType {
         return NetworkManager.performRequest(route: .viewMyPosts(userID: UserDefaults.standard.string(forKey: "userID") ?? "", query: query), dataType: FeedModel.self)
             .asObservable()
             .do(onDispose: { [weak self] in self?.isLoading.onNext(false) })
-            .map { [weak self] feedModel -> [Post] in
+            .flatMap { [weak self] feedModel -> Observable<[Post]> in
                 if feedModel.nextCursor == "0" {
                     self?.currentPage.onNext("0")
                 } else {
                     self?.currentPage.onNext(feedModel.nextCursor)
                 }
-                return feedModel.data
+                return .just(feedModel.data)
             }
             .catch { [weak self] error in
-                self?.errors.onNext(error)
+                if let apiError = error as? APIError {
+                    self?.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
+                }
                 return .just([])
             }
     }
-
-
 }
