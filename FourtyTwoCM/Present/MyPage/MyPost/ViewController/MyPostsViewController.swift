@@ -32,15 +32,9 @@ final class MyPostsViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        output.errors
-            .drive(onNext: { error in
-                print("Error: \(error)")
-            })
-            .disposed(by: disposeBag)
-
-        output.isLoading
-            .drive(onNext: { isLoading in
-                print(isLoading ? "Loading more items..." : "Finished loading.")
+        output.errorMessage
+            .drive(onNext: { [weak self] message in
+                self?.view.makeToast(message)
             })
             .disposed(by: disposeBag)
     }
