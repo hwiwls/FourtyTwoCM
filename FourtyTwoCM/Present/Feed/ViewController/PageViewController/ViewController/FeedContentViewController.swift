@@ -289,7 +289,7 @@ final class FeedContentViewController: BaseViewController {
     override func configLayout() {
         postProgressbar.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12)
-            $0.top.equalToSuperview().offset(60)
+            $0.top.equalToSuperview().offset(50)
         }
         
         postImageView.snp.makeConstraints {

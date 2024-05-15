@@ -25,7 +25,7 @@ enum Router {
     case writeComment(postId: String, query: WriteCommentQuery)
     case viewCertainPost(postId: String)
     case viewMyPosts(userID: String, query: ViewMyPostsQuery)
-    case viewMyLikes
+    case viewMyLikes(query: ViewMyLikesQuery)
 }
 
 extension Router: TargetType {
@@ -465,6 +465,14 @@ extension Router: TargetType {
         case .viewMyPosts(_, let query):
             var items = [
                 URLQueryItem(name: "product_id", value: query.product_id),
+                URLQueryItem(name: "limit", value: query.limit)
+            ]
+            if let next = query.next {
+                items.append(URLQueryItem(name: "next", value: next))
+            }
+            return items
+        case .viewMyLikes(let query):
+            var items = [
                 URLQueryItem(name: "limit", value: query.limit)
             ]
             if let next = query.next {

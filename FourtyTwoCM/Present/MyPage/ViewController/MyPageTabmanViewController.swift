@@ -48,7 +48,7 @@ class MyPageTabmanViewController: TabmanViewController {
         }
 
         bar.indicator.weight = .custom(value: 3)
-        bar.indicator.tintColor = .white 
+        bar.indicator.tintColor = .white
     }
 }
 
@@ -78,4 +78,3 @@ extension MyPageTabmanViewController: PageboyViewControllerDataSource, TMBarData
         return .at(index: 0)
     }
 }
-

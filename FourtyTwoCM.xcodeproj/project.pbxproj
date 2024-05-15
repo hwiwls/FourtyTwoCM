@@ -92,6 +92,7 @@
 		2EB7F3332BE770390064276D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3322BE770390064276D /* CustomButton.swift */; };
 		2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3362BE77B840064276D /* ReservationViewController.swift */; };
 		2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */; };
+		2ECE2B3C2BF4B195004D95B2 /* ViewMyLikesQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
 		2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397F02BDA485A0064CD71 /* LikeModel.swift */; };
 		2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */; };
@@ -191,6 +192,7 @@
 		2EB7F3322BE770390064276D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		2EB7F3362BE77B840064276D /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightGradientView.swift; sourceTree = "<group>"; };
+		2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyLikesQuery.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
 		2ED397F02BDA485A0064CD71 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		2ED642FA2BD5270D00722299 /* FeedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentViewController.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */,
 				2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */,
 				2E8DF6972BF14077009C0022 /* ViewMyPostsQuery.swift */,
+				2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 				2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */,
 				2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */,
 				2E8DF6982BF14077009C0022 /* ViewMyPostsQuery.swift in Sources */,
+				2ECE2B3C2BF4B195004D95B2 /* ViewMyLikesQuery.swift in Sources */,
 				2E5D7B932BD82C2200E25B26 /* loadImage.swift in Sources */,
 				2E8F98602BCD7EF200E9A79A /* SignInQuery.swift in Sources */,
 				2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */,
