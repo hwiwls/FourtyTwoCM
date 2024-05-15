@@ -82,31 +82,30 @@ class Permissions: NSObject, CLLocationManagerDelegate {
     }
 
     func checkUserDeviceLocationServiceAuthorization() {
-            let authorizationStatus: CLAuthorizationStatus
-            if #available(iOS 14.0, *) {
-                authorizationStatus = locationManager.authorizationStatus
-            } else {
-                authorizationStatus = CLLocationManager.authorizationStatus()
-            }
-
-            switch authorizationStatus {
-            case .notDetermined:
-                print("위치 권한 상태가 결정되지 않음, 권한 요청 가능")
-                // 권한 상태가 결정되지 않음, 권한 요청 가능
-                locationManager.requestWhenInUseAuthorization()
-            case .restricted, .denied:
-                // 권한이 제한되거나 거부됨, 설정으로 유도
-                print("위치 권한이 제한되거나 거부됨, 설정으로 유도")
-                showRequestAccessAlert(for: "위치")
-            case .authorizedWhenInUse, .authorizedAlways:
-                // 권한 허용됨, 위치 업데이트 시작
-                print("위치 권한 허용됨, 위치 업데이트 시작")
-                isLocationAuthorized.onNext(true)
-                locationManager.startUpdatingLocation()
-            default:
-                print("Unhandled authorization status")
-            }
+        let authorizationStatus: CLAuthorizationStatus
+        if #available(iOS 14.0, *) {
+            authorizationStatus = locationManager.authorizationStatus
+        } else {
+            authorizationStatus = CLLocationManager.authorizationStatus()
         }
+
+        switch authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            showRequestAccessAlert(for: "위치")
+        case .authorizedWhenInUse, .authorizedAlways:
+            DispatchQueue.global(qos: .background).async {
+                self.locationManager.startUpdatingLocation()
+                DispatchQueue.main.async {
+                    self.isLocationAuthorized.onNext(true)
+                }
+            }
+        default:
+            print("Unhandled authorization status")
+        }
+    }
+
 
     func checkUserCurrentLocationAuthorization(_ status: CLAuthorizationStatus) {
         switch status {
@@ -145,20 +144,21 @@ class Permissions: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("locationManager >> didUpdateLocations ")
         
-        var longitude = CLLocationDegrees()
-        var latitude = CLLocationDegrees()
+//        var longitude = CLLocationDegrees()
+//        var latitude = CLLocationDegrees()
          
-        if let location = locations.first {
-            longitude = location.coordinate.latitude
-            latitude = location.coordinate.longitude
-        }
-        locationManager.stopUpdatingLocation()
+//        if let location = locations.first {
+//            longitude = location.coordinate.latitude
+//            latitude = location.coordinate.longitude
+//        }
         
-        print("위도: \(latitude)")
-        print("경도: \(longitude)")
-        
-        if let location = locations.first {
-            currentLocationSubject.onNext(location)
+        DispatchQueue.global(qos: .background).async {
+            manager.stopUpdatingLocation()
+            DispatchQueue.main.async {
+                if let location = locations.first {
+                    self.currentLocationSubject.onNext(location)
+                }
+            }
         }
     }
 

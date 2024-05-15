@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-//import Then
 import RxSwift
 import RxCocoa
 
@@ -289,7 +288,7 @@ final class FeedContentViewController: BaseViewController {
     override func configLayout() {
         postProgressbar.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12)
-            $0.top.equalToSuperview().offset(50)
+            $0.top.equalToSuperview().offset(58)
         }
         
         postImageView.snp.makeConstraints {
