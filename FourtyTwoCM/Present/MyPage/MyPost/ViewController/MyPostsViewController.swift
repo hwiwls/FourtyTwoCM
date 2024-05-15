@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 final class MyPostsViewController: BaseViewController {
     var viewModel = MyPostsViewModel()
@@ -47,6 +48,7 @@ final class MyPostsViewController: BaseViewController {
     override func configView() {
         collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
     }
     
     override func configHierarchy() {
@@ -80,3 +82,4 @@ final class MyPostsViewController: BaseViewController {
         return layout
     }
 }
+
