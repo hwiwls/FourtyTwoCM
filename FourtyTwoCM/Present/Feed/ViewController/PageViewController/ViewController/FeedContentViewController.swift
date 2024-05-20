@@ -128,12 +128,12 @@ final class FeedContentViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         viewModel.isLiked
-                    .asDriver(onErrorJustReturn: false)
-                    .drive(onNext: { [weak self] isLiked in
-                        self?.updateLikeButton(isLiked: isLiked)
-                    })
-                    .disposed(by: disposeBag)
-
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isLiked in
+                self?.updateLikeButton(isLiked: isLiked)
+            })
+            .disposed(by: disposeBag)
+        
         output.content
             .drive(postContentLabel.rx.text)
             .disposed(by: disposeBag)

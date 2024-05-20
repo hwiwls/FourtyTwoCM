@@ -13,6 +13,7 @@ class MyLikesViewModel: ViewModelType {
     private let currentPage = BehaviorSubject<String?>(value: nil)
     private let isLoading = BehaviorSubject<Bool>(value: false)
     let errorMessage = PublishSubject<String>()
+    let refreshTrigger = PublishSubject<Void>()
     
     struct Input {
         let trigger: Observable<Void>
@@ -22,30 +23,54 @@ class MyLikesViewModel: ViewModelType {
     struct Output {
         let posts: Driver<[Post]>
         let errorMessage: Driver<String>
+        let reloadTrigger: Driver<Void>
     }
     
     func transform(input: Input) -> Output {
         let posts = BehaviorSubject<[Post]>(value: [])
+        let reloadTrigger = PublishSubject<Void>()
         
-        Observable.merge(input.trigger, input.loadNextPage)
+        input.trigger
+            .flatMapLatest { [weak self] _ -> Observable<[Post]> in
+                guard let self = self else { return .empty() }
+                self.currentPage.onNext(nil) // currentPage 초기화
+                return self.fetchPosts()
+            }
+            .do(onNext: { _ in
+                print("Reload trigger called")
+                reloadTrigger.onNext(())
+            })
+            .bind(to: posts)
+            .disposed(by: disposeBag)
+        
+        input.loadNextPage
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
                 return self.fetchPosts()
             }
-            .scan([], accumulator: { old, new in return old + new })
+            .withLatestFrom(posts) { (newPosts, existingPosts) in
+                return existingPosts + newPosts
+            }
+            .do(onNext: { _ in
+                print("Reload trigger called")
+                reloadTrigger.onNext(())
+            })
             .bind(to: posts)
             .disposed(by: disposeBag)
         
         return Output(
             posts: posts.asDriver(onErrorJustReturn: []),
-            errorMessage: errorMessage.asDriver(onErrorJustReturn: "")
+            errorMessage: errorMessage.asDriver(onErrorJustReturn: ""),
+            reloadTrigger: reloadTrigger.asDriver(onErrorJustReturn: ())
         )
     }
     
     private func fetchPosts() -> Observable<[Post]> {
-        guard ((try? isLoading.value()) != nil), (try? currentPage.value()) != "0" else {
+        guard ((try? isLoading.value()) != nil) else {
             return .empty()
         }
+        
+        print("Fetching posts")
         
         isLoading.onNext(true)
         let query = ViewMyLikesQuery(next: try? currentPage.value(), limit: "6")

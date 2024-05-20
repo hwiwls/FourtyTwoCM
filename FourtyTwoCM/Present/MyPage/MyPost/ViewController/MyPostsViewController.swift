@@ -27,6 +27,7 @@ final class MyPostsViewController: BaseViewController {
         let output = viewModel.transform(input: input)
 
         output.posts
+            .map { $0.reversed() }
             .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { row, post, cell in
                 cell.configure(with: post)
             }
