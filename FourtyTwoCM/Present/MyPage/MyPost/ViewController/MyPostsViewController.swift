@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 final class MyPostsViewController: BaseViewController {
     var viewModel = MyPostsViewModel()
@@ -20,33 +21,36 @@ final class MyPostsViewController: BaseViewController {
     }
     
     override func bind() {
-        let loadNextPageTrigger = collectionView.rx.reachedBottom.asObservable()
+            let loadNextPageTrigger = collectionView.rx.reachedBottom.asObservable()
+            let viewWillAppearTrigger = self.rx.viewWillAppear.map { _ in }
 
-        let input = MyPostsViewModel.Input(trigger: Observable.just(()), loadNextPage: loadNextPageTrigger)
-        let output = viewModel.transform(input: input)
+            let input = MyPostsViewModel.Input(trigger: viewWillAppearTrigger, loadNextPage: loadNextPageTrigger)
+            let output = viewModel.transform(input: input)
 
-        output.posts
-            .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { row, post, cell in
-                cell.configure(with: post)
-            }
-            .disposed(by: disposeBag)
+            output.posts
+                .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { row, post, cell in
+                    cell.configure(with: post)
+                }
+                .disposed(by: disposeBag)
 
-        output.errors
-            .drive(onNext: { error in
-                print("Error: \(error)")
-            })
-            .disposed(by: disposeBag)
+            output.errorMessage
+                .drive(onNext: { [weak self] message in
+                    self?.view.makeToast(message, duration: 2.0, position: .center)
+                })
+                .disposed(by: disposeBag)
 
-        output.isLoading
-            .drive(onNext: { isLoading in
-                print(isLoading ? "Loading more items..." : "Finished loading.")
-            })
-            .disposed(by: disposeBag)
-    }
+            output.reloadTrigger
+                .drive(onNext: { [weak self] in
+                    self?.collectionView.reloadData()
+                    print("Collection view reloaded")
+                })
+                .disposed(by: disposeBag)
+        }
     
     override func configView() {
         collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
     }
     
     override func configHierarchy() {
@@ -80,3 +84,4 @@ final class MyPostsViewController: BaseViewController {
         return layout
     }
 }
+

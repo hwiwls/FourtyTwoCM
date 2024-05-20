@@ -152,7 +152,7 @@ final class MyPageViewController: BaseViewController {
             $0.width.equalTo(68)
         }
         
-        myPageTabmanController.view.snp.makeConstraints { 
+        myPageTabmanController.view.snp.makeConstraints {
             $0.top.equalTo(followingLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalTo(view)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)

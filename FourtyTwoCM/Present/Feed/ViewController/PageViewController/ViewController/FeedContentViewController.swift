@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-//import Then
 import RxSwift
 import RxCocoa
 
@@ -129,12 +128,12 @@ final class FeedContentViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         viewModel.isLiked
-                    .asDriver(onErrorJustReturn: false)
-                    .drive(onNext: { [weak self] isLiked in
-                        self?.updateLikeButton(isLiked: isLiked)
-                    })
-                    .disposed(by: disposeBag)
-
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isLiked in
+                self?.updateLikeButton(isLiked: isLiked)
+            })
+            .disposed(by: disposeBag)
+        
         output.content
             .drive(postContentLabel.rx.text)
             .disposed(by: disposeBag)
@@ -289,7 +288,7 @@ final class FeedContentViewController: BaseViewController {
     override func configLayout() {
         postProgressbar.snp.makeConstraints {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(12)
-            $0.top.equalToSuperview().offset(60)
+            $0.top.equalToSuperview().offset(58)
         }
         
         postImageView.snp.makeConstraints {
@@ -310,6 +309,7 @@ final class FeedContentViewController: BaseViewController {
         btnStackView.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(postContentLabel.snp.bottom).offset(-4)
+            $0.width.equalTo(40)
         }
         
         likePostBtn.snp.makeConstraints {

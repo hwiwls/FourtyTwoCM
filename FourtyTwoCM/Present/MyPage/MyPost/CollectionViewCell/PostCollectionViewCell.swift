@@ -38,6 +38,8 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         postImageView.image = nil
+        userIdLabel.text = nil
+        profileImageView.image = nil
     }
 
     override func configView() {

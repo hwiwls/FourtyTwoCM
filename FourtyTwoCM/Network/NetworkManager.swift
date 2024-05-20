@@ -24,11 +24,11 @@ struct NetworkManager {
                             print("performRequest success: \(dataType)")
                             single(.success(data))
                         case .failure(_):
-                            if let statusCode = response.response?.statusCode, let data = response.data {
-                                                            single(.failure(APIError.mapError(from: response.response!, data: data)))
-                                                        } else {
-                                                            single(.failure(APIError.unknown("네트워크 오류")))
-                                                        }
+                            if let data = response.data {
+                                single(.failure(APIError.mapError(from: response.response!, data: data)))
+                            } else {
+                                single(.failure(APIError.unknown("네트워크 오류")))
+                            }
                         }
                     }
             } catch {
@@ -60,9 +60,7 @@ struct NetworkManager {
                 single(.failure(error))
             }
             
-            return Disposables.create {
-                // 요청 취소 처리
-            }
+            return Disposables.create()
         }
     }
     
@@ -85,14 +83,13 @@ struct NetworkManager {
                     case .success(let data):
                                print("Decodable success: \(data)")
                                single(.success(data))
-                           case .failure(let error):
+                    case .failure(_):
                         if let httpResponse = response.response, let data = response.data {
-                                                        single(.failure(APIError.mapError(from: httpResponse, data: data)))
-                                                    } else {
-                                                        // 여기서는 응답이 없거나 데이터가 없는 경우 처리
-                                                        single(.failure(APIError.unknown("네트워크 오류 또는 데이터 누락")))
-                                                    }
-                           }
+                            single(.failure(APIError.mapError(from: httpResponse, data: data)))
+                        } else {
+                            single(.failure(APIError.unknown("네트워크 오류 또는 데이터 누락")))
+                        }
+                    }
                 }
             } catch {
                 single(.failure(APIError.unknown("요청 생성 실패: \(error.localizedDescription)")))

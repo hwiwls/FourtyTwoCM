@@ -13,7 +13,8 @@ final class MyPostsViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     private let currentPage = BehaviorSubject<String?>(value: nil)
     private let isLoading = BehaviorSubject<Bool>(value: false)
-    private let errors = PublishSubject<Error>()
+    let errorMessage = PublishSubject<String>()
+    let refreshTrigger = PublishSubject<Void>()
 
     struct Input {
         let trigger: Observable<Void>
@@ -22,53 +23,84 @@ final class MyPostsViewModel: ViewModelType {
 
     struct Output {
         let posts: Driver<[Post]>
-        let errors: Driver<Error>
-        let isLoading: Driver<Bool>
+        let errorMessage: Driver<String>
+        let reloadTrigger: Driver<Void>
     }
 
     func transform(input: Input) -> Output {
         let posts = BehaviorSubject<[Post]>(value: [])
+        let reloadTrigger = PublishSubject<Void>()
 
-        Observable.merge(input.trigger, input.loadNextPage)
+        input.trigger
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
-                return self.fetchPosts()
+                self.currentPage.onNext(nil)
+                return self.fetchPosts(reset: true)
             }
-            .scan([], accumulator: { old, new in return old + new })
+            .do(onNext: { _ in
+                reloadTrigger.onNext(())
+            })
+            .bind(to: posts)
+            .disposed(by: disposeBag)
+
+        input.loadNextPage
+            .withLatestFrom(currentPage)
+            .filter { $0 != "0" }  // 더 이상 로드할 페이지가 없을 때는 요청하지 않음
+            .flatMapLatest { [weak self] _ -> Observable<[Post]> in
+                guard let self = self else { return .empty() }
+                return self.fetchPosts(reset: false)
+            }
+            .withLatestFrom(posts) { (newPosts, existingPosts) in
+                return existingPosts + newPosts
+            }
+            .do(onNext: { _ in
+                reloadTrigger.onNext(())
+            })
             .bind(to: posts)
             .disposed(by: disposeBag)
 
         return Output(
             posts: posts.asDriver(onErrorJustReturn: []),
-            errors: errors.asDriver(onErrorJustReturn: NSError(domain: "Network", code: -1, userInfo: nil)),
-            isLoading: isLoading.asDriver(onErrorJustReturn: false)
+            errorMessage: errorMessage.asDriver(onErrorJustReturn: ""),
+            reloadTrigger: reloadTrigger.asDriver(onErrorJustReturn: ())
         )
     }
 
-    private func fetchPosts() -> Observable<[Post]> {
-        guard ((try? isLoading.value()) != nil), (try? currentPage.value()) != "0" else {
+    private func fetchPosts(reset: Bool) -> Observable<[Post]> {
+        guard ((try? isLoading.value()) == false) else {
+            print("")
             return .empty()
         }
 
+        if reset {
+            currentPage.onNext(nil)
+        }
+
         isLoading.onNext(true)
-        let query = ViewMyPostsQuery(product_id: "ker0r0", next: try? currentPage.value(), limit: "6")
+        print("Fetching posts with currentPage: \(String(describing: try? currentPage.value()))")
+        let query = ViewMyPostsQuery(product_id: "ker0r0", next: try? currentPage.value(), limit: "10")
 
         return NetworkManager.performRequest(route: .viewMyPosts(userID: UserDefaults.standard.string(forKey: "userID") ?? "", query: query), dataType: FeedModel.self)
             .asObservable()
-            .do(onDispose: { [weak self] in self?.isLoading.onNext(false) })
-            .map { [weak self] feedModel -> [Post] in
+            .do(onDispose: { [weak self] in
+                self?.isLoading.onNext(false)
+                print("Fetch posts completed")
+            })
+            .flatMap { [weak self] feedModel -> Observable<[Post]> in
                 if feedModel.nextCursor == "0" {
                     self?.currentPage.onNext("0")
                 } else {
                     self?.currentPage.onNext(feedModel.nextCursor)
                 }
-                return feedModel.data
+                return .just(feedModel.data)
             }
             .catch { [weak self] error in
-                self?.errors.onNext(error)
+                if let apiError = error as? APIError {
+                    self?.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
+                }
                 return .just([])
             }
     }
-
-
 }
