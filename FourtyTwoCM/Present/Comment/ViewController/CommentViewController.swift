@@ -86,7 +86,6 @@ final class CommentViewController: BaseViewController {
         
         
         comments.asObservable()
-            .map { $0.reversed() }
             .bind(to: commentTableView.rx.items(cellIdentifier: "CommentTableViewCell", cellType: CommentTableViewCell.self)) { _, comment, cell in
                 cell.configure(with: comment)
                 cell.selectionStyle = .none
