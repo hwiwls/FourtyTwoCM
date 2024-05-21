@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CoreLocation
+import ImageIO
 
 final class PostCreationViewModel: ViewModelType {
     var disposeBag = DisposeBag()
@@ -37,14 +38,27 @@ final class PostCreationViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         input.submitTap
             .flatMapLatest { [weak self] _ -> Observable<[String]> in
-                guard let self = self, let imageData = try? self.imageSubject.value().pngData() else {
+                guard let self = self else {
                     return Observable.just([])
                 }
-                let uploadQuery = UploadImageQuery(files: imageData)
-                return NetworkManager.performMultipartRequest(route: .uploadFile(query: uploadQuery))
-                    .asObservable()
-                    .map { $0.files }
-            }
+                do {
+                    let image = try self.imageSubject.value()
+                    let targetSize = CGSize(width: 2556, height: 1179) // 해상도
+                    guard let resizedImage = image.resizedImage(targetSize: targetSize), let compressedData = resizedImage.compressedData(targetSizeInKB: 3000) else {   // 용량. 3000KB
+                        print("이미지 압축 실패")
+                        return Observable.just([])
+                    }
+                    
+                    print("압축된 이미지 용량: \(compressedData.count) bytes")
+                    let uploadQuery = UploadImageQuery(files: compressedData)
+                    return NetworkManager.performMultipartRequest(route: .uploadFile(query: uploadQuery))
+                        .asObservable()
+                        .map { $0.files }
+                } catch {
+                    print("이미지 에러: \(error)")
+                    return Observable.just([])
+                }
+           }
             .flatMapLatest { [weak self] files -> Observable<Void> in
                 guard let self = self, let text = try? self.postTextViewSubject.value() else {
                     return Observable.just(())
@@ -63,8 +77,7 @@ final class PostCreationViewModel: ViewModelType {
                 NotificationCenter.default.post(name: .postUploaded, object: nil)
                 self?.postSubmittedSubject.onNext(())
             }, onError: { error in
-                // 오류 처리
-                print("Error uploading post: \(error)")
+                print("포스트 작성 에러: \(error)")
             })
             .disposed(by: disposeBag)
 
@@ -80,4 +93,3 @@ final class PostCreationViewModel: ViewModelType {
 extension Notification.Name {
     static let postUploaded = Notification.Name("postUploaded")
 }
-
