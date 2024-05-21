@@ -14,6 +14,7 @@
 		2E1B91E82BE64EB300751288 /* UploadImageQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E72BE64EB300751288 /* UploadImageQuery.swift */; };
 		2E1E93282BE6D28700E9F9A5 /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */; };
 		2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E932A2BE6D4F800E9F9A5 /* MyPageViewModel.swift */; };
+		2E25E1932BFC2BBA00462F8C /* UIImage+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E25E1922BFC2BBA00462F8C /* UIImage+Compression.swift */; };
 		2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D54E2BE4DB430028A172 /* Interceptor.swift */; };
 		2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5502BE4DD760028A172 /* RefreshModel.swift */; };
 		2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */; };
@@ -118,6 +119,7 @@
 		2E1B91E72BE64EB300751288 /* UploadImageQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageQuery.swift; sourceTree = "<group>"; };
 		2E1E93272BE6D28700E9F9A5 /* MyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
 		2E1E932A2BE6D4F800E9F9A5 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		2E25E1922BFC2BBA00462F8C /* UIImage+Compression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Compression.swift"; sourceTree = "<group>"; };
 		2E38D54E2BE4DB430028A172 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
 		2E38D5502BE4DD760028A172 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
 		2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelErrorProtocol.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */,
 				2E8F986B2BCD900400E9A79A /* UITextField+addLeftPadding.swift */,
 				2E7198332BE78CAA00C8F334 /* String + formattedAsCurrency.swift */,
+				2E25E1922BFC2BBA00462F8C /* UIImage+Compression.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 				2E7198342BE78CAA00C8F334 /* String + formattedAsCurrency.swift in Sources */,
+				2E25E1932BFC2BBA00462F8C /* UIImage+Compression.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
