@@ -142,15 +142,6 @@ class Permissions: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("locationManager >> didUpdateLocations ")
-        
-//        var longitude = CLLocationDegrees()
-//        var latitude = CLLocationDegrees()
-         
-//        if let location = locations.first {
-//            longitude = location.coordinate.latitude
-//            latitude = location.coordinate.longitude
-//        }
         
         DispatchQueue.global(qos: .background).async {
             manager.stopUpdatingLocation()

@@ -7,7 +7,6 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 
 extension Reactive where Base: UIScrollView {
     var reachedBottom: Observable<Void> {
@@ -17,7 +16,7 @@ extension Reactive where Base: UIScrollView {
                 let scrollContentSizeHeight = self.base.contentSize.height
                 let scrollOffset = contentOffset.y
                 let bottomEdge = scrollOffset + scrollViewHeight
-                return bottomEdge >= scrollContentSizeHeight - 50 // Threshold of 50 points before bottom
+                return bottomEdge >= scrollContentSizeHeight - 50
             }
             .distinctUntilChanged()
             .filter { $0 }

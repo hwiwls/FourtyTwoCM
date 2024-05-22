@@ -15,7 +15,7 @@ final class FeedPageViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     var next_cursor: String?
     private var currentLocation: CLLocation?
-    private var minimumRequiredPosts = 30 // 최소로 가져와야 하는 포스트 수를 지정.
+    private var minimumRequiredPosts = 30 // 가져와야 하는 포스트 수를 지정.
 
     struct Input {
         let trigger: Observable<Void>

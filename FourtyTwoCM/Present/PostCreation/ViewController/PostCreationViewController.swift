@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-//import Then
+import Toast
 
 final class PostCreationViewController: BaseViewController {
     var viewModel: PostCreationViewModel!
@@ -68,6 +68,13 @@ final class PostCreationViewController: BaseViewController {
         output.postSubmitted
             .subscribe(onNext: { [weak self] _ in
                 self?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] message in
+                self?.view.makeToast(message, duration: 2.0, position: .top)
             })
             .disposed(by: disposeBag)
     }
