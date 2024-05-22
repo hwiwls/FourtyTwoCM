@@ -33,7 +33,6 @@ final class MyLikesViewModel: ViewModelType {
         input.trigger
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
-                print("Trigger: viewWillAppear")
                 self.currentPage.onNext(nil)
                 return self.fetchPosts(reset: true)
             }
@@ -45,10 +44,9 @@ final class MyLikesViewModel: ViewModelType {
 
         input.loadNextPage
             .withLatestFrom(currentPage)
-            .filter { $0 != "0" }  // 더 이상 로드할 페이지가 없을 때는 요청하지 않음
+            .filter { $0 != "0" }
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
-                print("Trigger: loadNextPage")
                 return self.fetchPosts(reset: false)
             }
             .withLatestFrom(posts) { (newPosts, existingPosts) in
@@ -69,32 +67,27 @@ final class MyLikesViewModel: ViewModelType {
 
     private func fetchPosts(reset: Bool) -> Observable<[Post]> {
         guard ((try? isLoading.value()) == false) else {
-            print("fetchPosts called but already loading")
+            print("아직 로딩중입니다.")
             return .empty()
         }
 
         if reset {
             currentPage.onNext(nil)
-            print("Resetting currentPage")
         }
 
         isLoading.onNext(true)
-        print("Fetching posts with currentPage: \(String(describing: try? currentPage.value()))")
-        let query = ViewMyLikesQuery(next: try? currentPage.value(), limit: "6")
+        let query = ViewMyLikesQuery(next: try? currentPage.value(), limit: "10")
 
         return NetworkManager.performRequest(route: .viewMyLikes(query: query), dataType: FeedModel.self)
             .asObservable()
             .do(onDispose: { [weak self] in
                 self?.isLoading.onNext(false)
-                print("Fetch posts completed")
             })
             .flatMap { [weak self] feedModel -> Observable<[Post]> in
                 if feedModel.nextCursor == "0" {
                     self?.currentPage.onNext("0")
-                    print("No more pages to load")
                 } else {
                     self?.currentPage.onNext(feedModel.nextCursor)
-                    print("Next page cursor: \(feedModel.nextCursor)")
                 }
                 return .just(feedModel.data)
             }

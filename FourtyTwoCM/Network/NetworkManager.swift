@@ -76,13 +76,13 @@ struct NetworkManager {
                     default:
                         break
                     }
-                }, with: urlRequest)
+                }, with: urlRequest, interceptor: APIInterceptor()) // 인터셉터 추가
                 .validate(statusCode: 200..<300)
                 .responseDecodable(of: FileModel.self) { response in
                     switch response.result {
                     case .success(let data):
-                               print("Decodable success: \(data)")
-                               single(.success(data))
+                        print("Decodable success: \(data)")
+                        single(.success(data))
                     case .failure(_):
                         if let httpResponse = response.response, let data = response.data {
                             single(.failure(APIError.mapError(from: httpResponse, data: data)))
@@ -97,7 +97,4 @@ struct NetworkManager {
             return Disposables.create()
         }
     }
-    
-    
-    
 }
