@@ -21,6 +21,8 @@ final class FeedPageViewController: UIPageViewController {
     private let progressBarMaxValue: Float = 7.0
     private var elapsedTime: Float = 0.0
     
+    private var isLastPageReached = false
+    
     private let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
@@ -115,10 +117,10 @@ final class FeedPageViewController: UIPageViewController {
     private func resetTimerAndProgress() {
         timer?.invalidate()  // 기존 타이머 중지
         elapsedTime = 0      // 경과 시간 리셋
+        isLastPageReached = (currentIndex == contentViewControllers.count - 1) // 마지막 페이지 여부 설정
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
         updateProgressBarForCurrentPage()  // 프로그레스 바 업데이트
     }
-
 
     
     private func setupTimer() {
@@ -128,15 +130,18 @@ final class FeedPageViewController: UIPageViewController {
     @objc private func timerAction() {
         elapsedTime += 1.0
         if elapsedTime >= progressBarMaxValue {
-            if contentViewControllers.count > 1 {  // 페이지가 1개를 초과할 때만 다음 페이지로 이동
-                currentIndex = (currentIndex + 1) % contentViewControllers.count
+            if currentIndex < contentViewControllers.count - 1 {
+                currentIndex += 1
                 setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+                resetTimerAndProgress()  // 새 페이지로 전환 시 프로그레스 바와 타이머 재설정
+            } else {
+                timer?.invalidate()
+                contentViewControllers[currentIndex].updateProgressBar(progress: 1.0) // 마지막 페이지에서는 프로그레스 바를 꽉 채우고 멈춤
             }
-            resetTimerAndProgress()  // 새 페이지로 전환 시 프로그레스 바와 타이머 재설정
         } else {
             if currentIndex < contentViewControllers.count {
-                        contentViewControllers[currentIndex].updateProgressBar(progress: elapsedTime / progressBarMaxValue)
-                    }
+                contentViewControllers[currentIndex].updateProgressBar(progress: elapsedTime / progressBarMaxValue)
+            }
         }
     }
 
