@@ -48,7 +48,6 @@ final class PostCreationViewModel: ViewModelType {
                 return self.submitPost(with: files)
             }
             .subscribe(onNext: { [weak self] _ in
-                NotificationCenter.default.post(name: .postUploaded, object: nil)
                 self?.postSubmittedSubject.onNext(())
             }, onError: { [weak self] error in
                 self?.errorMessageSubject.onNext((error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다.")
@@ -94,8 +93,4 @@ final class PostCreationViewModel: ViewModelType {
                     }
             }
     }
-}
-
-extension Notification.Name {
-    static let postUploaded = Notification.Name("postUploaded")
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-//import Then
 import PhotosUI
 
 final class TabBarController: UITabBarController, PHPickerViewControllerDelegate {
