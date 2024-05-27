@@ -4,7 +4,6 @@
 //
 //  Created by hwijinjeong on 4/15/24.
 //
-
 import UIKit
 import RxSwift
 import RxCocoa
@@ -32,12 +31,6 @@ final class FeedPageViewController: UIPageViewController {
         requestLocationAuthorization()
         bind()
         setupTimer()
-        configureSubscriptions()
-    }
-    
-    
-    private func configureSubscriptions() {
-        NotificationCenter.default.addObserver(self, selector: #selector(newPostReceived), name: .postUploaded, object: nil)
     }
 
     private var newPostAddedSubject = PublishSubject<Void>()
@@ -122,6 +115,7 @@ final class FeedPageViewController: UIPageViewController {
         updateProgressBarForCurrentPage()  // 프로그레스 바 업데이트
     }
 
+
     
     private func setupTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
@@ -133,7 +127,7 @@ final class FeedPageViewController: UIPageViewController {
             if currentIndex < contentViewControllers.count - 1 {
                 currentIndex += 1
                 setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
-                resetTimerAndProgress()  // 새 페이지로 전환 시 프로그레스 바와 타이머 재설정
+                resetTimerAndProgress() // 새 페이지로 전환 시 프로그레스 바와 타이머 재설정
             } else {
                 timer?.invalidate()
                 contentViewControllers[currentIndex].updateProgressBar(progress: 1.0) // 마지막 페이지에서는 프로그레스 바를 꽉 채우고 멈춤
@@ -237,5 +231,3 @@ extension FeedPageViewController: UIPageViewControllerDelegate {
         contentViewControllers.append(contentsOf: newViewControllers)
     }
 }
-
-
