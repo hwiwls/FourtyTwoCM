@@ -67,7 +67,7 @@ final class PostCreationViewController: BaseViewController {
 
         output.postSubmitted
             .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.dismissAndSwitchToMyPage()
             })
             .disposed(by: disposeBag)
         
@@ -77,6 +77,15 @@ final class PostCreationViewController: BaseViewController {
                 self?.view.makeToast(message, duration: 2.0, position: .top)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func dismissAndSwitchToMyPage() {
+        dismiss(animated: true) {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let tabBarController = windowScene.windows.first?.rootViewController as? TabBarController else {
+                return
+            }
+            tabBarController.selectedIndex = 2
+        }
     }
     
     @objc private func closeButtonTapped() {
