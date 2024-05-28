@@ -294,12 +294,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		2E520B0F2BF301EA0034C2F2 /* CollectionViewCell */ = {
+		2E520B0F2BF301EA0034C2F2 /* CustomCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				2EE00AC52BF24B7B003297A9 /* PostCollectionViewCell.swift */,
 			);
-			path = CollectionViewCell;
+			path = CustomCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		2E56664C2BD671070018E8E7 /* PageViewController */ = {
@@ -611,6 +611,7 @@
 		2E8F98662BCD85B300E9A79A /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				2E520B0F2BF301EA0034C2F2 /* CustomCollectionViewCell */,
 				2E56664A2BD663FE0018E8E7 /* GradientView.swift */,
 				2E8F98672BCD85CA00E9A79A /* PointButton.swift */,
 				2E8F98692BCD85F300E9A79A /* SignTextField.swift */,
@@ -747,7 +748,6 @@
 		2EEAC02F2BF0DF4100F56645 /* MyPost */ = {
 			isa = PBXGroup;
 			children = (
-				2E520B0F2BF301EA0034C2F2 /* CollectionViewCell */,
 				2E520B0C2BF301D40034C2F2 /* ViewModel */,
 				2E520B0B2BF301CD0034C2F2 /* ViewController */,
 			);
