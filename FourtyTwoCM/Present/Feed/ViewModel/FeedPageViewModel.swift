@@ -6,157 +6,89 @@
 //
 
 import Foundation
-import CoreLocation
 import RxSwift
 import RxCocoa
 
 final class FeedPageViewModel: ViewModelType {
-    
+
     var disposeBag = DisposeBag()
-    var next_cursor: String?
-    private var currentLocation: CLLocation?
-    private var minimumRequiredPosts = 30 // 가져와야 하는 포스트 수를 지정.
+    private let currentPage = BehaviorSubject<String?>(value: nil)
+    private let isLoading = BehaviorSubject<Bool>(value: false)
+    let errorMessage = PublishSubject<String>()
 
     struct Input {
         let trigger: Observable<Void>
         let fetchNextPage: Observable<Void>
-        let newPostAdded: Observable<Void>
     }
 
     struct Output {
         let posts: Driver<[Post]>
-    }
-
-    func setCurrentLocation(_ location: CLLocation) {
-        currentLocation = location
-        print("현재 위치 위도: \(location.coordinate.latitude), 현재 위치 경도: \(location.coordinate.longitude)")
+        let errorMessage: Driver<String>
     }
 
     func transform(input: Input) -> Output {
-        let initialQuery = ViewPostQuery(product_id: "ker0r0", next: nil, limit: "5")
-        
-        let fetchRequest = Observable.merge(
-            input.trigger.map { _ in initialQuery },
-            input.fetchNextPage.map { _ in ViewPostQuery(product_id: "ker0r0", next: self.next_cursor, limit: "5") },
-            input.newPostAdded.map { _ -> ViewPostQuery in
-                self.next_cursor = nil  // 새 게시글 추가 시 커서 리셋
-                return initialQuery
+        let posts = BehaviorSubject<[Post]>(value: [])
+
+        input.trigger
+            .flatMapLatest { [weak self] _ -> Observable<[Post]> in
+                guard let self = self else { return .empty() }
+                self.currentPage.onNext(nil)
+                return self.fetchPosts(reset: true)
             }
+            .bind(to: posts)
+            .disposed(by: disposeBag)
+
+        input.fetchNextPage
+            .withLatestFrom(currentPage)
+            .filter { $0 != "0" }
+            .flatMapLatest { [weak self] _ -> Observable<[Post]> in
+                guard let self = self else { return .empty() }
+                return self.fetchPosts(reset: false)
+            }
+            .withLatestFrom(posts) { (newPosts, existingPosts) in
+                return existingPosts + newPosts
+            }
+            .bind(to: posts)
+            .disposed(by: disposeBag)
+
+        return Output(
+            posts: posts.asDriver(onErrorJustReturn: []),
+            errorMessage: errorMessage.asDriver(onErrorJustReturn: "")
         )
-
-        let posts = fetchRequest
-            .flatMapLatest { query -> Observable<[Post]> in
-                self.performRequestWithQuery(query)
-                    .asObservable()
-                    .flatMap { feedModel -> Observable<[Post]> in
-                        if let nextCursor = feedModel.nextCursor, nextCursor != "0" {
-                            self.next_cursor = nextCursor
-                        } else {
-                            self.next_cursor = nil
-                        }
-                        let filteredPosts = feedModel.data.filter { self.isValid(post: $0) }
-                        return self.fetchPostsIfNeeded(currentPosts: filteredPosts)
-                    }
-                    .catch { error -> Observable<[Post]> in
-                        print("Error: \(error.localizedDescription)")
-                        return .just([])
-                    }
-            }
-            .asDriver(onErrorJustReturn: [])
-
-        return Output(posts: posts)
     }
 
-
-    private func performRequestWithQuery(_ query: ViewPostQuery) -> Single<FeedModel> {
-        return NetworkManager.performRequest(route: Router.viewPost(query: query), dataType: FeedModel.self)
-            .map { feedModel -> FeedModel in
-                if let nextCursor = feedModel.nextCursor, nextCursor != "0" {
-                    self.next_cursor = nextCursor
-                } else {
-                    self.next_cursor = nil  // 여기에서 커서를 nil로 설정
-                }
-                return feedModel
-            }
-    }
-
-    private func fetchPostsIfNeeded(currentPosts: [Post]) -> Observable<[Post]> {
-        let requiredPostsCount = minimumRequiredPosts
-        return Observable.create { [weak self] observer in
-            var accumulatedPosts = currentPosts
-
-            func loadNextPage() {
-                guard let self = self,
-                      let nextCursor = self.next_cursor,
-                      nextCursor != "0" else {
-                    observer.onNext(accumulatedPosts)
-                    observer.onCompleted()
-                    return
-                }
-
-                let query = ViewPostQuery(product_id: "ker0r0", next: nextCursor, limit: "5")
-                self.performRequestWithQuery(query)
-                    .asObservable()
-                    .subscribe(onNext: { feedModel in
-                        let validPosts = feedModel.data.filter { self.isValid(post: $0) }
-                        accumulatedPosts.append(contentsOf: validPosts)
-
-                        if accumulatedPosts.count >= requiredPostsCount || feedModel.nextCursor == "0" {
-                            observer.onNext(accumulatedPosts)
-                            observer.onCompleted()
-                        } else {
-                            self.next_cursor = feedModel.nextCursor
-                            loadNextPage()
-                        }
-                    }, onError: { error in
-                        observer.onError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-
-            loadNextPage()
-            return Disposables.create()
+    private func fetchPosts(reset: Bool) -> Observable<[Post]> {
+        guard ((try? isLoading.value()) == false) else {
+            return .empty()
         }
-    }
 
-
-    private func fetchMorePosts() -> Observable<[Post]> {
-        guard let nextCursor = next_cursor, nextCursor != "0" else {
-            return .just([])  // 여기에서 빈 배열 반환하도록 수정
+        if reset {
+            currentPage.onNext(nil)
         }
-        let query = ViewPostQuery(product_id: "ker0r0", next: nextCursor, limit: "5")
-        return performRequestWithQuery(query)
+
+        isLoading.onNext(true)
+        let query = ViewPostQuery(product_id: "ker0r0", next: try? currentPage.value(), limit: "5")
+
+        return NetworkManager.performRequest(route: .viewPost(query: query), dataType: FeedModel.self)
             .asObservable()
-            .map { feedModel -> [Post] in
-                return feedModel.data.filter { self.isValid(post: $0) }
+            .do(onDispose: { [weak self] in
+                self?.isLoading.onNext(false)
+            })
+            .flatMap { [weak self] feedModel -> Observable<[Post]> in
+                if feedModel.nextCursor == "0" {
+                    self?.currentPage.onNext("0")
+                } else {
+                    self?.currentPage.onNext(feedModel.nextCursor)
+                }
+                return .just(feedModel.data)
             }
-            .catchAndReturn([])
-    }
-
-    private func isValid(post: Post) -> Bool {
-        guard let lat = Double(post.content1 ?? ""), let lon = Double(post.content2 ?? ""),
-              let currentLocation = self.currentLocation else {
-            return false
-        }
-        let postLocation = CLLocation(latitude: lat, longitude: lon)
-        let distance = postLocation.distance(from: currentLocation)
-        guard let postDate = post.createdAt.toDate() else {
-            return false
-        }
-        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: postDate, to: Date())
-        let timeDiff = (timeComponents.hour ?? 0) * 60 + (timeComponents.minute ?? 0)
-
-        let timeCondition = timeDiff <= (23 * 60 + 59)
-        let contentCondition = post.content3 == "1"
-
-        return (distance <= 1000 && timeCondition) || contentCondition
-    }
-}
-
-extension String {
-    func toDate() -> Date? {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return formatter.date(from: self)
+            .catch { [weak self] error in
+                if let apiError = error as? APIError {
+                    self?.errorMessage.onNext(apiError.errorMessage)
+                } else {
+                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
+                }
+                return .just([])
+            }
     }
 }
