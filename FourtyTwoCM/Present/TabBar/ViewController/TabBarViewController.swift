@@ -43,23 +43,31 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
         
         let feedViewController = UINavigationController(rootViewController: FeedPageViewController())
         let myPageViewController = UINavigationController(rootViewController: MyPageViewController())
+        let postMapViewController = UINavigationController(rootViewController: PostMapViewController())
+        let chattingViewController = UINavigationController(rootViewController: ChattingViewController())
 
         
         let connectActive = resizeImage(image: UIImage(named: "connect_active")!, targetSize: CGSize(width: 32, height: 32))
-        
         let connectUnactive = resizeImage(image: UIImage(named: "connect_unactive")!, targetSize: CGSize(width: 32, height: 32))
         
-        let personActive = resizeImage(image: UIImage(named: "person_active")!, targetSize: CGSize(width: 32, height: 32))
+        let compassActive = resizeImage(image: UIImage(named: "compass_active")!, targetSize: CGSize(width: 32, height: 32))
+        let compassUnactive = resizeImage(image: UIImage(named: "compass_unactive")!, targetSize: CGSize(width: 32, height: 32))
         
+        let circleActive = resizeImage(image: UIImage(named: "circle_active")!, targetSize: CGSize(width: 32, height: 32))
+        let circleUnactive = resizeImage(image: UIImage(named: "circle_unactive")!, targetSize: CGSize(width: 32, height: 32))
+        
+        let personActive = resizeImage(image: UIImage(named: "person_active")!, targetSize: CGSize(width: 32, height: 32))
         let personUnactive = resizeImage(image: UIImage(named: "person_unactive")!, targetSize: CGSize(width: 32, height: 32))
         
         feedViewController.tabBarItem = UITabBarItem(title: "가까워지기", image: connectUnactive, selectedImage: connectActive)
         myPageViewController.tabBarItem = UITabBarItem(title: "마이페이지", image: personUnactive, selectedImage: personActive)
+        postMapViewController.tabBarItem = UITabBarItem(title: "둘러보기", image: compassUnactive, selectedImage: compassActive)
+        chattingViewController.tabBarItem = UITabBarItem(title: "대화하기", image: circleUnactive, selectedImage: circleActive)
 
-        let tabItems = [feedViewController, UIViewController(), myPageViewController]
+        let tabItems = [feedViewController, postMapViewController, UIViewController(), chattingViewController, myPageViewController]
         setViewControllers(tabItems, animated: true)
         
-        tabBar.items?[1].isEnabled = false
+        tabBar.items?[2].isEnabled = false
     }
     
     private func setupMiddleButton() {
