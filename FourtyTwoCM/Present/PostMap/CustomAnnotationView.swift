@@ -69,4 +69,22 @@ final class CustomAnnotationView: MKAnnotationView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    func update(with annotation: CustomAnnotation) {
+        if let imageUrl = annotation.imageName, let url = URL(string: imageUrl) {
+            customImageView.kf.setImage(with: url)
+        }
+    }
+    
+    func select() {
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }
+    }
+    
+    func deselect() {
+        UIView.animate(withDuration: 0.3) {
+            self.backgroundView.transform = .identity
+        }
+    }
 }
