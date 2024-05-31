@@ -10,9 +10,9 @@ import MapKit
 import CoreLocation
 
 class CustomAnnotation: NSObject, MKAnnotation {
-
     @objc dynamic var coordinate: CLLocationCoordinate2D
     var imageName: String?
+    var post: Post?
     
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate

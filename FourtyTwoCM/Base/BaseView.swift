@@ -7,12 +7,12 @@
 
 import UIKit
 
-class BaseCollectionView: UIView {
+class BaseView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
-        setHierarchy()
-        setConstraints()
+        configView()
+        configHierarchy()
+        configLayout()
         
     }
     
@@ -20,7 +20,15 @@ class BaseCollectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setHierarchy() { }
-    func configure() { }
-    func setConstraints() { }
+    func configView() {
+        
+    }
+    
+    func configHierarchy() {
+        
+    }
+    
+    func configLayout() {
+        
+    }
 }
