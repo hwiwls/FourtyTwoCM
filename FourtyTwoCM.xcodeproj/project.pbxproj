@@ -39,7 +39,6 @@
 		2E5C380E2BCA72D000A006FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C380D2BCA72D000A006FB /* Assets.xcassets */; };
 		2E5C38112BCA72D000A006FB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C38102BCA72D000A006FB /* Base */; };
 		2E5C38192BCA734400A006FB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C38182BCA734400A006FB /* .gitignore */; };
-		2E5C381B2BCA73E000A006FB /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2E5C381A2BCA73E000A006FB /* Secrets.xcconfig */; };
 		2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38232BCA7CDC00A006FB /* SignInViewController.swift */; };
 		2E5C38292BCA7DAF00A006FB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C38282BCA7DAF00A006FB /* Alamofire */; };
 		2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5C382B2BCA7DD100A006FB /* Kingfisher */; };
@@ -870,7 +869,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					2E5C38002BCA72CF00A006FB = {
 						CreatedOnToolsVersion = 15.3;
@@ -910,7 +909,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E5C38192BCA734400A006FB /* .gitignore in Resources */,
-				2E5C381B2BCA73E000A006FB /* Secrets.xcconfig in Resources */,
 				2E8F98232BCD4D0B00E9A79A /* SB 어그로OTF M.otf in Resources */,
 				2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */,
 				2E5C380E2BCA72D000A006FB /* Assets.xcassets in Resources */,
