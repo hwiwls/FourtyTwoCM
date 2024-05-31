@@ -25,5 +25,7 @@ extension UIColor {
         
         let backgroundBlack = UIColor(named: "BackgroundBlack") ?? .white
         
+        let lime = UIColor(named: "Lime") ?? .white
+        
     }
 }
