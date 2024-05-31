@@ -113,6 +113,8 @@
 		2EEAC03B2BF0DFEE00F56645 /* MyLikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */; };
 		2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */; };
 		2EEAC0412BF0F9C500F56645 /* MyPageTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */; };
+		2EFE84532C25459D004CBC5E /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */; };
+		2EFE84552C2545CC004CBC5E /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -216,6 +218,8 @@
 		2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLikesViewModel.swift; sourceTree = "<group>"; };
 		2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsViewModel.swift; sourceTree = "<group>"; };
 		2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTabmanViewController.swift; sourceTree = "<group>"; };
+		2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +254,8 @@
 			children = (
 				2E2E99802C240BC50035D50E /* ViewController */,
 				2E2E997F2C240BC00035D50E /* ViewModel */,
+				2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */,
+				2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */,
 			);
 			path = PostMap;
 			sourceTree = "<group>";
@@ -929,6 +935,7 @@
 				2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */,
 				2E5C383B2BCA7EC200A006FB /* UIStackView+addArrangedSubviews.swift in Sources */,
 				2EE00AC62BF24B7B003297A9 /* PostCollectionViewCell.swift in Sources */,
+				2EFE84552C2545CC004CBC5E /* CustomAnnotationView.swift in Sources */,
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2ED643002BD5272500722299 /* FeedPageViewModel.swift in Sources */,
 				2E38D55B2BE53F770028A172 /* PostCreationViewController.swift in Sources */,
@@ -946,6 +953,7 @@
 				2EA184712BF3275700A84FEA /* UICollectionView+ReachedBottom.swift in Sources */,
 				2ED642FB2BD5270D00722299 /* FeedContentViewController.swift in Sources */,
 				2ED643022BD52A1A00722299 /* IconBtn.swift in Sources */,
+				2EFE84532C25459D004CBC5E /* CustomAnnotation.swift in Sources */,
 				2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */,
 				2EB4443B2BEF7A2D009D7684 /* CommentViewModel.swift in Sources */,
 				2E5C38242BCA7CDC00A006FB /* SignInViewController.swift in Sources */,
