@@ -33,7 +33,7 @@ final class FeedPageViewModel: ViewModelType {
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
                 self.currentPage.onNext(nil)
-                return self.fetchPosts(reset: true)
+                return self.fetchPosts()
             }
             .bind(to: posts)
             .disposed(by: disposeBag)
@@ -43,7 +43,7 @@ final class FeedPageViewModel: ViewModelType {
             .filter { $0 != "0" }
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
-                return self.fetchPosts(reset: false)
+                return self.fetchPosts()
             }
             .withLatestFrom(posts) { (newPosts, existingPosts) in
                 return existingPosts + newPosts
@@ -57,16 +57,13 @@ final class FeedPageViewModel: ViewModelType {
         )
     }
 
-    private func fetchPosts(reset: Bool) -> Observable<[Post]> {
+    private func fetchPosts() -> Observable<[Post]> {
         guard ((try? isLoading.value()) == false) else {
             return .empty()
         }
 
-        if reset {
-            currentPage.onNext(nil)
-        }
-
         isLoading.onNext(true)
+
         let query = ViewPostQuery(product_id: "ker0r0", next: try? currentPage.value(), limit: "5")
 
         return NetworkManager.performRequest(route: .viewPost(query: query), dataType: FeedModel.self)
