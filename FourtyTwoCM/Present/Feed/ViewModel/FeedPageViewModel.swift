@@ -58,25 +58,23 @@ final class FeedPageViewModel: ViewModelType {
     }
 
     private func fetchPosts() -> Observable<[Post]> {
-        guard ((try? isLoading.value()) == false) else {
-            return .empty()
-        }
+//        guard ((try? isLoading.value()) == false) else {
+//            return .empty()
+//        }
 
-        isLoading.onNext(true)
+//        isLoading.onNext(true)
 
         let query = ViewPostQuery(product_id: "ker0r0", next: try? currentPage.value(), limit: "5")
 
         return NetworkManager.performRequest(route: .viewPost(query: query), dataType: FeedModel.self)
             .asObservable()
-            .do(onDispose: { [weak self] in
+            .do(onSubscribe: { [weak self] in
+                self?.isLoading.onNext(true)
+            }, onDispose: { [weak self] in
                 self?.isLoading.onNext(false)
             })
             .flatMap { [weak self] feedModel -> Observable<[Post]> in
-                if feedModel.nextCursor == "0" {
-                    self?.currentPage.onNext("0")
-                } else {
-                    self?.currentPage.onNext(feedModel.nextCursor)
-                }
+                self?.currentPage.onNext(feedModel.nextCursor == "0" ? "0" : feedModel.nextCursor)
                 return .just(feedModel.data)
             }
             .catch { [weak self] error in

@@ -128,7 +128,7 @@ extension FeedPageViewController {
                 setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
                 resetTimerAndProgress()
             } else {
-                timer?.invalidate()
+//                timer?.invalidate()
                 contentViewControllers[currentIndex].updateProgressBar(progress: 1.0)
                 loadNextPage()
             }
@@ -140,6 +140,7 @@ extension FeedPageViewController {
     }
 
     private func loadNextPage() {
+        guard !isLoadingNextPage else { return } // 이미 로딩 중이면 반환
         isLoadingNextPage = true // 다음 페이지 로드 중으로 설정
 
         let fetchNextPage = Observable.just(())
@@ -160,6 +161,7 @@ extension FeedPageViewController {
             })
             .disposed(by: disposeBag)
     }
+
 
     private func addNewViewControllers(newPosts: [Post]) {
         let newViewControllers = newPosts.map { post -> FeedContentViewController in
@@ -215,16 +217,29 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+//        guard let viewControllerIndex = contentViewControllers.firstIndex(of: viewController as! FeedContentViewController) else {
+//            return nil
+//        }
+//        
+//        let nextIndex = viewControllerIndex + 1
+//        guard nextIndex < contentViewControllers.count else {
+//            return nil
+//        }
+//        
+//        return contentViewControllers[nextIndex]
+        
         guard let viewControllerIndex = contentViewControllers.firstIndex(of: viewController as! FeedContentViewController) else {
-            return nil
-        }
-        
-        let nextIndex = viewControllerIndex + 1
-        guard nextIndex < contentViewControllers.count else {
-            return nil
-        }
-        
-        return contentViewControllers[nextIndex]
+                return nil
+            }
+            
+            let nextIndex = viewControllerIndex + 1
+            if nextIndex < contentViewControllers.count {
+                return contentViewControllers[nextIndex]
+            } else {
+                // 마지막 페이지인 경우 다음 페이지 로드 트리거
+                loadNextPage()
+                return nil
+            }
     }
 }
 
