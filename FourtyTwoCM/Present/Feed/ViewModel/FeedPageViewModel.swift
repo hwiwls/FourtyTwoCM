@@ -58,12 +58,6 @@ final class FeedPageViewModel: ViewModelType {
     }
 
     private func fetchPosts() -> Observable<[Post]> {
-//        guard ((try? isLoading.value()) == false) else {
-//            return .empty()
-//        }
-
-//        isLoading.onNext(true)
-
         let query = ViewPostQuery(product_id: "ker0r0", next: try? currentPage.value(), limit: "5")
 
         return NetworkManager.performRequest(route: .viewPost(query: query), dataType: FeedModel.self)
