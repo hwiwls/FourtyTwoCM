@@ -14,13 +14,9 @@ class FeedContentViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     var post: BehaviorSubject<Post>
-
     var isLiked = BehaviorSubject<Bool>(value: false)
-    
-    var postDeleteSuccess = PublishSubject<Void>()
-    
-    var errorMessage = PublishSubject<String>()
-    
+    var postDeleteSuccess = PublishRelay<Void>()
+    var errorMessage = PublishRelay<String>()
     private var followingStatus = BehaviorSubject<Bool>(value: false)
     
     var currentPostId: String? {
@@ -34,14 +30,14 @@ class FeedContentViewModel: ViewModelType {
         let followBtnTapped: Observable<Void>
         let commentPostBtnTapped: Observable<Void>
     }
-
+    
     struct Output {
         let content: Driver<String>
         let nickname: Driver<String>
         let profileImageUrl: Driver<String?>
         let postImageUrl: Driver<String?>
         let likeStatus: Driver<Bool>
-        let likeButtonImage: Driver<String>  // 좋아요 버튼 이미지 이름을 제공
+        let likeButtonImage: Driver<String>
         let ellipsisVisibility: Driver<Bool>
         let goReservationVisibility: Driver<Bool>
         let showActionSheet: Driver<Void>
@@ -51,38 +47,37 @@ class FeedContentViewModel: ViewModelType {
         let isFollowButtonHidden: Driver<Bool>
         let comments: Driver<[Comment]>
     }
-
+    
     init(post: Post) {
         self.post = BehaviorSubject<Post>(value: post)
         
         let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-        // 초기 좋아요 상태 설정
         let initialIsLiked = post.likes?.contains(userID) ?? false
         self.isLiked.onNext(initialIsLiked)
     }
-
+    
     func transform(input: Input) -> Output {
         let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
-        
-        
+
         let likeStatus = input.likeBtnTapped
-                .withLatestFrom(isLiked) { !$1 }
-                .flatMapLatest { [weak self] newStatus -> Observable<Bool> in
-                    guard let self = self, let postID = try? self.post.value().postID else {
-                        return .just(false)
-                    }
-                    return self.toggleLikeStatus(for: postID, newStatus: newStatus)
+            .withLatestFrom(isLiked) { !$1 }
+            .flatMapLatest { [weak self] newStatus -> Observable<Bool> in
+                guard let self = self, let postID = try? self.post.value().postID else {
+                    return .just(false)
                 }
-                .do(onNext: isLiked.onNext)
-                .asDriver(onErrorJustReturn: false)
-            
+                return self.toggleLikeStatus(for: postID, newStatus: newStatus)
+            }
+            .do(onNext: isLiked.onNext)
+            .asDriver(onErrorJustReturn: false)
+        
         let likeButtonImage = isLiked
             .map { $0 ? "heart.fill" : "heart" }
             .asDriver(onErrorJustReturn: "heart")
-        
-        let ellipsisVisibility = post.map { $0.creator.userID != userID } 
-            .asDriver(onErrorJustReturn: false)
 
+        let ellipsisVisibility = post
+            .map { $0.creator.userID != userID }
+            .asDriver(onErrorJustReturn: false)
+        
         let content = post.map { $0.content }.asDriver(onErrorJustReturn: "")
         let nickname = post.map { $0.creator.nick }.asDriver(onErrorJustReturn: "")
         let profileImageUrl = post
@@ -91,27 +86,27 @@ class FeedContentViewModel: ViewModelType {
         let postImageUrl = post
             .map { $0.files.first?.prependBaseURL() }
             .asDriver(onErrorJustReturn: nil)
-        
+
         let showActionSheet = input.ellipsisBtnTapped
-                    .asDriver(onErrorJustReturn: ())
-        
+            .asDriver(onErrorJustReturn: ())
+
         let goReservationVisibility = post
-                .map { $0.content3 != "2" }
-                .asDriver(onErrorJustReturn: false)
-        
+            .map { $0.content3 != "2" }
+            .asDriver(onErrorJustReturn: false)
+
         let formattedPrice = post.map { post in
             let price = post.content5?.formattedAsCurrency() ?? "가격 정보 없음"
             let product = post.content4 ?? "제품 정보 없음"
             return "\(product) \(price)"
         }.asDriver(onErrorJustReturn: "데이터 로드 실패")
-        
 
         let imageUrls = post.map { $0.files }
             .asDriver(onErrorJustReturn: [])
         
         let myProfile = input.viewDidLoadTrigger
-            .flatMapLatest { _ -> Single<MyProfileModel> in
+            .flatMapLatest { _ -> Observable<MyProfileModel> in
                 NetworkManager.performRequest(route: Router.myProfile, dataType: MyProfileModel.self)
+                    .asObservable()
             }
             .share(replay: 1, scope: .whileConnected)
 
@@ -120,16 +115,17 @@ class FeedContentViewModel: ViewModelType {
                 profile.following.contains { $0.userID == post.creator.userID }
             }
             .do(onNext: { [weak self] isFollowing in
-                self?.followingStatus.onNext(isFollowing)  // 초기 팔로우 상태 설정
+                self?.followingStatus.onNext(isFollowing)
             })
 
         let followStateChanges = input.followBtnTapped
             .withLatestFrom(followingStatus)
-            .flatMapLatest { [weak self] isFollowing -> Single<Bool> in
-                guard let self = self else { return Single.just(isFollowing) }
+            .flatMapLatest { [weak self] isFollowing -> Observable<Bool> in
+                guard let self = self else { return Observable.just(isFollowing) }
                 let userID = try self.post.value().creator.userID
                 let route = isFollowing ? Router.unfollowUser(userId: userID) : Router.followUser(userId: userID)
                 return NetworkManager.performRequest(route: route, dataType: FollowModel.self)
+                    .asObservable()
                     .map { $0.followingStatus }
                     .catchAndReturn(isFollowing)
             }
@@ -147,22 +143,22 @@ class FeedContentViewModel: ViewModelType {
         let isFollowButtonHidden = post
             .map { $0.creator.userID == userID }
             .asDriver(onErrorJustReturn: false)
-        
+
         let comments = input.commentPostBtnTapped
-                .flatMapLatest { [weak self] _ -> Observable<[Comment]> in
-                    guard let self = self, let postComments = try? self.post.value().comments else {
-                        return .just([])
-                    }
-                    return .just(postComments)
+            .flatMapLatest { [weak self] _ -> Observable<[Comment]> in
+                guard let self = self, let postComments = try? self.post.value().comments else {
+                    return .just([])
                 }
-                .asDriver(onErrorJustReturn: [])
+                return .just(postComments)
+            }
+            .asDriver(onErrorJustReturn: [])
 
         return Output(
             content: content,
             nickname: nickname,
             profileImageUrl: profileImageUrl,
             postImageUrl: postImageUrl,
-            likeStatus: likeStatus, 
+            likeStatus: likeStatus,
             likeButtonImage: likeButtonImage,
             ellipsisVisibility: ellipsisVisibility,
             goReservationVisibility: goReservationVisibility,
@@ -175,44 +171,35 @@ class FeedContentViewModel: ViewModelType {
         )
     }
     
-    // 다른 파일에서 APIError 사용하는 부분 수정
     private func toggleLikeStatus(for postID: String, newStatus: Bool) -> Observable<Bool> {
         let query = LikeQuery(like_status: newStatus)
         return NetworkManager.performRequest(route: Router.likePost(postId: postID, query: query), dataType: LikeModel.self)
-            .map { $0.likeStatus }
             .asObservable()
-            .catch { error -> Observable<Bool> in
+            .map { $0.likeStatus }
+            .catch { [weak self] error -> Observable<Bool> in
                 if let apiError = error as? APIError {
-                    self.errorMessage.onNext(apiError.errorMessage)
+                    self?.errorMessage.accept(apiError.errorMessage)
                 } else {
-                    self.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
+                    self?.errorMessage.accept("알 수 없는 오류가 발생했습니다.")
                 }
                 return .just(false)
             }
     }
-
-
+    
     func confirmDeletion() {
         guard let postID = try? post.value().postID else { return }
-        NetworkManager.requestDeletePost(postID: postID)
-            .subscribe(onSuccess: { [weak self] _ in
-                self?.postDeleteSuccess.onNext(())
-            }, onFailure: { [weak self] error in
+        NetworkManager.performRequest(route: Router.deletePost(postId: postID))
+            .asObservable()
+            .map { _ in Void() }
+            .subscribe(onNext: { [weak self] in
+                self?.postDeleteSuccess.accept(())
+            }, onError: { [weak self] error in
                 if let apiError = error as? APIError {
-                    self?.errorMessage.onNext(apiError.errorMessage)
+                    self?.errorMessage.accept(apiError.errorMessage)
                 } else {
-                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
+                    self?.errorMessage.accept("알 수 없는 오류가 발생했습니다.")
                 }
             })
             .disposed(by: disposeBag)
-    }
-
-
-
-}
-
-extension String {
-    func prependBaseURL() -> String {
-        return BaseURL.baseURL.rawValue + "/" + self
     }
 }

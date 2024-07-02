@@ -113,6 +113,7 @@
 		2EEAC03B2BF0DFEE00F56645 /* MyLikesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */; };
 		2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */; };
 		2EEAC0412BF0F9C500F56645 /* MyPageTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */; };
+		2EF30B612C34791E00404368 /* String+prependBaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF30B602C34791E00404368 /* String+prependBaseURL.swift */; };
 		2EFE84532C25459D004CBC5E /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */; };
 		2EFE84552C2545CC004CBC5E /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */; };
 /* End PBXBuildFile section */
@@ -219,6 +220,7 @@
 		2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLikesViewModel.swift; sourceTree = "<group>"; };
 		2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsViewModel.swift; sourceTree = "<group>"; };
 		2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTabmanViewController.swift; sourceTree = "<group>"; };
+		2EF30B602C34791E00404368 /* String+prependBaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+prependBaseURL.swift"; sourceTree = "<group>"; };
 		2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -552,6 +554,7 @@
 				2E5D7B922BD82C2200E25B26 /* UIImageView+loadImage.swift */,
 				2E520B102BF308E80034C2F2 /* UIViewController+RxLifecycle.swift */,
 				2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */,
+				2EF30B602C34791E00404368 /* String+prependBaseURL.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -925,6 +928,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EEAC0412BF0F9C500F56645 /* MyPageTabmanViewController.swift in Sources */,
+				2EF30B612C34791E00404368 /* String+prependBaseURL.swift in Sources */,
 				2EEAC0342BF0DF7B00F56645 /* MyLikesViewController.swift in Sources */,
 				2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */,
 				2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */,

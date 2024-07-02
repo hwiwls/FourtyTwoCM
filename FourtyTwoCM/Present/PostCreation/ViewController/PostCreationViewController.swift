@@ -84,7 +84,7 @@ final class PostCreationViewController: BaseViewController {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let tabBarController = windowScene.windows.first?.rootViewController as? TabBarController else {
                 return
             }
-            tabBarController.selectedIndex = 2
+            tabBarController.selectedIndex = 4
         }
     }
     
