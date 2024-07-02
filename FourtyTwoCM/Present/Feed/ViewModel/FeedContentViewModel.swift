@@ -191,14 +191,16 @@ class FeedContentViewModel: ViewModelType {
         NetworkManager.performRequest(route: Router.deletePost(postId: postID))
             .asObservable()
             .map { _ in Void() }
-            .subscribe(onNext: { [weak self] in
-                self?.postDeleteSuccess.accept(())
-            }, onError: { [weak self] error in
+            .catch { [weak self] error -> Observable<Void> in
                 if let apiError = error as? APIError {
                     self?.errorMessage.accept(apiError.errorMessage)
                 } else {
                     self?.errorMessage.accept("알 수 없는 오류가 발생했습니다.")
                 }
+                return .just(())
+            }
+            .subscribe(onNext: { [weak self] in
+                self?.postDeleteSuccess.accept(())
             })
             .disposed(by: disposeBag)
     }

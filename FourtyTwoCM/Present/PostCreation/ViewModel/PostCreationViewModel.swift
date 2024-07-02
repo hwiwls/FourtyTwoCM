@@ -65,7 +65,16 @@ final class PostCreationViewModel: ViewModelType {
         guard let image = try? imageSubject.value() else {
             return Observable.just([])
         }
-        let uploadQuery = UploadImageQuery(files: image.pngData() ?? Data())
+        
+        let targetSize = CGSize(width: 2556, height: 1179) // 해상도
+        guard let resizedImage = image.resizedImage(targetSize: targetSize), let compressedData = resizedImage.compressedData(targetSizeInKB: 3000) else {   // 용량. 3000KB
+            print("이미지 압축 실패")
+            errorMessageSubject.onNext("이미지 압축 실패")
+            return Observable.just([])
+        }
+        
+        print("압축된 이미지 용량: \(compressedData.count) bytes")
+        let uploadQuery = UploadImageQuery(files: compressedData)
         return NetworkManager.performMultipartRequest(route: .uploadFile(query: uploadQuery))
             .asObservable()
             .map { $0.files }
@@ -87,7 +96,7 @@ final class PostCreationViewModel: ViewModelType {
                 return NetworkManager.performRequest(route: .uploadPost(query: query), dataType: UploadPostModel.self)
                     .asObservable()
                     .map { _ in () }
-                    .catch { error in
+                    .catch { [weak self] error in
                         self?.errorMessageSubject.onNext((error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다.")
                         return Observable.just(())
                     }
