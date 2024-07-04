@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import Toast
 
 final class SignUpViewModel: ViewModelType {
     var disposeBag = DisposeBag()
@@ -30,9 +29,9 @@ final class SignUpViewModel: ViewModelType {
     }
 
     func transform(input: Input) -> Output {
-        let emailValid = BehaviorSubject<Bool>(value: false)
-        let passwordValid = BehaviorSubject<Bool>(value: false)
-        let nicknameValid = BehaviorSubject<Bool>(value: false)
+        let emailValid = BehaviorRelay(value: false)
+        let passwordValid = BehaviorRelay(value: false)
+        let nicknameValid = BehaviorRelay(value: false)
         let signUpSuccessTrigger = PublishRelay<Void>()
 
         input.emailValidationButtonTapped
@@ -46,12 +45,12 @@ final class SignUpViewModel: ViewModelType {
                 switch event {
                 case .next(let validationModel):
                     if validationModel.message == "사용 가능한 이메일입니다." {
-                        emailValid.onNext(true)
+                        emailValid.accept(true)
                     } else {
-                        emailValid.onNext(false)
+                        emailValid.accept(false)
                     }
                 case .error:
-                    emailValid.onNext(false)
+                    emailValid.accept(false)
                 default:
                     break
                 }
@@ -65,10 +64,10 @@ final class SignUpViewModel: ViewModelType {
         let passwordValidationResult = input.passwordText
             .map { password in
                 if password.count >= 5 && password.count <= 20 {
-                    passwordValid.onNext(true)
+                    passwordValid.accept(true)
                     return "사용 가능한 비밀번호입니다."
                 } else {
-                    passwordValid.onNext(false)
+                    passwordValid.accept(false)
                     return "비밀번호는 5~20자로 구성되어야 합니다."
                 }
             }
@@ -77,10 +76,10 @@ final class SignUpViewModel: ViewModelType {
         let nicknameValidationResult = input.nicknameText
             .map { nickname in
                 if nickname.count >= 3 && nickname.count <= 10 {
-                    nicknameValid.onNext(true)
+                    nicknameValid.accept(true)
                     return "사용 가능한 닉네임입니다."
                 } else {
-                    nicknameValid.onNext(false)
+                    nicknameValid.accept(false)
                     return "닉네임은 3~10자로 구성되어야 합니다."
                 }
             }
