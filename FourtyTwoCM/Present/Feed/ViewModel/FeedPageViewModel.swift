@@ -28,7 +28,6 @@ final class FeedPageViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
         let posts = BehaviorRelay<[Post]>(value: [])
-        let fetchPostsTrigger = PublishRelay<Void>()
         
         let loadInitialPosts = input.trigger
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in

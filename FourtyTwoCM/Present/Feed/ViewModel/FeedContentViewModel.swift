@@ -186,8 +186,7 @@ class FeedContentViewModel: ViewModelType {
             }
     }
     
-    func confirmDeletion() {
-        guard let postID = try? post.value().postID else { return }
+    func confirmDeletion(postID: String) {
         NetworkManager.performRequest(route: Router.deletePost(postId: postID))
             .asObservable()
             .map { _ in Void() }
