@@ -68,7 +68,6 @@
 		2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */; };
 		2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98402BCD73FA00E9A79A /* TabBarViewController.swift */; };
 		2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F984C2BCD74A100E9A79A /* MyPageViewController.swift */; };
-		2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98522BCD74B200E9A79A /* SearchViewController.swift */; };
 		2E8F98552BCD74B700E9A79A /* FeedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98542BCD74B700E9A79A /* FeedPageViewController.swift */; };
 		2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */; };
 		2E8F985A2BCD7EDA00E9A79A /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */; };
@@ -177,7 +176,6 @@
 		2E8F983C2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addCharacterSpacing.swift"; sourceTree = "<group>"; };
 		2E8F98402BCD73FA00E9A79A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		2E8F984C2BCD74A100E9A79A /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
-		2E8F98522BCD74B200E9A79A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2E8F98542BCD74B700E9A79A /* FeedPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPageViewController.swift; sourceTree = "<group>"; };
 		2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
@@ -524,7 +522,6 @@
 				2EB7F3342BE77B670064276D /* Reservation */,
 				2E8F98462BCD747B00E9A79A /* MyPage */,
 				2E38D5572BE53F560028A172 /* PostCreation */,
-				2E8F98432BCD743100E9A79A /* Search */,
 				2E8F98662BCD85B300E9A79A /* CustomView */,
 			);
 			path = Present;
@@ -635,14 +632,6 @@
 			path = Feed;
 			sourceTree = "<group>";
 		};
-		2E8F98432BCD743100E9A79A /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				2E8F98482BCD748A00E9A79A /* ViewController */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
 		2E8F98462BCD747B00E9A79A /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,14 +647,6 @@
 			isa = PBXGroup;
 			children = (
 				2E56664C2BD671070018E8E7 /* PageViewController */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
-		2E8F98482BCD748A00E9A79A /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				2E8F98522BCD74B200E9A79A /* SearchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -995,7 +976,6 @@
 				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2EB4443D2BEF8557009D7684 /* PaddingTextField.swift in Sources */,
-				2E8F98532BCD74B200E9A79A /* SearchViewController.swift in Sources */,
 				2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */,
 				2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */,
 				2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */,
