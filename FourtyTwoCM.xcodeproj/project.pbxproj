@@ -581,13 +581,6 @@
 			path = Payment;
 			sourceTree = "<group>";
 		};
-		2E71983F2BE7D9A900C8F334 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		2E8F98202BCD4D0B00E9A79A /* SB_Mac_Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -746,7 +739,6 @@
 		2EB7F3342BE77B670064276D /* Reservation */ = {
 			isa = PBXGroup;
 			children = (
-				2E71983F2BE7D9A900C8F334 /* ViewModel */,
 				2EB7F3352BE77B7A0064276D /* ViewController */,
 			);
 			path = Reservation;
