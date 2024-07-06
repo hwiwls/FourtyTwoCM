@@ -9,7 +9,9 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class MyPageViewModel: ViewModelType {
+final class MyPageViewModel: ViewModelType {
+    var disposeBag = DisposeBag()
+    
     struct Input {
         let loadProfileTrigger: Observable<Void>
     }
@@ -19,26 +21,26 @@ class MyPageViewModel: ViewModelType {
         let username: Driver<String>
         let followerCount: Driver<String>
         let followingCount: Driver<String>
-        let error: Driver<Error>
+        let error: Driver<String>
     }
     
-    var disposeBag = DisposeBag()
-    
     func transform(input: Input) -> Output {
-        let errorTracker = PublishSubject<Error>()
+        let errorTracker = PublishRelay<String>()
+        
         let profileData = input.loadProfileTrigger
             .flatMapLatest {
                 NetworkManager.performRequest(route: Router.myProfile, dataType: MyProfileModel.self)
                     .asObservable()
                     .catch { error -> Observable<MyProfileModel> in
-                        errorTracker.onNext(error)
+                        let errorMessage = (error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다."
+                        errorTracker.accept(errorMessage)
                         return Observable.empty()
                     }
             }
             .share(replay: 1, scope: .whileConnected)
         
         let profileImageURL = profileData
-            .map { profile in URL(string: profile.profileImage ?? "") }
+            .map { URL(string: $0.profileImage ?? "") }
             .asDriver(onErrorJustReturn: nil)
         
         let username = profileData
@@ -53,8 +55,7 @@ class MyPageViewModel: ViewModelType {
             .map { "\($0.following.count) followings" }
             .asDriver(onErrorJustReturn: "0 followings")
         
-        let errorDriver = errorTracker
-            .asDriver(onErrorDriveWith: .empty())
+        let errorDriver = errorTracker.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다.")
         
         return Output(
             profileImageURL: profileImageURL,

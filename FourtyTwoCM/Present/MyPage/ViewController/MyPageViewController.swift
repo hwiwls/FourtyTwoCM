@@ -92,8 +92,8 @@ final class MyPageViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.error
-            .drive(onNext: { error in
-                print("An error occurred: \(error.localizedDescription)")
+            .drive(onNext: { [weak self] errorMessage in
+                self?.view.makeToast(errorMessage, duration: 0.2, position: .center)
             })
             .disposed(by: disposeBag)
     }
