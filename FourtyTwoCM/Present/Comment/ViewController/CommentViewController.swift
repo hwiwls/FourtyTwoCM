@@ -123,8 +123,8 @@ final class CommentViewController: BaseViewController {
                 self?.showError(error as! Error)
             })
             .disposed(by: disposeBag)
-    }
 
+    }
     
     private func showError(_ error: Error) {
         if let apiError = error as? APIError {
