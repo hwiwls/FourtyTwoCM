@@ -17,34 +17,36 @@ class MyLikesViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func bind() {
-            let loadNextPageTrigger = collectionView.rx.reachedBottom.asObservable()
-            let viewWillAppearTrigger = self.rx.viewWillAppear.map { _ in }
-                    
-            let input = MyLikesViewModel.Input(trigger: viewWillAppearTrigger, loadNextPage: loadNextPageTrigger)
-            let output = viewModel.transform(input: input)
+        let loadNextPageTrigger = collectionView.rx.reachedBottom
+            .skip(1) 
+            .asObservable()
+        
+        let viewWillAppearTrigger = self.rx.viewWillAppear.map { _ in }
+        
+        let input = MyLikesViewModel.Input(trigger: viewWillAppearTrigger, loadNextPage: loadNextPageTrigger)
+        let output = viewModel.transform(input: input)
 
-            output.posts
-                .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { row, post, cell in
-                    cell.configure(with: post)
-                }
-                .disposed(by: disposeBag)
+        output.posts
+            .drive(collectionView.rx.items(cellIdentifier: "PostCollectionViewCell", cellType: PostCollectionViewCell.self)) { row, post, cell in
+                cell.configure(with: post)
+            }
+            .disposed(by: disposeBag)
 
-            output.errorMessage
-                .drive(onNext: { [weak self] message in
-                    self?.view.makeToast(message, duration: 2.0, position: .center)
-                })
-                .disposed(by: disposeBag)
-            
-            output.reloadTrigger
-                .drive(onNext: { [weak self] in
-                    self?.collectionView.reloadData()
-                })
-                .disposed(by: disposeBag)
-        }
+        output.errorMessage
+            .drive(onNext: { [weak self] message in
+                self?.view.makeToast(message, duration: 2.0, position: .center)
+            })
+            .disposed(by: disposeBag)
+        
+        output.reloadTrigger
+            .drive(onNext: { [weak self] in
+                self?.collectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+    }
     
     override func configView() {
         collectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: "PostCollectionViewCell")
@@ -82,6 +84,4 @@ class MyLikesViewController: BaseViewController {
 
         return layout
     }
-
-    
 }

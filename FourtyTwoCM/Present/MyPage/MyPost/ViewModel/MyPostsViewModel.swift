@@ -70,7 +70,7 @@ final class MyPostsViewModel: ViewModelType {
     private func fetchPosts() -> Observable<[Post]> {
         let query = ViewMyPostsQuery(product_id: "ker0r0", next: currentPage.value, limit: "10")
 
-        print("Fetching posts with currentPage: \(String(describing: currentPage.value))")
+        print("현재 페이지: \(String(describing: currentPage.value))")
         return NetworkManager.performRequest(route: .viewMyPosts(userID: UserDefaults.standard.string(forKey: "userID") ?? "", query: query), dataType: FeedModel.self)
             .asObservable()
             .flatMap { [weak self] feedModel -> Observable<[Post]> in
