@@ -27,7 +27,7 @@ struct NetworkManager {
                             if let data = response.data {
                                 single(.failure(APIError.mapError(from: response.response!, data: data)))
                             } else {
-                                single(.failure(APIError.unknown("네트워크 오류")))
+                                single(.failure(APIError.unknown("알 수 없는 네트워크 오류")))
                             }
                         }
                     }
@@ -39,27 +39,29 @@ struct NetworkManager {
     }
     
     
-    static func requestDeletePost(postID: String) -> Single<Void> {
+    // 빈 응답을 처리하는 API 호출 함수
+    static func performRequest(route: Router) -> Single<Void> {
         return Single<Void>.create { single in
             do {
-                let urlRequest = try Router.deletePost(postId: postID).asURLRequest()
-                
+                let urlRequest = try route.asURLRequest()
                 AF.request(urlRequest, interceptor: APIInterceptor())
                     .validate(statusCode: 200..<300)
                     .response { response in
                         switch response.result {
                         case .success:
-                            print("Delete post success")
+                            print("performRequest success: Void")
                             single(.success(()))
-                        case .failure(let error):
-                            print("Delete post error: \(error)")
-                            single(.failure(error))
+                        case .failure(_):
+                            if let data = response.data {
+                                single(.failure(APIError.mapError(from: response.response!, data: data)))
+                            } else {
+                                single(.failure(APIError.unknown("알 수 없는 네트워크 오류")))
+                            }
                         }
                     }
             } catch {
                 single(.failure(error))
             }
-            
             return Disposables.create()
         }
     }

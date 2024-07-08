@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 
 final class CommentViewModel: ViewModelType {
+    var disposeBag = DisposeBag()
+    
     private let postId: String
     
     struct Input {
@@ -25,15 +27,13 @@ final class CommentViewModel: ViewModelType {
         let submitButtonVisible: Driver<Bool>
         let keyboardDismiss: Driver<Void>
         let commentSubmitted: Driver<Comment>
-        let errors: Driver<Error>
+        let errors: Driver<String>
         let refreshComments: Driver<[Comment]>
     }
     
     init(postId: String) {
         self.postId = postId
     }
-    
-    var disposeBag = DisposeBag()
 
     func transform(input: Input) -> Output {
         let dismissAction = input.closeTrigger
@@ -45,42 +45,41 @@ final class CommentViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: false)
         
         let keyboardDismiss = input.keyboardDismissalTrigger
-                    .asDriver(onErrorJustReturn: ())
-        
-        let errors = PublishSubject<Error>()
-        
-        let errorDriver = errors
-                .asDriver(onErrorJustReturn: NSError(domain: "CommentError", code: -1, userInfo: nil) as Error)
+            .asDriver(onErrorJustReturn: ())
+
+        let errorRelay = PublishRelay<String>()
         
         let commentSubmitted = input.submitCommentTrigger
             .withLatestFrom(input.commentText)
             .flatMapLatest { text -> Observable<Comment> in
                 let query = WriteCommentQuery(content: text)
                 return NetworkManager.performRequest(
-                    route: .writeComment(postId: self.postId, query: query),
+                    route: Router.writeComment(postId: self.postId, query: query),
                     dataType: Comment.self
                 )
                 .asObservable()
                 .catch { error -> Observable<Comment> in
-                    errors.onNext(error)
+                    if let apiError = error as? APIError {
+                        errorRelay.accept(apiError.errorMessage)
+                    } else {
+                        errorRelay.accept("알 수 없는 오류가 발생했습니다.")
+                    }
                     return Observable.empty()
                 }
             }
             .asDriver(onErrorDriveWith: Driver.empty())
         
-        // 새 댓글 추가 후 댓글 리스트 새로고침
         let refreshComments = commentSubmitted
             .flatMapLatest { _ -> Driver<[Comment]> in
                 NetworkManager.performRequest(
-                    route: .viewCertainPost(postId: self.postId),
+                    route: Router.viewCertainPost(postId: self.postId),
                     dataType: ViewCertainPostModel.self
                 )
-                .do(onSuccess: { viewCertainPostModel in
-                    print("Fetched comments: \(viewCertainPostModel.comments)")
-                })
                 .map { $0.comments }
                 .asDriver(onErrorJustReturn: [])
             }
+
+        let errorDriver = errorRelay.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다.")
         
         return Output(
             dismiss: dismissAction,
@@ -90,6 +89,5 @@ final class CommentViewModel: ViewModelType {
             errors: errorDriver,
             refreshComments: refreshComments
         )
-            
     }
 }

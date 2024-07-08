@@ -62,18 +62,17 @@ final class PostCreationViewController: BaseViewController {
         let output = viewModel.transform(input: input)
 
         output.image
-            .bind(to: postImageView.rx.image)
+            .drive(postImageView.rx.image)
             .disposed(by: disposeBag)
 
         output.postSubmitted
-            .subscribe(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] _ in
                 self?.dismissAndSwitchToMyPage()
             })
             .disposed(by: disposeBag)
         
         output.errorMessage
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] message in
+            .drive(onNext: { [weak self] message in
                 self?.view.makeToast(message, duration: 2.0, position: .top)
             })
             .disposed(by: disposeBag)
@@ -84,7 +83,7 @@ final class PostCreationViewController: BaseViewController {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let tabBarController = windowScene.windows.first?.rootViewController as? TabBarController else {
                 return
             }
-            tabBarController.selectedIndex = 2
+            tabBarController.selectedIndex = 4
         }
     }
     

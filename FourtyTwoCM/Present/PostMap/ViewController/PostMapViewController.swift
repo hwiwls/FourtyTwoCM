@@ -63,7 +63,7 @@ class PostMapViewController: BaseViewController {
     }
 
     override func bind() {
-        let loadTrigger = Driver.just(())
+        let loadTrigger = Driver.just(()).asObservable()
 
         let input = PostMapViewModel.Input(loadTrigger: loadTrigger)
         let output = viewModel.transform(input: input)

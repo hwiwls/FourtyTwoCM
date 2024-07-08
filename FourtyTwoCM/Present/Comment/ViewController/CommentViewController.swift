@@ -120,11 +120,11 @@ final class CommentViewController: BaseViewController {
         
         output.errors
             .drive(onNext: { [weak self] error in
-                self?.showError(error)
+                self?.showError(error as! Error)
             })
             .disposed(by: disposeBag)
-    }
 
+    }
     
     private func showError(_ error: Error) {
         if let apiError = error as? APIError {

@@ -17,6 +17,7 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
     private let postGradientView = LightGradientView()
     
     private let profileImageView = UIImageView().then {
+        $0.image = UIImage(named: "defaultprofile")
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
     }
@@ -29,6 +30,7 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews()
     }
 
     required init?(coder: NSCoder) {
@@ -42,12 +44,27 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
         profileImageView.image = nil
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setupCornerRadius()
+    }
+
+    private func setupViews() {
+        configView()
+        configHierarchy()
+        configLayout()
+    }
+
     override func configView() {
         contentView.layer.cornerRadius = 10
-        contentView.clipsToBounds = true
+        contentView.layer.masksToBounds = true
     }
     
-    
+    private func setupCornerRadius() {
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
+        profileImageView.layer.masksToBounds = true
+    }
+
     override func configHierarchy() {
         contentView.addSubviews([
             postImageView,
@@ -90,15 +107,13 @@ final class PostCollectionViewCell: BaseCollectionViewCell {
 
         guard let profileImage = post.creator.profileImage,
               let fullProfileImageUrl = URL(string: "\(BaseURL.baseURL.rawValue)/\(profileImage)") else {
-            profileImageView.image = UIImage(named: "SampleProfileImg")
+            profileImageView.image = UIImage(named: "defaultprofile")
             return
         }
-        profileImageView.loadImage(from: fullProfileImageUrl, placeHolderImage: UIImage(named: "SampleProfileImg")) {
+        profileImageView.loadImage(from: fullProfileImageUrl, placeHolderImage: UIImage(named: "defaultprofile")) {
             DispatchQueue.main.async {
-                self.profileImageView.layer.cornerRadius = self.profileImageView.bounds.width / 2
+                self.setupCornerRadius()
             }
         }
     }
-
 }
-

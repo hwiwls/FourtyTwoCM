@@ -16,17 +16,17 @@ final class PostCreationViewModel: ViewModelType {
     
     private let imageSubject: BehaviorSubject<UIImage>
     private let postTextViewSubject = BehaviorSubject<String>(value: "")
-    private let postSubmittedSubject = PublishSubject<Void>()
-    private let errorMessageSubject = PublishSubject<String>()
+    private let postSubmittedSubject = PublishRelay<Void>()
+    private let errorMessageSubject = PublishRelay<String>()
     
     struct Input {
         let submitTap: Observable<Void>
     }
     
     struct Output {
-        let postSubmitted: Observable<Void>
-        let image: Observable<UIImage>
-        let errorMessage: Observable<String>
+        let postSubmitted: Driver<Void>
+        let image: Driver<UIImage>
+        let errorMessage: Driver<String>
     }
     
     init(image: UIImage) {
@@ -38,6 +38,9 @@ final class PostCreationViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
+        let postSubmittedRelay = PublishRelay<Void>()
+        let errorMessageRelay = PublishRelay<String>()
+
         input.submitTap
             .flatMapLatest { [weak self] _ -> Observable<[String]> in
                 guard let self = self else { return Observable.just([]) }
@@ -47,17 +50,18 @@ final class PostCreationViewModel: ViewModelType {
                 guard let self = self else { return Observable.just(()) }
                 return self.submitPost(with: files)
             }
-            .subscribe(onNext: { [weak self] _ in
-                self?.postSubmittedSubject.onNext(())
-            }, onError: { [weak self] error in
-                self?.errorMessageSubject.onNext((error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다.")
+            .subscribe(onNext: {
+                postSubmittedRelay.accept(())
+            }, onError: { error in
+                let errorMessage = (error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다."
+                errorMessageRelay.accept(errorMessage)
             })
             .disposed(by: disposeBag)
 
         return Output(
-            postSubmitted: postSubmittedSubject.asObservable(),
-            image: imageSubject.asObservable(),
-            errorMessage: errorMessageSubject.asObservable()
+            postSubmitted: postSubmittedRelay.asDriver(onErrorJustReturn: ()),
+            image: imageSubject.asDriver(onErrorDriveWith: .empty()),
+            errorMessage: errorMessageRelay.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다.")
         )
     }
 
@@ -65,12 +69,22 @@ final class PostCreationViewModel: ViewModelType {
         guard let image = try? imageSubject.value() else {
             return Observable.just([])
         }
-        let uploadQuery = UploadImageQuery(files: image.pngData() ?? Data())
+        
+        let targetSize = CGSize(width: 2556, height: 1179) // 해상도
+        guard let resizedImage = image.resizedImage(targetSize: targetSize), let compressedData = resizedImage.compressedData(targetSizeInKB: 3000) else {   // 용량. 3000KB
+            print("이미지 압축 실패")
+            errorMessageSubject.accept("이미지 압축 실패")
+            return Observable.just([])
+        }
+        
+        print("압축된 이미지 용량: \(compressedData.count) bytes")
+        let uploadQuery = UploadImageQuery(files: compressedData)
         return NetworkManager.performMultipartRequest(route: .uploadFile(query: uploadQuery))
             .asObservable()
             .map { $0.files }
             .catch { [weak self] error in
-                self?.errorMessageSubject.onNext((error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다.")
+                let errorMessage = (error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다."
+                self?.errorMessageSubject.accept(errorMessage)
                 return Observable.just([])
             }
     }
@@ -80,15 +94,16 @@ final class PostCreationViewModel: ViewModelType {
             return Observable.just(())
         }
         return Permissions.shared.currentLocationObservable()
-            .flatMap { [weak self] location -> Observable<Void> in
+            .flatMapLatest { [weak self] location -> Observable<Void> in
                 let latitude = location.coordinate.latitude.description
                 let longitude = location.coordinate.longitude.description
                 let query = UploadPostQuery(content: text, content1: latitude, content2: longitude, files: files, product_id: "ker0r0")
                 return NetworkManager.performRequest(route: .uploadPost(query: query), dataType: UploadPostModel.self)
                     .asObservable()
                     .map { _ in () }
-                    .catch { error in
-                        self?.errorMessageSubject.onNext((error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다.")
+                    .catch { [weak self] error in
+                        let errorMessage = (error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다."
+                        self?.errorMessageSubject.accept(errorMessage)
                         return Observable.just(())
                     }
             }

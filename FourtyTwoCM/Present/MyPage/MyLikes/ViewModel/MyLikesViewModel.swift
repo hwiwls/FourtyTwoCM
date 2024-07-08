@@ -11,10 +11,8 @@ import RxCocoa
 final class MyLikesViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     private let currentPage = BehaviorSubject<String?>(value: nil)
-    private let isLoading = BehaviorSubject<Bool>(value: false)
-    let errorMessage = PublishSubject<String>()
-    let refreshTrigger = PublishSubject<Void>()
-
+    let errorMessage = PublishRelay<String>()
+    
     struct Input {
         let trigger: Observable<Void>
         let loadNextPage: Observable<Void>
@@ -27,33 +25,36 @@ final class MyLikesViewModel: ViewModelType {
     }
 
     func transform(input: Input) -> Output {
-        let posts = BehaviorSubject<[Post]>(value: [])
-        let reloadTrigger = PublishSubject<Void>()
+        
+        let posts = BehaviorRelay<[Post]>(value: [])
+        let reloadTrigger = PublishRelay<Void>()
 
+        // 초기 데이터 로드
         input.trigger
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
                 self.currentPage.onNext(nil)
-                return self.fetchPosts(reset: true)
+                return self.fetchPosts()
             }
             .do(onNext: { _ in
-                reloadTrigger.onNext(())
+                reloadTrigger.accept(())
             })
             .bind(to: posts)
             .disposed(by: disposeBag)
 
+        // 페이지네이션 데이터 로드
         input.loadNextPage
             .withLatestFrom(currentPage)
             .filter { $0 != "0" }
             .flatMapLatest { [weak self] _ -> Observable<[Post]> in
                 guard let self = self else { return .empty() }
-                return self.fetchPosts(reset: false)
+                return self.fetchPosts()
             }
             .withLatestFrom(posts) { (newPosts, existingPosts) in
                 return existingPosts + newPosts
             }
             .do(onNext: { _ in
-                reloadTrigger.onNext(())
+                reloadTrigger.accept(())
             })
             .bind(to: posts)
             .disposed(by: disposeBag)
@@ -65,24 +66,11 @@ final class MyLikesViewModel: ViewModelType {
         )
     }
 
-    private func fetchPosts(reset: Bool) -> Observable<[Post]> {
-        guard ((try? isLoading.value()) == false) else {
-            print("아직 로딩중입니다.")
-            return .empty()
-        }
-
-        if reset {
-            currentPage.onNext(nil)
-        }
-
-        isLoading.onNext(true)
+    private func fetchPosts() -> Observable<[Post]> {
         let query = ViewMyLikesQuery(next: try? currentPage.value(), limit: "10")
 
         return NetworkManager.performRequest(route: .viewMyLikes(query: query), dataType: FeedModel.self)
             .asObservable()
-            .do(onDispose: { [weak self] in
-                self?.isLoading.onNext(false)
-            })
             .flatMap { [weak self] feedModel -> Observable<[Post]> in
                 if feedModel.nextCursor == "0" {
                     self?.currentPage.onNext("0")
@@ -92,11 +80,10 @@ final class MyLikesViewModel: ViewModelType {
                 return .just(feedModel.data)
             }
             .catch { [weak self] error in
-                print("Error fetching posts: \(error)")
                 if let apiError = error as? APIError {
-                    self?.errorMessage.onNext(apiError.errorMessage)
+                    self?.errorMessage.accept(apiError.errorMessage)
                 } else {
-                    self?.errorMessage.onNext("알 수 없는 오류가 발생했습니다.")
+                    self?.errorMessage.accept("알 수 없는 오류가 발생했습니다.")
                 }
                 return .just([])
             }

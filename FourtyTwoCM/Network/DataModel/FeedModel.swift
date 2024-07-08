@@ -43,7 +43,7 @@ struct Post: Decodable {
         self.content1 = try container.decodeIfPresent(String.self, forKey: .content1) ?? "0"
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
         self.creator = try container.decode(PostCreator.self, forKey: .creator)
-        self.files = try container.decode([String].self, forKey: .files)
+        self.files = try container.decodeIfPresent([String].self, forKey: .files) ?? ["SampleImg1"]
         self.likes = try container.decodeIfPresent([String].self, forKey: .likes) ?? ["rr"]
         self.likes2 = try container.decodeIfPresent([String].self, forKey: .likes2) ?? []
         self.hashTags = try container.decodeIfPresent([String].self, forKey: .hashTags) ?? []
@@ -87,6 +87,12 @@ struct CommentCreator: Decodable {
         case profileImage
     }
     
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.userID = try container.decode(String.self, forKey: .userID)
+        self.nick = try container.decode(String.self, forKey: .nick)
+        self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage) ?? "defaultimage"
+    }
 }
 
 // MARK: - DatumCreator

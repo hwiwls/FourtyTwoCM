@@ -60,9 +60,9 @@ final class FeedPageViewController: UIPageViewController {
             })
             .disposed(by: disposeBag)
         
-        self.rx.viewWillDisappear
+        self.rx.viewDidDisappear
             .subscribe(onNext: { [weak self] _ in
-                self?.timer?.invalidate() // 화면이 사라질 때 타이머 중지
+                self?.invalidateTimer() // 화면이 사라질 때 타이머 중지 및 해제
             })
             .disposed(by: disposeBag)
     }
@@ -70,9 +70,15 @@ final class FeedPageViewController: UIPageViewController {
 
 extension FeedPageViewController {
     private func setupTimer() {
+        invalidateTimer()
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     }
     
+    private func invalidateTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+
     private func setupViewControllers(posts: [Post]) {
         self.contentViewControllers = posts.map { post in
             let vc = FeedContentViewController()
@@ -91,11 +97,11 @@ extension FeedPageViewController {
     }
 
     private func moveToNextPage() {
-        if currentIndex >= contentViewControllers.count { return } // Index 범위 초과를 방지
+        guard currentIndex < contentViewControllers.count else { return }
 
         contentViewControllers.remove(at: currentIndex) // 현재 페이지 삭제
         
-        if contentViewControllers.isEmpty { return } // 더 이상 페이지가 없으면 종료
+        if contentViewControllers.isEmpty { return }
         
         currentIndex = currentIndex % contentViewControllers.count // 새 인덱스 계산
         let nextViewController = contentViewControllers[currentIndex]
@@ -107,7 +113,7 @@ extension FeedPageViewController {
     }
     
     private func resetTimerAndProgress() {
-        timer?.invalidate()
+        invalidateTimer()
         elapsedTime = 0
         
         guard lastViewedIndex < contentViewControllers.count else { return }
@@ -115,7 +121,7 @@ extension FeedPageViewController {
         isLastPageReached = (lastViewedIndex == contentViewControllers.count - 1)
         contentViewControllers[lastViewedIndex].updateProgressBar(progress: 0)
 
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        setupTimer()
     }
 
     @objc private func timerAction() {
@@ -127,7 +133,6 @@ extension FeedPageViewController {
                 setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
                 resetTimerAndProgress()
             } else {
-                timer?.invalidate()
                 contentViewControllers[currentIndex].updateProgressBar(progress: 1.0)
                 loadNextPage()
             }
@@ -139,7 +144,8 @@ extension FeedPageViewController {
     }
 
     private func loadNextPage() {
-        isLoadingNextPage = true // 다음 페이지 로드 중으로 설정
+        guard !isLoadingNextPage else { return }
+        isLoadingNextPage = true
 
         let fetchNextPage = Observable.just(())
         let input = FeedPageViewModel.Input(trigger: Observable.never(), fetchNextPage: fetchNextPage)
@@ -150,12 +156,12 @@ extension FeedPageViewController {
             .subscribe(onNext: { [weak self] newPosts in
                 guard let self = self else { return }
                 self.addNewViewControllers(newPosts: newPosts)
-                self.isLoadingNextPage = false // 로드 완료 후 플래그 해제
-            }, onError: { [weak self] (error: Error) in
-                self?.isLoadingNextPage = false // 에러 발생 시 플래그 해제
+                self.isLoadingNextPage = false
+            }, onError: { [weak self] error in
+                self?.isLoadingNextPage = false
                 print("Error loading next page: \(error.localizedDescription)")
             }, onCompleted: { [weak self] in
-                self?.isLoadingNextPage = false // 완료 시 플래그 해제
+                self?.isLoadingNextPage = false
             })
             .disposed(by: disposeBag)
     }
@@ -175,29 +181,26 @@ extension FeedPageViewController {
         let previousCount = contentViewControllers.count
         contentViewControllers.append(contentsOf: newViewControllers)
 
-        // 새 게시글이 추가된 경우 타이머를 재설정하고 다음 페이지로 이동
         if previousCount == contentViewControllers.count - newViewControllers.count && !newViewControllers.isEmpty {
-            currentIndex = previousCount // 추가된 첫 게시글로 인덱스 설정
+            currentIndex = previousCount
             setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
             resetTimerAndProgress()
         }
     }
     
     private func resetTimer() {
-        timer?.invalidate() // 기존 타이머를 중지
-        elapsedTime = 0 // 경과 시간을 0으로 리셋
-        guard currentIndex < contentViewControllers.count else { return } // Index 범위 초과를 방지
-        contentViewControllers[currentIndex].updateProgressBar(progress: 0) // 프로그레스 바를 초기화
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        invalidateTimer()
+        elapsedTime = 0
+        guard currentIndex < contentViewControllers.count else { return }
+        contentViewControllers[currentIndex].updateProgressBar(progress: 0)
+        setupTimer()
     }
     
     private func updateProgressBarForCurrentPage() {
-        guard currentIndex < contentViewControllers.count else { return } // Index 범위 초과를 방지
+        guard currentIndex < contentViewControllers.count else { return }
         contentViewControllers[currentIndex].updateProgressBar(progress: 0)
     }
 }
-
-
 
 extension FeedPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -219,11 +222,12 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
         }
         
         let nextIndex = viewControllerIndex + 1
-        guard nextIndex < contentViewControllers.count else {
+        if nextIndex < contentViewControllers.count {
+            return contentViewControllers[nextIndex]
+        } else {
+            loadNextPage()
             return nil
         }
-        
-        return contentViewControllers[nextIndex]
     }
 }
 
@@ -235,7 +239,6 @@ extension FeedPageViewController: UIPageViewControllerDelegate {
                 lastViewedIndex = index
                 resetTimerAndProgress()
 
-                // 마지막 페이지에서 다음 페이지를 로드
                 if currentIndex == contentViewControllers.count - 1 {
                     loadNextPage()
                 }

@@ -237,9 +237,11 @@ final class FeedContentViewController: BaseViewController {
     }
     
     private func showActionSheet() {
+        guard let postID = viewModel.currentPostId else { return }
+
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
-            self?.viewModel.confirmDeletion()
+            self?.viewModel.confirmDeletion(postID: postID)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
