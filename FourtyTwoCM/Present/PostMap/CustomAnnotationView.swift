@@ -13,7 +13,7 @@ import Kingfisher
 final class CustomAnnotationView: MKAnnotationView {
     
     lazy var backgroundView = UIView().then {
-        $0.backgroundColor = .lime
+        $0.backgroundColor = .white
         $0.layer.cornerRadius = 29
         $0.clipsToBounds = true
     }

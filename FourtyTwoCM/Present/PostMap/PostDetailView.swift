@@ -102,6 +102,7 @@ final class PostDetailView: BaseView {
 
     func configure(with post: Post) {
         postContentLabel.text = post.content
+        postContentLabel.setLineSpacing(lineSpacing: 2)
         createdAtLabel.text = post.createdAt
         creatorLabel.text = "by @\(post.creator.nick)"
 
