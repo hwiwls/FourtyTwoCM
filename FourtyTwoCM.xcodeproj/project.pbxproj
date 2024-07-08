@@ -96,6 +96,7 @@
 		2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3362BE77B840064276D /* ReservationViewController.swift */; };
 		2EBA8D612C2991E900C3CEEA /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBA8D602C2991E900C3CEEA /* PostDetailView.swift */; };
 		2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */; };
+		2ECD93E12C3C50DF0030CDAC /* UILabel+setLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD93E02C3C50DF0030CDAC /* UILabel+setLineSpacing.swift */; };
 		2ECE2B3C2BF4B195004D95B2 /* ViewMyLikesQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
 		2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397F02BDA485A0064CD71 /* LikeModel.swift */; };
@@ -204,6 +205,7 @@
 		2EB7F3362BE77B840064276D /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		2EBA8D602C2991E900C3CEEA /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightGradientView.swift; sourceTree = "<group>"; };
+		2ECD93E02C3C50DF0030CDAC /* UILabel+setLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+setLineSpacing.swift"; sourceTree = "<group>"; };
 		2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyLikesQuery.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
 		2ED397F02BDA485A0064CD71 /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 				2E520B102BF308E80034C2F2 /* UIViewController+RxLifecycle.swift */,
 				2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */,
 				2EF30B602C34791E00404368 /* String+prependBaseURL.swift */,
+				2ECD93E02C3C50DF0030CDAC /* UILabel+setLineSpacing.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -945,6 +948,7 @@
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E2E998D2C2410F00035D50E /* ChattingViewModel.swift in Sources */,
 				2E38D55F2BE55B550028A172 /* CustomTabBar.swift in Sources */,
+				2ECD93E12C3C50DF0030CDAC /* UILabel+setLineSpacing.swift in Sources */,
 				2E1B91E82BE64EB300751288 /* UploadImageQuery.swift in Sources */,
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
