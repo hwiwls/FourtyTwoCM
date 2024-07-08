@@ -45,6 +45,7 @@ final class FeedContentViewController: BaseViewController {
         $0.textColor = .offWhite
         $0.font = .systemFont(ofSize: 14)
         $0.textAlignment = .left
+        $0.setLineSpacing(lineSpacing: 3)
     }
     
     private let btnStackView = UIStackView().then {
