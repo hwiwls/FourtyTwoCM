@@ -11,12 +11,10 @@ import RealmSwift
 class ChatSender: EmbeddedObject {
     @Persisted var userId: String
     @Persisted var nick: String
-    @Persisted var profileImage: String?
 
-    convenience init(userId: String, nick: String, profileImage: String? = nil) {
+    convenience init(userId: String, nick: String) {
         self.init()
         self.userId = userId
         self.nick = nick
-        self.profileImage = profileImage
     }
 }

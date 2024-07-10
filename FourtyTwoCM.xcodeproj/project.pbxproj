@@ -63,6 +63,7 @@
 		2E77031E2C3EFF3F0061D6F1 /* ChatSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */; };
 		2E7703212C3F075F0061D6F1 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7703202C3F075F0061D6F1 /* Realm */; };
 		2E7703232C3F075F0061D6F1 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7703222C3F075F0061D6F1 /* RealmSwift */; };
+		2E7703252C3F0A9C0061D6F1 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7703242C3F0A9C0061D6F1 /* ChatRepository.swift */; };
 		2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */; };
 		2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */; };
 		2E7BEEAC2BEFF33800A798D9 /* ViewCertainPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */; };
@@ -176,6 +177,7 @@
 		2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParticipant.swift; sourceTree = "<group>"; };
 		2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSender.swift; sourceTree = "<group>"; };
+		2E7703242C3F0A9C0061D6F1 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentQuery.swift; sourceTree = "<group>"; };
 		2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCertainPostModel.swift; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 		2E7703152C3EFB520061D6F1 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
+				2E7703242C3F0A9C0061D6F1 /* ChatRepository.swift */,
 				2E7703162C3EFF180061D6F1 /* Models */,
 			);
 			path = Realm;
@@ -997,6 +1000,7 @@
 				2E8F98552BCD74B700E9A79A /* FeedPageViewController.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E7BEEAC2BEFF33800A798D9 /* ViewCertainPostModel.swift in Sources */,
+				2E7703252C3F0A9C0061D6F1 /* ChatRepository.swift in Sources */,
 				2E1B91E22BE632FA00751288 /* UploadPostQuery.swift in Sources */,
 				2E5980002BD426CD00AAAFA7 /* SignUpModel.swift in Sources */,
 				2E8F985C2BCD7EDF00E9A79A /* Router.swift in Sources */,
