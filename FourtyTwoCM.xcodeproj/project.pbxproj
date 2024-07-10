@@ -57,6 +57,12 @@
 		2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7198392BE798EF00C8F334 /* UserCode.swift */; };
 		2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */; };
 		2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */; };
+		2E7703182C3EFF240061D6F1 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7703172C3EFF240061D6F1 /* ChatRoom.swift */; };
+		2E77031A2C3EFF2E0061D6F1 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */; };
+		2E77031C2C3EFF370061D6F1 /* ChatParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */; };
+		2E77031E2C3EFF3F0061D6F1 /* ChatSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */; };
+		2E7703212C3F075F0061D6F1 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7703202C3F075F0061D6F1 /* Realm */; };
+		2E7703232C3F075F0061D6F1 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7703222C3F075F0061D6F1 /* RealmSwift */; };
 		2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */; };
 		2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */; };
 		2E7BEEAC2BEFF33800A798D9 /* ViewCertainPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */; };
@@ -166,6 +172,10 @@
 		2E7198392BE798EF00C8F334 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
 		2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationQuery.swift; sourceTree = "<group>"; };
 		2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationModel.swift; sourceTree = "<group>"; };
+		2E7703172C3EFF240061D6F1 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParticipant.swift; sourceTree = "<group>"; };
+		2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSender.swift; sourceTree = "<group>"; };
 		2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentQuery.swift; sourceTree = "<group>"; };
 		2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCertainPostModel.swift; sourceTree = "<group>"; };
@@ -236,7 +246,9 @@
 				2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */,
 				2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */,
 				2E5C38292BCA7DAF00A006FB /* Alamofire in Frameworks */,
+				2E7703212C3F075F0061D6F1 /* Realm in Frameworks */,
 				2E7198372BE7925600C8F334 /* iamport-ios in Frameworks */,
+				2E7703232C3F075F0061D6F1 /* RealmSwift in Frameworks */,
 				2EE486932BCEE3DD00D40682 /* Toast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,6 +463,7 @@
 		2E5C38032BCA72CF00A006FB /* FourtyTwoCM */ = {
 			isa = PBXGroup;
 			children = (
+				2E7703152C3EFB520061D6F1 /* Realm */,
 				2E5C381C2BCA7C2A00A006FB /* App */,
 				2EE34D562BCE716100DE3EF7 /* KeyChain */,
 				2E7198382BE798D600C8F334 /* Payment */,
@@ -582,6 +595,25 @@
 				2E7198392BE798EF00C8F334 /* UserCode.swift */,
 			);
 			path = Payment;
+			sourceTree = "<group>";
+		};
+		2E7703152C3EFB520061D6F1 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				2E7703162C3EFF180061D6F1 /* Models */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		2E7703162C3EFF180061D6F1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2E7703172C3EFF240061D6F1 /* ChatRoom.swift */,
+				2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */,
+				2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */,
+				2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		2E8F98202BCD4D0B00E9A79A /* SB_Mac_Font */ = {
@@ -835,6 +867,8 @@
 				2EE486922BCEE3DD00D40682 /* Toast */,
 				2E7198362BE7925600C8F334 /* iamport-ios */,
 				2EEAC02D2BF0DEF400F56645 /* Tabman */,
+				2E7703202C3F075F0061D6F1 /* Realm */,
+				2E7703222C3F075F0061D6F1 /* RealmSwift */,
 			);
 			productName = FourtyTwoCM;
 			productReference = 2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */;
@@ -872,6 +906,7 @@
 				2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */,
 				2EEAC02C2BF0DEF400F56645 /* XCRemoteSwiftPackageReference "Tabman" */,
+				2E77031F2C3F075F0061D6F1 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 2E5C38022BCA72CF00A006FB /* Products */;
 			projectDirPath = "";
@@ -909,6 +944,7 @@
 				2EA15DA52BE2C6AE002DB338 /* APIError.swift in Sources */,
 				2E8F98582BCD7ECD00E9A79A /* NetworkManager.swift in Sources */,
 				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
+				2E7703182C3EFF240061D6F1 /* ChatRoom.swift in Sources */,
 				2E1E93282BE6D28700E9F9A5 /* MyProfileModel.swift in Sources */,
 				2E2E998B2C2410E70035D50E /* ChattingViewController.swift in Sources */,
 				2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */,
@@ -945,6 +981,7 @@
 				2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */,
 				2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */,
 				2E2E99862C240DBA0035D50E /* PostMapViewController.swift in Sources */,
+				2E77031C2C3EFF370061D6F1 /* ChatParticipant.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E2E998D2C2410F00035D50E /* ChattingViewModel.swift in Sources */,
 				2E38D55F2BE55B550028A172 /* CustomTabBar.swift in Sources */,
@@ -981,11 +1018,13 @@
 				2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */,
 				2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */,
 				2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */,
+				2E77031A2C3EFF2E0061D6F1 /* ChatMessage.swift in Sources */,
 				2E5C38072BCA72CF00A006FB /* SceneDelegate.swift in Sources */,
 				2E7198342BE78CAA00C8F334 /* String + formattedAsCurrency.swift in Sources */,
 				2E25E1932BFC2BBA00462F8C /* UIImage+Compression.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */,
+				2E77031E2C3EFF3F0061D6F1 /* ChatSender.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
 				2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */,
 				2E8F985A2BCD7EDA00E9A79A /* HTTPHeader.swift in Sources */,
@@ -1274,6 +1313,14 @@
 				minimumVersion = 1.4.1;
 			};
 		};
+		2E77031F2C3F075F0061D6F1 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.48.0;
+			};
+		};
 		2EE486912BCEE3DD00D40682 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -1322,6 +1369,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */;
 			productName = "iamport-ios";
+		};
+		2E7703202C3F075F0061D6F1 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E77031F2C3F075F0061D6F1 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		2E7703222C3F075F0061D6F1 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E77031F2C3F075F0061D6F1 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		2EE486922BCEE3DD00D40682 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
