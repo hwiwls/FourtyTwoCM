@@ -294,13 +294,13 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		2E2E99872C2410D00035D50E /* Chatting */ = {
+		2E2E99872C2410D00035D50E /* ChatRoom */ = {
 			isa = PBXGroup;
 			children = (
 				2E2E99892C2410DE0035D50E /* ViewController */,
 				2E2E99882C2410DA0035D50E /* ViewModel */,
 			);
-			path = Chatting;
+			path = ChatRoom;
 			sourceTree = "<group>";
 		};
 		2E2E99882C2410DA0035D50E /* ViewModel */ = {
@@ -528,7 +528,7 @@
 		2E5C38202BCA7C3E00A006FB /* Present */ = {
 			isa = PBXGroup;
 			children = (
-				2E2E99872C2410D00035D50E /* Chatting */,
+				2E2E99872C2410D00035D50E /* ChatRoom */,
 				2E2E997E2C240BBA0035D50E /* PostMap */,
 				2E8F983E2BCD6A8F00E9A79A /* TabBar */,
 				2E988E102BE2525700F48CF4 /* Permission */,
