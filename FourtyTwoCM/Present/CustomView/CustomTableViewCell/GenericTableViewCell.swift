@@ -1,30 +1,32 @@
 //
-//  CommentTableViewCell.swift
+//  GenericTableViewCell.swift
 //  FourtyTwoCM
 //
 //  Created by hwijinjeong on 5/11/24.
 //
 
 import UIKit
-import SnapKit
 
-final class CommentTableViewCell: UITableViewCell {
-    
+class GenericTableViewCell: UITableViewCell {
+
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
+        $0.image = UIImage(named: "defaultprofile")
     }
     
     private let nicknameLabel = UILabel().then {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.textColor = .offWhite
+        $0.text = "알 수 없음"
     }
     
     private let contentLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textColor = .offWhite
         $0.numberOfLines = 0
+        $0.text = "알 수 없음"
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -74,4 +76,16 @@ final class CommentTableViewCell: UITableViewCell {
             profileImageView.image = UIImage(named: "defaultprofile")
         }
     }
+    
+//    func configure(with chat: Chat) {
+//        nicknameLabel.text = chat.creator.nick
+//        contentLabel.text = chat.content
+//        if let profileImageUrl = chat.creator.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
+//            profileImageView.loadImage(from: url)
+//            print("채팅창 프로필 이미지 url: \(url)")
+//        } else {
+//            profileImageView.image = UIImage(named: "defaultprofile")
+//        }
+//    }
 }
+

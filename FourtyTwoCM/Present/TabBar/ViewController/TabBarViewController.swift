@@ -44,7 +44,7 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
         let feedViewController = UINavigationController(rootViewController: FeedPageViewController())
         let myPageViewController = UINavigationController(rootViewController: MyPageViewController())
         let postMapViewController = UINavigationController(rootViewController: PostMapViewController())
-        let chattingViewController = UINavigationController(rootViewController: ChattingViewController())
+        let chattingViewController = UINavigationController(rootViewController: ChatRoomListViewController())
 
         
         let connectActive = resizeImage(image: UIImage(named: "connect_active")!, targetSize: CGSize(width: 32, height: 32))

@@ -17,7 +17,7 @@
 		2E25E1932BFC2BBA00462F8C /* UIImage+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E25E1922BFC2BBA00462F8C /* UIImage+Compression.swift */; };
 		2E2E99842C240DA60035D50E /* PostMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E99832C240DA60035D50E /* PostMapViewModel.swift */; };
 		2E2E99862C240DBA0035D50E /* PostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E99852C240DBA0035D50E /* PostMapViewController.swift */; };
-		2E2E998B2C2410E70035D50E /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E998A2C2410E70035D50E /* ChattingViewController.swift */; };
+		2E2E998B2C2410E70035D50E /* ChatRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E998A2C2410E70035D50E /* ChatRoomListViewController.swift */; };
 		2E2E998D2C2410F00035D50E /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E998C2C2410F00035D50E /* ChattingViewModel.swift */; };
 		2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D54E2BE4DB430028A172 /* Interceptor.swift */; };
 		2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5502BE4DD760028A172 /* RefreshModel.swift */; };
@@ -96,7 +96,7 @@
 		2EA184712BF3275700A84FEA /* UICollectionView+ReachedBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */; };
 		2EAF064C2BEE611B00E77A3D /* FollowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAF064B2BEE611B00E77A3D /* FollowModel.swift */; };
 		2EB444352BEF709D009D7684 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444342BEF709D009D7684 /* CommentViewController.swift */; };
-		2EB444392BEF7240009D7684 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */; };
+		2EB444392BEF7240009D7684 /* GenericTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB444382BEF7240009D7684 /* GenericTableViewCell.swift */; };
 		2EB4443B2BEF7A2D009D7684 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4443A2BEF7A2D009D7684 /* CommentViewModel.swift */; };
 		2EB4443D2BEF8557009D7684 /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB4443C2BEF8557009D7684 /* PaddingTextField.swift */; };
 		2EB7F3332BE770390064276D /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3322BE770390064276D /* CustomButton.swift */; };
@@ -136,7 +136,7 @@
 		2E25E1922BFC2BBA00462F8C /* UIImage+Compression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Compression.swift"; sourceTree = "<group>"; };
 		2E2E99832C240DA60035D50E /* PostMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapViewModel.swift; sourceTree = "<group>"; };
 		2E2E99852C240DBA0035D50E /* PostMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapViewController.swift; sourceTree = "<group>"; };
-		2E2E998A2C2410E70035D50E /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		2E2E998A2C2410E70035D50E /* ChatRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListViewController.swift; sourceTree = "<group>"; };
 		2E2E998C2C2410F00035D50E /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
 		2E38D54E2BE4DB430028A172 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
 		2E38D5502BE4DD760028A172 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 		2EA184702BF3275700A84FEA /* UICollectionView+ReachedBottom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReachedBottom.swift"; sourceTree = "<group>"; };
 		2EAF064B2BEE611B00E77A3D /* FollowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowModel.swift; sourceTree = "<group>"; };
 		2EB444342BEF709D009D7684 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
-		2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		2EB444382BEF7240009D7684 /* GenericTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewCell.swift; sourceTree = "<group>"; };
 		2EB4443A2BEF7A2D009D7684 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		2EB4443C2BEF8557009D7684 /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		2EB7F3322BE770390064276D /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -314,7 +314,7 @@
 		2E2E99892C2410DE0035D50E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2E2E998A2C2410E70035D50E /* ChattingViewController.swift */,
+				2E2E998A2C2410E70035D50E /* ChatRoomListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -694,6 +694,7 @@
 		2E8F98662BCD85B300E9A79A /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				2ECD62742C3FE9D10055364E /* CustomTableViewCell */,
 				2E520B0F2BF301EA0034C2F2 /* CustomCollectionViewCell */,
 				2E56664A2BD663FE0018E8E7 /* GradientView.swift */,
 				2E8F98672BCD85CA00E9A79A /* PointButton.swift */,
@@ -743,7 +744,6 @@
 		2EB444322BEF707E009D7684 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				2EB444372BEF7233009D7684 /* TableViewCell */,
 				2EB444362BEF7227009D7684 /* ViewModel */,
 				2EB444332BEF708F009D7684 /* ViewController */,
 			);
@@ -766,14 +766,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		2EB444372BEF7233009D7684 /* TableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				2EB444382BEF7240009D7684 /* CommentTableViewCell.swift */,
-			);
-			path = TableViewCell;
-			sourceTree = "<group>";
-		};
 		2EB7F3342BE77B670064276D /* Reservation */ = {
 			isa = PBXGroup;
 			children = (
@@ -788,6 +780,14 @@
 				2EB7F3362BE77B840064276D /* ReservationViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2ECD62742C3FE9D10055364E /* CustomTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				2EB444382BEF7240009D7684 /* GenericTableViewCell.swift */,
+			);
+			path = CustomTableViewCell;
 			sourceTree = "<group>";
 		};
 		2ED642FC2BD5271000722299 /* ViewModel */ = {
@@ -949,7 +949,7 @@
 				2E5980072BD42FBD00AAAFA7 /* EmailValidationQuery.swift in Sources */,
 				2E7703182C3EFF240061D6F1 /* ChatRoom.swift in Sources */,
 				2E1E93282BE6D28700E9F9A5 /* MyProfileModel.swift in Sources */,
-				2E2E998B2C2410E70035D50E /* ChattingViewController.swift in Sources */,
+				2E2E998B2C2410E70035D50E /* ChatRoomListViewController.swift in Sources */,
 				2E8F98652BCD803300E9A79A /* Bundle.swift in Sources */,
 				2E8F986C2BCD900400E9A79A /* UITextField+addLeftPadding.swift in Sources */,
 				2E56664F2BD6815E0018E8E7 /* FeedModel.swift in Sources */,
@@ -1038,7 +1038,7 @@
 				2E597FFE2BD41EAC00AAAFA7 /* SignUpViewModel.swift in Sources */,
 				2E38D55D2BE53F7E0028A172 /* PostCreationViewModel.swift in Sources */,
 				2E56664B2BD663FE0018E8E7 /* GradientView.swift in Sources */,
-				2EB444392BEF7240009D7684 /* CommentTableViewCell.swift in Sources */,
+				2EB444392BEF7240009D7684 /* GenericTableViewCell.swift in Sources */,
 				2E8F98682BCD85CA00E9A79A /* PointButton.swift in Sources */,
 				2EB444352BEF709D009D7684 /* CommentViewController.swift in Sources */,
 			);

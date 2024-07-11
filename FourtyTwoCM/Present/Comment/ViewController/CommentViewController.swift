@@ -47,7 +47,7 @@ final class CommentViewController: BaseViewController {
     
     private lazy var commentTableView = UITableView().then {
         $0.backgroundColor = .clear
-        $0.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentTableViewCell")
+        $0.register(GenericTableViewCell.self, forCellReuseIdentifier: "GenericTableViewCell")
     }
     
     override func viewDidLoad() {
@@ -86,7 +86,7 @@ final class CommentViewController: BaseViewController {
         
         
         comments.asObservable()
-            .bind(to: commentTableView.rx.items(cellIdentifier: "CommentTableViewCell", cellType: CommentTableViewCell.self)) { _, comment, cell in
+            .bind(to: commentTableView.rx.items(cellIdentifier: "GenericTableViewCell", cellType: GenericTableViewCell.self)) { _, comment, cell in
                 cell.configure(with: comment)
                 cell.selectionStyle = .none
             }
