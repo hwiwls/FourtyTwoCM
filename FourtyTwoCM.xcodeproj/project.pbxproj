@@ -103,6 +103,7 @@
 		2EB7F3372BE77B840064276D /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB7F3362BE77B840064276D /* ReservationViewController.swift */; };
 		2EBA8D612C2991E900C3CEEA /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBA8D602C2991E900C3CEEA /* PostDetailView.swift */; };
 		2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */; };
+		2ECD62762C4012E70055364E /* ChatRoomListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD62752C4012E70055364E /* ChatRoomListModel.swift */; };
 		2ECD93E12C3C50DF0030CDAC /* UILabel+setLineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD93E02C3C50DF0030CDAC /* UILabel+setLineSpacing.swift */; };
 		2ECE2B3C2BF4B195004D95B2 /* ViewMyLikesQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */; };
 		2ED397EF2BDA482A0064CD71 /* LikeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */; };
@@ -217,6 +218,7 @@
 		2EB7F3362BE77B840064276D /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		2EBA8D602C2991E900C3CEEA /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightGradientView.swift; sourceTree = "<group>"; };
+		2ECD62752C4012E70055364E /* ChatRoomListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListModel.swift; sourceTree = "<group>"; };
 		2ECD93E02C3C50DF0030CDAC /* UILabel+setLineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+setLineSpacing.swift"; sourceTree = "<group>"; };
 		2ECE2B3B2BF4B195004D95B2 /* ViewMyLikesQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyLikesQuery.swift; sourceTree = "<group>"; };
 		2ED397EE2BDA482A0064CD71 /* LikeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeQuery.swift; sourceTree = "<group>"; };
@@ -815,6 +817,7 @@
 				2EAF064B2BEE611B00E77A3D /* FollowModel.swift */,
 				2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */,
 				2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */,
+				2ECD62752C4012E70055364E /* ChatRoomListModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -1011,6 +1014,7 @@
 				2EEAC03B2BF0DFEE00F56645 /* MyLikesViewModel.swift in Sources */,
 				2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */,
 				2E1E932B2BE6D4F800E9F9A5 /* MyPageViewModel.swift in Sources */,
+				2ECD62762C4012E70055364E /* ChatRoomListModel.swift in Sources */,
 				2E5980042BD42F0100AAAFA7 /* SignUpQuery.swift in Sources */,
 				2EB4443D2BEF8557009D7684 /* PaddingTextField.swift in Sources */,
 				2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */,
