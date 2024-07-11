@@ -26,7 +26,7 @@ enum Router {
     case viewCertainPost(postId: String)
     case viewMyPosts(userID: String, query: ViewMyPostsQuery)
     case viewMyLikes(query: ViewMyLikesQuery)
-    case myChatRoomList
+    case getChatRoomList
 }
 
 extension Router: TargetType {
@@ -36,7 +36,7 @@ extension Router: TargetType {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .viewPost, .refresh, .myProfile, .viewCertainPost, .viewMyPosts, .viewMyLikes, .myChatRoomList:
+        case .viewPost, .refresh, .myProfile, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList:
             return .get
         case .deletePost, .unfollowUser:
             return .delete
@@ -81,7 +81,7 @@ extension Router: TargetType {
             return "posts/users/\(userID)"
         case .viewMyLikes:
             return "posts/likes/me"
-        case .myChatRoomList:
+        case .getChatRoomList:
             return "chats"
         }
     }
@@ -202,7 +202,7 @@ extension Router: TargetType {
             return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
             return encodeQuery(query)
-        case .viewPost, .deletePost, .refresh, .uploadFile, .myProfile, .followUser, .unfollowUser, .viewCertainPost, .viewMyPosts, .viewMyLikes, .myChatRoomList:
+        case .viewPost, .deletePost, .refresh, .uploadFile, .myProfile, .followUser, .unfollowUser, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList:
             return nil
         }
     }

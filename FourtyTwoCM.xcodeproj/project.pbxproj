@@ -18,7 +18,7 @@
 		2E2E99842C240DA60035D50E /* PostMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E99832C240DA60035D50E /* PostMapViewModel.swift */; };
 		2E2E99862C240DBA0035D50E /* PostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E99852C240DBA0035D50E /* PostMapViewController.swift */; };
 		2E2E998B2C2410E70035D50E /* ChatRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E998A2C2410E70035D50E /* ChatRoomListViewController.swift */; };
-		2E2E998D2C2410F00035D50E /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E998C2C2410F00035D50E /* ChattingViewModel.swift */; };
+		2E2E998D2C2410F00035D50E /* ChatRoomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E998C2C2410F00035D50E /* ChatRoomListViewModel.swift */; };
 		2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D54E2BE4DB430028A172 /* Interceptor.swift */; };
 		2E38D5512BE4DD760028A172 /* RefreshModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5502BE4DD760028A172 /* RefreshModel.swift */; };
 		2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */; };
@@ -138,7 +138,7 @@
 		2E2E99832C240DA60035D50E /* PostMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapViewModel.swift; sourceTree = "<group>"; };
 		2E2E99852C240DBA0035D50E /* PostMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapViewController.swift; sourceTree = "<group>"; };
 		2E2E998A2C2410E70035D50E /* ChatRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListViewController.swift; sourceTree = "<group>"; };
-		2E2E998C2C2410F00035D50E /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
+		2E2E998C2C2410F00035D50E /* ChatRoomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListViewModel.swift; sourceTree = "<group>"; };
 		2E38D54E2BE4DB430028A172 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
 		2E38D5502BE4DD760028A172 /* RefreshModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshModel.swift; sourceTree = "<group>"; };
 		2E38D5522BE4FF5E0028A172 /* ViewModelErrorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelErrorProtocol.swift; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 		2E2E99882C2410DA0035D50E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2E2E998C2C2410F00035D50E /* ChattingViewModel.swift */,
+				2E2E998C2C2410F00035D50E /* ChatRoomListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -989,7 +989,7 @@
 				2E2E99862C240DBA0035D50E /* PostMapViewController.swift in Sources */,
 				2E77031C2C3EFF370061D6F1 /* ChatParticipant.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
-				2E2E998D2C2410F00035D50E /* ChattingViewModel.swift in Sources */,
+				2E2E998D2C2410F00035D50E /* ChatRoomListViewModel.swift in Sources */,
 				2E38D55F2BE55B550028A172 /* CustomTabBar.swift in Sources */,
 				2ECD93E12C3C50DF0030CDAC /* UILabel+setLineSpacing.swift in Sources */,
 				2E1B91E82BE64EB300751288 /* UploadImageQuery.swift in Sources */,

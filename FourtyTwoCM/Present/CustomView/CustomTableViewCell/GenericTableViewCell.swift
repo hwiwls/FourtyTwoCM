@@ -29,6 +29,12 @@ class GenericTableViewCell: UITableViewCell {
         $0.text = "알 수 없음"
     }
     
+    private let timeLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 9)
+        $0.textColor = .offWhite
+        $0.text = "n시간 전"
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
@@ -43,7 +49,8 @@ class GenericTableViewCell: UITableViewCell {
         addSubviews([
             profileImageView,
             nicknameLabel,
-            contentLabel
+            contentLabel,
+            timeLabel
         ])
         
         profileImageView.snp.makeConstraints {
@@ -64,11 +71,17 @@ class GenericTableViewCell: UITableViewCell {
             $0.leading.equalTo(profileImageView.snp.trailing).offset(8)
             $0.bottom.equalToSuperview().inset(12)
         }
+        
+        timeLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(profileImageView.snp.top)
+        }
     }
     
     func configure(with comment: Comment) {
         nicknameLabel.text = comment.creator.nick
         contentLabel.text = comment.content
+        timeLabel.text = comment.createdAt
         if let profileImageUrl = comment.creator.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
             profileImageView.loadImage(from: url)
             print("댓글창 프로필 이미지 url: \(url)")
@@ -77,15 +90,21 @@ class GenericTableViewCell: UITableViewCell {
         }
     }
     
-//    func configure(with chat: Chat) {
-//        nicknameLabel.text = chat.creator.nick
-//        contentLabel.text = chat.content
-//        if let profileImageUrl = chat.creator.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
-//            profileImageView.loadImage(from: url)
-//            print("채팅창 프로필 이미지 url: \(url)")
-//        } else {
-//            profileImageView.image = UIImage(named: "defaultprofile")
-//        }
-//    }
+    func configure(with participants: [Participant], lastChat: LastChat?, updatedAt: String) {
+        let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        
+        // userID와 다른 participant 찾기
+        let otherParticipant = participants.first { $0.userID != userID }
+        
+        nicknameLabel.text = otherParticipant?.nick ?? "알 수 없음"
+        contentLabel.text = lastChat?.content ?? "알 수 없음"
+        timeLabel.text = updatedAt
+        
+        if let profileImageUrl = otherParticipant?.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
+            profileImageView.loadImage(from: url)
+        } else {
+            profileImageView.image = UIImage(named: "defaultprofile")
+        }
+    }
 }
 
