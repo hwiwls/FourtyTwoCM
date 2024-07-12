@@ -23,8 +23,6 @@ class ChatRoomListViewController: BaseViewController {
     private let viewDidLoadTrigger = PublishSubject<Void>()
     private let refreshTrigger = PublishSubject<Void>()
     
-//    private var chatRooms: [ChatRoomModel] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadTrigger.onNext(())
@@ -33,7 +31,8 @@ class ChatRoomListViewController: BaseViewController {
     override func bind() {
         let input = ChatRoomListViewModel.Input(
             viewDidLoadTrigger: viewDidLoadTrigger.asObservable(),
-            refreshTrigger: refreshTrigger.asObservable()
+            refreshTrigger: refreshTrigger.asObservable(),
+            chatRoomClicked: chatRoomListTableView.rx.itemSelected.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -53,6 +52,15 @@ class ChatRoomListViewController: BaseViewController {
         
         output.isRefreshing
             .drive(refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+        
+        output.moveToChat
+            .drive(onNext: { [weak self] (roomId, participantNick) in
+                let chatVC = ChatViewController()
+                chatVC.viewModel = ChatViewModel(chatRoomId: roomId, participantId: nil, participantNick: participantNick)
+                chatVC.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(chatVC, animated: true)
+            })
             .disposed(by: disposeBag)
         
         chatRoomListTableView.refreshControl = refreshControl

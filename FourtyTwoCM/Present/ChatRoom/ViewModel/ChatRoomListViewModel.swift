@@ -15,6 +15,7 @@ final class ChatRoomListViewModel: ViewModelType {
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
         let refreshTrigger: Observable<Void>
+        let chatRoomClicked: Observable<IndexPath>
     }
     
     struct Output {
@@ -22,17 +23,23 @@ final class ChatRoomListViewModel: ViewModelType {
         let refreshLoad: Driver<[ChatRoomModel]>
         let errorMessage: Driver<String>
         let isRefreshing: Driver<Bool>
+        let moveToChat: Driver<(String, String)>
     }
     
     func transform(input: Input) -> Output {
         let errorMessageRelay = PublishRelay<String>()
         let isRefreshingRelay = PublishRelay<Bool>()
         
+        let chatRoomsRelay = BehaviorRelay<[ChatRoomModel]>(value: [])
+        
         // Initial load
         let initialLoad = input.viewDidLoadTrigger
             .flatMapLatest {
                 NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
                     .asObservable()
+                    .do(onNext: { response in
+                        chatRoomsRelay.accept(response.data)
+                    })
                     .catch { error in
                         if let apiError = error as? APIError {
                             errorMessageRelay.accept(apiError.errorMessage)
@@ -42,7 +49,7 @@ final class ChatRoomListViewModel: ViewModelType {
                         return .empty()
                     }
             }
-            .map { $0.data }
+            .map { _ in chatRoomsRelay.value }
             .asDriver(onErrorJustReturn: [])
         
         // Refresh load
@@ -52,7 +59,7 @@ final class ChatRoomListViewModel: ViewModelType {
                 NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
                     .asObservable()
                     .do(onNext: { response in
-                        print("Server response: \(response.data)") // 서버 응답 출력
+                        chatRoomsRelay.accept(response.data)
                     })
                     .catch { error in
                         if let apiError = error as? APIError {
@@ -64,12 +71,27 @@ final class ChatRoomListViewModel: ViewModelType {
                     }
             }
             .do(onNext: { _ in isRefreshingRelay.accept(false) })
-            .map { $0.data }
+            .map { _ in chatRoomsRelay.value }
             .asDriver(onErrorJustReturn: [])
         
         let errorMessage = errorMessageRelay.asDriver(onErrorJustReturn: "알 수 없는 네트워크 오류")
         let isRefreshing = isRefreshingRelay.asDriver(onErrorJustReturn: false)
         
-        return Output(initialLoad: initialLoad, refreshLoad: refreshLoad, errorMessage: errorMessage, isRefreshing: isRefreshing)
+        let moveToChat = input.chatRoomClicked
+            .withLatestFrom(chatRoomsRelay) { indexPath, chatRooms in
+                let chatRoom = chatRooms[indexPath.row]
+                let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
+                let particiapntName = chatRoom.participants.first { $0.userID != userId }?.nick ?? ""
+                return (chatRoom.roomID, particiapntName)
+            }
+            .asDriver(onErrorJustReturn: ("", ""))
+        
+        return Output(
+            initialLoad: initialLoad,
+            refreshLoad: refreshLoad,
+            errorMessage: errorMessage,
+            isRefreshing: isRefreshing,
+            moveToChat: moveToChat
+        )
     }
 }

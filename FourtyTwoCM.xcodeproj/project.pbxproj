@@ -122,6 +122,8 @@
 		2EEAC03D2BF0DFFC00F56645 /* MyPostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */; };
 		2EEAC0412BF0F9C500F56645 /* MyPageTabmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */; };
 		2EF30B612C34791E00404368 /* String+prependBaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF30B602C34791E00404368 /* String+prependBaseURL.swift */; };
+		2EFA27282C41316F00847FD0 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFA27272C41316F00847FD0 /* ChatViewController.swift */; };
+		2EFA272C2C41318500847FD0 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFA272B2C41318500847FD0 /* ChatViewModel.swift */; };
 		2EFE84532C25459D004CBC5E /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */; };
 		2EFE84552C2545CC004CBC5E /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */; };
 /* End PBXBuildFile section */
@@ -235,6 +237,8 @@
 		2EEAC03C2BF0DFFC00F56645 /* MyPostsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsViewModel.swift; sourceTree = "<group>"; };
 		2EEAC0402BF0F9C500F56645 /* MyPageTabmanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTabmanViewController.swift; sourceTree = "<group>"; };
 		2EF30B602C34791E00404368 /* String+prependBaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+prependBaseURL.swift"; sourceTree = "<group>"; };
+		2EFA27272C41316F00847FD0 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		2EFA272B2C41318500847FD0 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		2EFE84522C25459D004CBC5E /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		2EFE84542C2545CC004CBC5E /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -530,6 +534,7 @@
 		2E5C38202BCA7C3E00A006FB /* Present */ = {
 			isa = PBXGroup;
 			children = (
+				2EFA27262C41316000847FD0 /* Chat */,
 				2E2E99872C2410D00035D50E /* ChatRoom */,
 				2E2E997E2C240BBA0035D50E /* PostMap */,
 				2E8F983E2BCD6A8F00E9A79A /* TabBar */,
@@ -848,6 +853,31 @@
 			path = MyLikes;
 			sourceTree = "<group>";
 		};
+		2EFA27262C41316000847FD0 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				2EFA272A2C41317800847FD0 /* ViewModel */,
+				2EFA27292C41317300847FD0 /* ViewController */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		2EFA27292C41317300847FD0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2EFA27272C41316F00847FD0 /* ChatViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2EFA272A2C41317800847FD0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2EFA272B2C41318500847FD0 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -962,6 +992,7 @@
 				2E5C38392BCA7EA900A006FB /* UIView+addSubViews.swift in Sources */,
 				2ED643002BD5272500722299 /* FeedPageViewModel.swift in Sources */,
 				2E38D55B2BE53F770028A172 /* PostCreationViewController.swift in Sources */,
+				2EFA272C2C41318500847FD0 /* ChatViewModel.swift in Sources */,
 				2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */,
 				2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */,
 				2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */,
@@ -972,6 +1003,7 @@
 				2E71983C2BE7BB7900C8F334 /* PaymentsValidationQuery.swift in Sources */,
 				2EEAC0322BF0DF5B00F56645 /* MyPostsViewController.swift in Sources */,
 				2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */,
+				2EFA27282C41316F00847FD0 /* ChatViewController.swift in Sources */,
 				2EBA8D612C2991E900C3CEEA /* PostDetailView.swift in Sources */,
 				2E8F98732BCD946100E9A79A /* ViewModelType.swift in Sources */,
 				2EA184712BF3275700A84FEA /* UICollectionView+ReachedBottom.swift in Sources */,

@@ -6,14 +6,21 @@
 //
 
 import UIKit
-//import Then
 
 final class CustomTabBar: UITabBar {
-    let middleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 70, height: 70)).then {
-        $0.backgroundColor = .black
-        $0.layer.cornerRadius = 35 
-        $0.setImage(UIImage(systemName: "plus")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+    let middleButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60)).then {
+        $0.backgroundColor = .offWhite
+        $0.layer.cornerRadius = 30
+        $0.setImage(UIImage(systemName: "plus")?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let tabBarHeight = frame.height
+        // 위치를 5픽셀 더 높게 조정
+        middleButton.center = CGPoint(x: frame.width / 2, y: tabBarHeight / 2 - 20)
+        addSubview(middleButton)
+    }
 }
 
