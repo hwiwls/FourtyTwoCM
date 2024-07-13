@@ -24,6 +24,7 @@ final class ChatViewController: BaseViewController {
         $0.backgroundColor = .clear
         $0.allowsSelection = false
         $0.register(ChatMessageCell.self, forCellReuseIdentifier: ChatMessageCell.identifier)
+        $0.contentInset = UIEdgeInsets(top: 28, left: 0, bottom: 60, right: 0)
     }
     
     private let messageTextFieldBackgroundView = UIView().then {
@@ -59,16 +60,15 @@ final class ChatViewController: BaseViewController {
         output.messages
             .drive(chatMessageTableView.rx.items(cellIdentifier: ChatMessageCell.identifier, cellType: ChatMessageCell.self)) { row, message, cell in
                 let isOutgoing = (message.sender?.userId ?? "") == self.userId
-                let isFirst = row == 0
-                cell.configure(with: message, isOutgoing: isOutgoing, isFirst: isFirst)
+                cell.configure(with: message, isOutgoing: isOutgoing)
             }
             .disposed(by: disposeBag)
         
         output.error
-                    .drive(onNext: { [weak self] errorMessage in
-                        print("채팅 페치 에러: \(errorMessage)")
-                    })
-                    .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] errorMessage in
+                print("채팅 페치 에러: \(errorMessage)")
+            })
+            .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {
@@ -87,7 +87,7 @@ final class ChatViewController: BaseViewController {
         messageTextFieldBackgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(50)
-            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
+            $0.bottom.equalToSuperview()
         }
         
         messageTextField.snp.makeConstraints {

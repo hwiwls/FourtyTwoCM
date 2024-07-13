@@ -37,9 +37,9 @@ class ChatMessageCell: BaseTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with message: ChatMessage, isOutgoing: Bool, isFirst: Bool = false) {
+    func configure(with message: ChatMessage, isOutgoing: Bool) {
         messageLabel.text = message.content
-        updateUI(isOutgoing: isOutgoing, isFirst: isFirst)
+        updateUI(isOutgoing: isOutgoing)
     }
     
     override func configHierarchy() {
@@ -61,29 +61,19 @@ class ChatMessageCell: BaseTableViewCell {
         }
     }
     
-    private func updateUI(isOutgoing: Bool, isFirst: Bool) {
+    private func updateUI(isOutgoing: Bool) {
         bubbleBackgroundView.backgroundColor = isOutgoing ? .systemBlue : .superDarkGray
         
         if isOutgoing {
             bubbleBackgroundView.snp.remakeConstraints {
                 $0.trailing.equalToSuperview().inset(24)
-                if isFirst {
-                    $0.top.equalToSuperview().inset(24)
-                } else {
-                    $0.top.equalToSuperview()
-                }
-                $0.bottom.equalToSuperview().inset(12)
+                $0.top.bottom.equalToSuperview().inset(12)
                 $0.width.lessThanOrEqualTo(300)
             }
         } else {
             bubbleBackgroundView.snp.remakeConstraints {
                 $0.leading.equalToSuperview().inset(24)
-                if isFirst {
-                    $0.top.equalToSuperview().inset(24)
-                } else {
-                    $0.top.equalToSuperview()
-                }
-                $0.bottom.equalToSuperview().inset(12)
+                $0.top.bottom.equalToSuperview().inset(12)
                 $0.width.lessThanOrEqualTo(300)
             }
         }
