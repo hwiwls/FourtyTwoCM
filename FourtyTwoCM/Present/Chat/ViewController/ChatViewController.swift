@@ -11,11 +11,6 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-struct DummyMessage {
-    let senderID: String
-    let text: String
-}
-
 final class ChatViewController: BaseViewController {
     
     var viewModel: ChatViewModel!
@@ -62,9 +57,9 @@ final class ChatViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.messages
-            .drive(chatMessageTableView.rx.items(cellIdentifier: "ChatMessageCell", cellType: ChatMessageCell.self)) { row, message, cell in
-                let isOutgoing = message.senderID == self.userId
-                let isFirst = row == 0 
+            .drive(chatMessageTableView.rx.items(cellIdentifier: ChatMessageCell.identifier, cellType: ChatMessageCell.self)) { row, message, cell in
+                let isOutgoing = message.sender?.userId ?? "" == self.userId
+                let isFirst = row == 0
                 cell.configure(with: message, isOutgoing: isOutgoing, isFirst: isFirst)
             }
             .disposed(by: disposeBag)

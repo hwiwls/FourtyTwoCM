@@ -12,18 +12,16 @@ import RxCocoa
 final class ChatViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
-    let chatRoomId: String?
-    let participantId: String?
-    let participantNick: String?
+    let chatRepository = ChatRepository()
     
-    init(chatRoomId: String?, participantId: String?, participantNick: String?) {
+    let chatRoomId: String?
+    let participantId: String
+    let participantNick: String
+    
+    init(chatRoomId: String?, participantId: String, participantNick: String) {
         self.chatRoomId = chatRoomId
         self.participantId = participantId
         self.participantNick = participantNick
-        
-        print("chatRoomId \(String(describing: chatRoomId))")
-        print("participantId \(String(describing: participantId))")
-        print("participantNick \(String(describing: participantNick))")
     }
     
     struct Input {
@@ -31,22 +29,17 @@ final class ChatViewModel: ViewModelType {
     }
     
     struct Output {
-        let messages: Driver<[DummyMessage]>
+        let messages: Driver<[ChatMessage]>
     }
     
     func transform(input: Input) -> Output {
-        let messagesRelay = BehaviorRelay(value: [DummyMessage]())
-
-        
+        let messagesRelay = BehaviorRelay(value: [ChatMessage]())
+                
         input.loadMessage
-            .map { _ in
-                // 더미 메시지 로드
-                return [
-                    DummyMessage(senderID: "friend", text: "Hello, World!"),
-                    DummyMessage(senderID: "6675009f488eb4cb431c9242", text: "Hello, World! Hello, World! Hello, World! \n Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World!"),
-                    DummyMessage(senderID: "friend", text: "こんにちは、世界!"),
-                    DummyMessage(senderID: "6675009f488eb4cb431c9242", text: "안녕하세요, 세상!")
-                ]
+            .map { [weak self] _ -> [ChatMessage] in
+                guard let self = self else { return [] }
+                let messages = self.chatRepository.fetchMessagesUsingRoomId(for: self.participantId)
+                return messages
             }
             .bind(to: messagesRelay)
             .disposed(by: disposeBag)

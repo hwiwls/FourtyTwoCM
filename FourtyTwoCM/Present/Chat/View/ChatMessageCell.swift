@@ -37,8 +37,8 @@ class ChatMessageCell: BaseTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with message: DummyMessage, isOutgoing: Bool, isFirst: Bool = false) {
-        messageLabel.text = message.text
+    func configure(with message: ChatMessage, isOutgoing: Bool, isFirst: Bool = false) {
+        messageLabel.text = message.content
         updateUI(isOutgoing: isOutgoing, isFirst: isFirst)
     }
     

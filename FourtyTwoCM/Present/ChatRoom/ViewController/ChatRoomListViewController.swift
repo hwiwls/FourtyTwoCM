@@ -55,9 +55,9 @@ class ChatRoomListViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.moveToChat
-            .drive(onNext: { [weak self] (roomId, participantNick) in
+            .drive(onNext: { [weak self] (roomId, participantId, participantNick) in
                 let chatVC = ChatViewController()
-                chatVC.viewModel = ChatViewModel(chatRoomId: roomId, participantId: nil, participantNick: participantNick)
+                chatVC.viewModel = ChatViewModel(chatRoomId: roomId, participantId: participantId, participantNick: participantNick)
                 chatVC.hidesBottomBarWhenPushed = true
                 self?.navigationController?.pushViewController(chatVC, animated: true)
             })

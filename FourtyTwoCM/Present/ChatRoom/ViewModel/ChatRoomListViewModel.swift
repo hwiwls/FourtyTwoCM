@@ -23,7 +23,7 @@ final class ChatRoomListViewModel: ViewModelType {
         let refreshLoad: Driver<[ChatRoomModel]>
         let errorMessage: Driver<String>
         let isRefreshing: Driver<Bool>
-        let moveToChat: Driver<(String, String)>
+        let moveToChat: Driver<(String, String, String)>
     }
     
     func transform(input: Input) -> Output {
@@ -81,10 +81,13 @@ final class ChatRoomListViewModel: ViewModelType {
             .withLatestFrom(chatRoomsRelay) { indexPath, chatRooms in
                 let chatRoom = chatRooms[indexPath.row]
                 let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
-                let particiapntName = chatRoom.participants.first { $0.userID != userId }?.nick ?? ""
-                return (chatRoom.roomID, particiapntName)
+                let participant = chatRoom.participants.first { $0.userID != userId }
+                let participantId = participant?.userID ?? ""
+                let participantName = participant?.nick ?? ""
+                return (chatRoom.roomID, participantId, participantName)
             }
-            .asDriver(onErrorJustReturn: ("", ""))
+            .asDriver(onErrorJustReturn: ("", "", ""))
+
         
         return Output(
             initialLoad: initialLoad,
