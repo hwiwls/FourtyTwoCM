@@ -27,7 +27,7 @@ enum Router {
     case viewMyPosts(userID: String, query: ViewMyPostsQuery)
     case viewMyLikes(query: ViewMyLikesQuery)
     case getChatRoomList
-    case getChatHistory(roomId: String)
+    case getChatHistory(roomId: String, query: ChatHistoryQuery)
     case sendMessage(roomId: String)
 }
 
@@ -85,7 +85,7 @@ extension Router: TargetType {
             return "posts/likes/me"
         case .getChatRoomList:
             return "chats"
-        case .getChatHistory(let roomId):
+        case .getChatHistory(let roomId, query: _):
             return "chats/\(roomId)"
         case .sendMessage(let roomId):
             return "chats/\(roomId)"
@@ -180,6 +180,13 @@ extension Router: TargetType {
                 items.append(URLQueryItem(name: "next", value: next))
             }
             return items
+            
+        case .getChatHistory(_, let query):
+            var items = [URLQueryItem]()
+            if let cursorDate = query.cursor_date {
+                items.append(URLQueryItem(name: "cursor_date", value: cursorDate))
+            }
+            return items
         default:
             return nil
         }
@@ -208,7 +215,7 @@ extension Router: TargetType {
             return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
             return encodeQuery(query)
-        case .getChatHistory(let query):
+        case .getChatHistory(roomId: _, let query):
             return encodeQuery(query)
         case .sendMessage(let query):
             return encodeQuery(query)
