@@ -27,15 +27,31 @@ final class ChatViewModel: ViewModelType {
     }
     
     struct Input {
-        
+        let loadMessage: Observable<Void>
     }
     
     struct Output {
-        
+        let messages: Driver<[DummyMessage]>
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+        let messagesRelay = BehaviorRelay(value: [DummyMessage]())
+
+        
+        input.loadMessage
+            .map { _ in
+                // 더미 메시지 로드
+                return [
+                    DummyMessage(senderID: "friend", text: "Hello, World!"),
+                    DummyMessage(senderID: "6675009f488eb4cb431c9242", text: "Hello, World! Hello, World! Hello, World! \n Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! Hello, World!"),
+                    DummyMessage(senderID: "friend", text: "こんにちは、世界!"),
+                    DummyMessage(senderID: "6675009f488eb4cb431c9242", text: "안녕하세요, 세상!")
+                ]
+            }
+            .bind(to: messagesRelay)
+            .disposed(by: disposeBag)
+        
+        return Output(messages: messagesRelay.asDriver())
     }
     
     

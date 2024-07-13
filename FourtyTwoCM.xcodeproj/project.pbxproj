@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */; };
 		2E1390A52C43EFB900AB303C /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1390A42C43EFB900AB303C /* ChatMessageModel.swift */; };
+		2E19570B2C44F99F00EFA70A /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19570A2C44F99F00EFA70A /* ChatMessageCell.swift */; };
+		2E19570D2C44F9E500EFA70A /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19570C2C44F9E500EFA70A /* BaseTableViewCell.swift */; };
 		2E1B91E02BE62F1000751288 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91DF2BE62F1000751288 /* FileModel.swift */; };
 		2E1B91E22BE632FA00751288 /* UploadPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */; };
 		2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E52BE63F5200751288 /* UploadPostModel.swift */; };
@@ -132,6 +134,8 @@
 /* Begin PBXFileReference section */
 		2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostQuery.swift; sourceTree = "<group>"; };
 		2E1390A42C43EFB900AB303C /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
+		2E19570A2C44F99F00EFA70A /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		2E19570C2C44F9E500EFA70A /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		2E1B91DF2BE62F1000751288 /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostQuery.swift; sourceTree = "<group>"; };
 		2E1B91E52BE63F5200751288 /* UploadPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostModel.swift; sourceTree = "<group>"; };
@@ -266,6 +270,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E1957092C44F98C00EFA70A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2E19570A2C44F99F00EFA70A /* ChatMessageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		2E1E93292BE6D4ED00E9F9A5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,6 +532,7 @@
 				2E5C383E2BCA7FEC00A006FB /* BaseViewController.swift */,
 				2E5C38402BCA7FF800A006FB /* BaseView.swift */,
 				2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */,
+				2E19570C2C44F9E500EFA70A /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -859,6 +872,7 @@
 		2EFA27262C41316000847FD0 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				2E1957092C44F98C00EFA70A /* View */,
 				2EFA272A2C41317800847FD0 /* ViewModel */,
 				2EFA27292C41317300847FD0 /* ViewController */,
 			);
@@ -997,6 +1011,7 @@
 				2E38D55B2BE53F770028A172 /* PostCreationViewController.swift in Sources */,
 				2EFA272C2C41318500847FD0 /* ChatViewModel.swift in Sources */,
 				2E988E1A2BE2713E00F48CF4 /* PermissionViewController.swift in Sources */,
+				2E19570D2C44F9E500EFA70A /* BaseTableViewCell.swift in Sources */,
 				2E38D54F2BE4DB430028A172 /* Interceptor.swift in Sources */,
 				2E988E162BE2710C00F48CF4 /* PermissionViewModel.swift in Sources */,
 				2E8DF6982BF14077009C0022 /* ViewMyPostsQuery.swift in Sources */,
@@ -1073,6 +1088,7 @@
 				2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */,
 				2E8F985A2BCD7EDA00E9A79A /* HTTPHeader.swift in Sources */,
 				2E8F98622BCD7F1500E9A79A /* BaseURL.swift in Sources */,
+				2E19570B2C44F99F00EFA70A /* ChatMessageCell.swift in Sources */,
 				2E8F983A2BCD5A6E00E9A79A /* UIFont+Aggro.swift in Sources */,
 				2E1B91E02BE62F1000751288 /* FileModel.swift in Sources */,
 				2E597FFE2BD41EAC00AAAFA7 /* SignUpViewModel.swift in Sources */,

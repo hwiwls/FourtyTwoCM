@@ -10,26 +10,54 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+struct DummyMessage {
+    let senderID: String
+    let text: String
+}
+
 final class ChatViewController: BaseViewController {
     
     var viewModel: ChatViewModel!
+    
+    let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
+    
+    private lazy var chatMessageTableView = UITableView().then {
+        $0.separatorStyle = .none
+        $0.backgroundColor = .clear
+        $0.allowsSelection = false
+        $0.register(ChatMessageCell.self, forCellReuseIdentifier: ChatMessageCell.identifier)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
     }
     
     override func bind() {
+        let input = ChatViewModel.Input(
+            loadMessage: Observable.just(())
+        )
         
+        let output = viewModel.transform(input: input)
         
+        output.messages
+            .drive(chatMessageTableView.rx.items(cellIdentifier: "ChatMessageCell", cellType: ChatMessageCell.self)) { row, message, cell in
+                let isOutgoing = message.senderID == self.userId
+                let isFirst = row == 0 
+                cell.configure(with: message, isOutgoing: isOutgoing, isFirst: isFirst)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {
-        
+        view.addSubviews([
+            chatMessageTableView
+        ])
     }
     
     override func configLayout() {
-        
+        chatMessageTableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     override func configNav() {
