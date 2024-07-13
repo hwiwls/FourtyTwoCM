@@ -34,7 +34,7 @@ final class CommentViewController: BaseViewController {
         $0.layer.borderColor = UIColor.placeHolderGray.cgColor
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
-        $0.textInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 72)
+        $0.textInsets = UIEdgeInsets(top: 16, left: 8, bottom: 0, right: 8)
     }
     
     private lazy var submitButton = UIButton(type: .system).then {

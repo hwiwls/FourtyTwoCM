@@ -49,6 +49,7 @@ class BaseViewController: UIViewController {
         
     }
     
+    
     // 코드베이스에서 자주 사용하는 패턴.
     // '*, unavailable'은 모든 플랫폼과 버전에서 해당 기능이 사용할 수 없음. 즉, 이 초기화 방법은 사용할 수 없도록 의도적으로 비활성화
     @available (*, unavailable)

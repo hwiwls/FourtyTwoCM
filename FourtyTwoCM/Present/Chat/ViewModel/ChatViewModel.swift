@@ -53,6 +53,4 @@ final class ChatViewModel: ViewModelType {
         
         return Output(messages: messagesRelay.asDriver())
     }
-    
-    
 }
