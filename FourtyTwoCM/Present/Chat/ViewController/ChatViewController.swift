@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 struct DummyMessage {
     let senderID: String
@@ -20,6 +21,8 @@ final class ChatViewController: BaseViewController {
     var viewModel: ChatViewModel!
     
     let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
+    
+    let chatRepository = ChatRepository()
     
     private lazy var chatMessageTableView = UITableView().then {
         $0.separatorStyle = .none
@@ -46,6 +49,9 @@ final class ChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolbar()
+        
+        let realm = try! Realm()
+        print("realm url: \(String(describing: realm.configuration.fileURL))")
     }
     
     override func bind() {

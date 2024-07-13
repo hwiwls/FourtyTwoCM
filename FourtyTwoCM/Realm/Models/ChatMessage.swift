@@ -9,8 +9,7 @@ import Foundation
 import RealmSwift
 
 class ChatMessage: Object {
-    @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var chatId: String
+    @Persisted(primaryKey: true) var chatId: String
     @Persisted var roomId: String
     @Persisted var content: String
     @Persisted var createdAt: Date

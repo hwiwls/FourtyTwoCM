@@ -9,8 +9,7 @@ import Foundation
 import RealmSwift
 
 class ChatRoom: Object {
-    @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var roomId: String
+    @Persisted(primaryKey: true) var roomId: String
     @Persisted var participants: List<ChatParticipant>
 
     convenience init(roomId: String) {
@@ -18,4 +17,5 @@ class ChatRoom: Object {
         self.roomId = roomId
     }
 }
+
 
