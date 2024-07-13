@@ -51,7 +51,7 @@ final class ChatViewController: BaseViewController {
     
     override func bind() {
         let input = ChatViewModel.Input(
-            loadMessage: Observable.just(())
+            loadMessage: self.rx.viewWillAppear.map { _ in }
         )
         
         let output = viewModel.transform(input: input)
