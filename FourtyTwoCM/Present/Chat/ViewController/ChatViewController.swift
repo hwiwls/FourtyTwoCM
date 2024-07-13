@@ -24,12 +24,10 @@ final class ChatViewController: BaseViewController {
         $0.backgroundColor = .clear
         $0.allowsSelection = false
         $0.register(ChatMessageCell.self, forCellReuseIdentifier: ChatMessageCell.identifier)
-        $0.contentInset = UIEdgeInsets(top: 28, left: 0, bottom: 60, right: 0)
+        $0.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 60, right: 0)
     }
     
-    private let messageTextFieldBackgroundView = UIView().then {
-        $0.backgroundColor = .backgroundBlack.withAlphaComponent(0.5)
-    }
+    private let messageTextFieldBackgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
     private let messageTextField = PaddedTextField().then {
         $0.placeholder = "메시지를 입력하세요..."
@@ -86,7 +84,7 @@ final class ChatViewController: BaseViewController {
         
         messageTextFieldBackgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(50)
+            $0.top.equalTo(messageTextField.snp.top).offset(-4)
             $0.bottom.equalToSuperview()
         }
         
