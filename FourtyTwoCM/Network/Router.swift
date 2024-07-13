@@ -28,6 +28,7 @@ enum Router {
     case viewMyLikes(query: ViewMyLikesQuery)
     case getChatRoomList
     case getChatHistory(roomId: String)
+    case sendMessage(roomId: String)
 }
 
 extension Router: TargetType {
@@ -41,7 +42,7 @@ extension Router: TargetType {
             return .get
         case .deletePost, .unfollowUser:
             return .delete
-        case .login, .signUp, .emailValidation, .likePost, .uploadFile, .uploadPost, .paymentValidation, .followUser, .writeComment:
+        case .login, .signUp, .emailValidation, .likePost, .uploadFile, .uploadPost, .paymentValidation, .followUser, .writeComment, .sendMessage:
             return .post
         }
     }
@@ -85,6 +86,8 @@ extension Router: TargetType {
         case .getChatRoomList:
             return "chats"
         case .getChatHistory(let roomId):
+            return "chats/\(roomId)"
+        case .sendMessage(let roomId):
             return "chats/\(roomId)"
         }
     }
@@ -207,7 +210,9 @@ extension Router: TargetType {
             return encodeQuery(query)
         case .getChatHistory(let query):
             return encodeQuery(query)
-        case .viewPost, .deletePost, .refresh, .uploadFile, .myProfile, .followUser, .unfollowUser, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList:
+        case .sendMessage(let query):
+            return encodeQuery(query)
+        default:
             return nil
         }
     }
