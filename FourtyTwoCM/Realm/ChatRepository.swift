@@ -34,14 +34,6 @@ class ChatRepository {
         }
     }
 
-    // 특정 roomId의 모든 ChatMessage의 내용 조회
-    func fetchMessageUsingRoomId(for roomId: String) -> [String] {
-        return realm.objects(ChatMessage.self)
-            .filter("roomId == %@", roomId)
-            .sorted(byKeyPath: "createdAt", ascending: true)
-            .map { $0.content }
-    }
-
     // 특정 유저와의 채팅방이 존재하는지 확인하는 함수
     func isChatRoomExists(with userId: String) -> Bool {
         return !realm.objects(ChatRoom.self)
@@ -57,12 +49,18 @@ class ChatRepository {
             .roomId
     }
     
-    // 특정 유저와의 모든 ChatMessage 조회 함수
-    func fetchMessagesUsingUserId(for userId: String) -> [ChatMessage] {
+    // 특정 유저의 participantId와 일치하는 채팅방의 모든 메시지를 가져오는 함수
+    func fetchMessagesUsingRoomId(for participantId: String) -> [ChatMessage] {
+        guard let roomId = fetchChatRoomId(with: participantId) else {
+            print("해당 participantId로 채팅방을 찾을 수 없습니다: \(participantId)")
+            return []
+        }
+        
         let results = realm.objects(ChatMessage.self)
-            .filter("sender.userId == %@", userId)
+            .filter("roomId == %@", roomId)
             .sorted(byKeyPath: "createdAt", ascending: true)
         
         return Array(results)
     }
+    
 }
