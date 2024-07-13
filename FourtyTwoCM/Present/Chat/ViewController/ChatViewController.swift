@@ -58,11 +58,17 @@ final class ChatViewController: BaseViewController {
         
         output.messages
             .drive(chatMessageTableView.rx.items(cellIdentifier: ChatMessageCell.identifier, cellType: ChatMessageCell.self)) { row, message, cell in
-                let isOutgoing = message.sender?.userId ?? "" == self.userId
+                let isOutgoing = (message.sender?.userId ?? "") == self.userId
                 let isFirst = row == 0
                 cell.configure(with: message, isOutgoing: isOutgoing, isFirst: isFirst)
             }
             .disposed(by: disposeBag)
+        
+        output.error
+                    .drive(onNext: { [weak self] errorMessage in
+                        print("채팅 페치 에러: \(errorMessage)")
+                    })
+                    .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {
