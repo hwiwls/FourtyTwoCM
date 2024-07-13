@@ -1,5 +1,5 @@
 //
-//  ChatHistoryModel.swift
+//  ChatMessageModel.swift
 //  FourtyTwoCM
 //
 //  Created by hwijinjeong on 7/14/24.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - ChatHistoryModel
-struct ChatHistoryModel: Decodable {
+// MARK: - ChatMessageModel
+struct ChatMessageModel: Decodable {
     let data: [ChatDetail]
 }
 

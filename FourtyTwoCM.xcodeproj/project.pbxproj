@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E0B837D2BD6D10600F304B4 /* ViewPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */; };
-		2E1390A52C43EFB900AB303C /* ChatHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1390A42C43EFB900AB303C /* ChatHistoryModel.swift */; };
+		2E1390A52C43EFB900AB303C /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1390A42C43EFB900AB303C /* ChatMessageModel.swift */; };
 		2E1B91E02BE62F1000751288 /* FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91DF2BE62F1000751288 /* FileModel.swift */; };
 		2E1B91E22BE632FA00751288 /* UploadPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */; };
 		2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1B91E52BE63F5200751288 /* UploadPostModel.swift */; };
@@ -131,7 +131,7 @@
 
 /* Begin PBXFileReference section */
 		2E0B837C2BD6D10600F304B4 /* ViewPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostQuery.swift; sourceTree = "<group>"; };
-		2E1390A42C43EFB900AB303C /* ChatHistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHistoryModel.swift; sourceTree = "<group>"; };
+		2E1390A42C43EFB900AB303C /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
 		2E1B91DF2BE62F1000751288 /* FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileModel.swift; sourceTree = "<group>"; };
 		2E1B91E12BE632FA00751288 /* UploadPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostQuery.swift; sourceTree = "<group>"; };
 		2E1B91E52BE63F5200751288 /* UploadPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostModel.swift; sourceTree = "<group>"; };
@@ -825,7 +825,7 @@
 				2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */,
 				2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */,
 				2ECD62752C4012E70055364E /* ChatRoomListModel.swift */,
-				2E1390A42C43EFB900AB303C /* ChatHistoryModel.swift */,
+				2E1390A42C43EFB900AB303C /* ChatMessageModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -1069,7 +1069,7 @@
 				2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */,
 				2E77031E2C3EFF3F0061D6F1 /* ChatSender.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
-				2E1390A52C43EFB900AB303C /* ChatHistoryModel.swift in Sources */,
+				2E1390A52C43EFB900AB303C /* ChatMessageModel.swift in Sources */,
 				2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */,
 				2E8F985A2BCD7EDA00E9A79A /* HTTPHeader.swift in Sources */,
 				2E8F98622BCD7F1500E9A79A /* BaseURL.swift in Sources */,
