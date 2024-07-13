@@ -87,5 +87,10 @@ class ChatMessageCell: BaseTableViewCell {
                 $0.width.lessThanOrEqualTo(300)
             }
         }
+        
+        messageLabel.snp.remakeConstraints {
+            $0.leading.trailing.equalTo(bubbleBackgroundView).inset(12)
+            $0.top.bottom.equalTo(bubbleBackgroundView).inset(8)
+        }
     }
 }

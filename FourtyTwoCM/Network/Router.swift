@@ -215,8 +215,6 @@ extension Router: TargetType {
             return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
             return encodeQuery(query)
-        case .getChatHistory(roomId: _, let query):
-            return encodeQuery(query)
         case .sendMessage(let query):
             return encodeQuery(query)
         default:
