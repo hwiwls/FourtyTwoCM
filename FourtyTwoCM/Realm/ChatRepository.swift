@@ -68,7 +68,11 @@ class ChatRepository {
     func updateChatHistory(roomId: String) -> Single<[ChatDetail]> {
         let lastMessageDate = fetchLastMessageTimestamp(for: roomId)
         let dateFormatter = ISO8601DateFormatter()
-        let cursorDate = lastMessageDate != nil ? dateFormatter.string(from: lastMessageDate!) : nil
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        var cursorDate: String? = nil
+        if let lastDate = lastMessageDate {
+            cursorDate = dateFormatter.string(from: lastDate)
+        }
         let query = ChatHistoryQuery(cursor_date: cursorDate)
         
         return NetworkManager.performRequest(route: .getChatHistory(roomId: roomId, query: query), dataType: ChatMessageModel.self)
@@ -89,5 +93,4 @@ class ChatRepository {
                 }
             })
     }
-    
 }
