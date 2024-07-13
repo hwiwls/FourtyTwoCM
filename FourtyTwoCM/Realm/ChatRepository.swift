@@ -35,7 +35,7 @@ class ChatRepository {
     }
 
     // 특정 roomId의 모든 ChatMessage의 내용 조회
-    func fetchMessageContents(for roomId: String) -> [String] {
+    func fetchMessageUsingRoomId(for roomId: String) -> [String] {
         return realm.objects(ChatMessage.self)
             .filter("roomId == %@", roomId)
             .sorted(byKeyPath: "createdAt", ascending: true)
@@ -55,5 +55,13 @@ class ChatRepository {
             .filter("ANY participants.userId == %@", userId)
             .first?
             .roomId
+    }
+    
+    // 특정 유저와의 모든 ChatMessage 내용 조회 함수
+    func fetchMessagesUsingUserId(from userId: String) -> [String] {
+        return realm.objects(ChatMessage.self)
+            .filter("sender.userId == %@", userId)
+            .sorted(byKeyPath: "createdAt", ascending: true)
+            .map { $0.content }
     }
 }
