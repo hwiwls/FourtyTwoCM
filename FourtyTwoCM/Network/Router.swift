@@ -27,6 +27,7 @@ enum Router {
     case viewMyPosts(userID: String, query: ViewMyPostsQuery)
     case viewMyLikes(query: ViewMyLikesQuery)
     case getChatRoomList
+    case getChatHistory(roomId: String)
 }
 
 extension Router: TargetType {
@@ -36,7 +37,7 @@ extension Router: TargetType {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .viewPost, .refresh, .myProfile, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList:
+        case .viewPost, .refresh, .myProfile, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList, .getChatHistory:
             return .get
         case .deletePost, .unfollowUser:
             return .delete
@@ -71,11 +72,11 @@ extension Router: TargetType {
             return "payments/validation"
         case .followUser(let userId):
             return "follow/\(userId)"
-        case .unfollowUser(userId: let userId):
+        case .unfollowUser(let userId):
             return "follow/\(userId)"
-        case .writeComment(postId: let postId, query: _):
+        case .writeComment(let postId, query: _):
             return "posts/\(postId)/comments"
-        case .viewCertainPost(postId: let postId):
+        case .viewCertainPost(let postId):
             return "posts/\(postId)"
         case .viewMyPosts(let userID, _):
             return "posts/users/\(userID)"
@@ -83,6 +84,8 @@ extension Router: TargetType {
             return "posts/likes/me"
         case .getChatRoomList:
             return "chats"
+        case .getChatHistory(let roomId):
+            return "chats/\(roomId)"
         }
     }
     
@@ -201,6 +204,8 @@ extension Router: TargetType {
         case .paymentValidation(query: let query):
             return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
+            return encodeQuery(query)
+        case .getChatHistory(let query):
             return encodeQuery(query)
         case .viewPost, .deletePost, .refresh, .uploadFile, .myProfile, .followUser, .unfollowUser, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList:
             return nil
