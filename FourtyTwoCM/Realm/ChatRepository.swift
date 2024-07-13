@@ -57,11 +57,12 @@ class ChatRepository {
             .roomId
     }
     
-    // 특정 유저와의 모든 ChatMessage 내용 조회 함수
-    func fetchMessagesUsingUserId(from userId: String) -> [String] {
-        return realm.objects(ChatMessage.self)
+    // 특정 유저와의 모든 ChatMessage 조회 함수
+    func fetchMessagesUsingUserId(for userId: String) -> [ChatMessage] {
+        let results = realm.objects(ChatMessage.self)
             .filter("sender.userId == %@", userId)
             .sorted(byKeyPath: "createdAt", ascending: true)
-            .map { $0.content }
+        
+        return Array(results)
     }
 }
