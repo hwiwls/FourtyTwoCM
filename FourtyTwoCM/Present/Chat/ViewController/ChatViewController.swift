@@ -37,9 +37,11 @@ final class ChatViewController: BaseViewController {
         $0.layer.borderColor = UIColor.unactiveGray.cgColor
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
-        $0.textInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
+        $0.textInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 68)
     }
-
+    
+    private let sendMessageBtn = SubmitButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolbar()
@@ -73,7 +75,8 @@ final class ChatViewController: BaseViewController {
         view.addSubviews([
             chatMessageTableView,
             messageTextFieldBackgroundView,
-            messageTextField
+            messageTextField,
+            sendMessageBtn
         ])
     }
     
@@ -92,6 +95,12 @@ final class ChatViewController: BaseViewController {
             $0.height.equalTo(42)
             $0.leading.trailing.equalTo(messageTextFieldBackgroundView).inset(16)
             $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-8)
+        }
+        
+        sendMessageBtn.snp.makeConstraints {
+            $0.trailing.equalTo(messageTextField).inset(8)
+            $0.top.bottom.equalTo(messageTextField).inset(4)
+            $0.width.equalTo(52)
         }
     }
     

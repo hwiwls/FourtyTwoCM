@@ -57,6 +57,7 @@
 		2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */; };
 		2E5D7B932BD82C2200E25B26 /* UIImageView+loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D7B922BD82C2200E25B26 /* UIImageView+loadImage.swift */; };
 		2E6D047B2C48F71A00548BD1 /* CreateChatRoomQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6D047A2C48F71A00548BD1 /* CreateChatRoomQuery.swift */; };
+		2E6D047D2C49015F00548BD1 /* SubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6D047C2C49015F00548BD1 /* SubmitButton.swift */; };
 		2E7198342BE78CAA00C8F334 /* String + formattedAsCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7198332BE78CAA00C8F334 /* String + formattedAsCurrency.swift */; };
 		2E7198372BE7925600C8F334 /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7198362BE7925600C8F334 /* iamport-ios */; };
 		2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7198392BE798EF00C8F334 /* UserCode.swift */; };
@@ -182,6 +183,7 @@
 		2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		2E5D7B922BD82C2200E25B26 /* UIImageView+loadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+loadImage.swift"; sourceTree = "<group>"; };
 		2E6D047A2C48F71A00548BD1 /* CreateChatRoomQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatRoomQuery.swift; sourceTree = "<group>"; };
+		2E6D047C2C49015F00548BD1 /* SubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButton.swift; sourceTree = "<group>"; };
 		2E7198332BE78CAA00C8F334 /* String + formattedAsCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + formattedAsCurrency.swift"; sourceTree = "<group>"; };
 		2E7198392BE798EF00C8F334 /* UserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCode.swift; sourceTree = "<group>"; };
 		2E71983B2BE7BB7900C8F334 /* PaymentsValidationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationQuery.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				2EB7F3322BE770390064276D /* CustomButton.swift */,
 				2EB4443C2BEF8557009D7684 /* PaddingTextField.swift */,
 				2EC88D4F2BF293D10024DF30 /* LightGradientView.swift */,
+				2E6D047C2C49015F00548BD1 /* SubmitButton.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1059,6 +1062,7 @@
 				2E8F98552BCD74B700E9A79A /* FeedPageViewController.swift in Sources */,
 				2E5C383F2BCA7FEC00A006FB /* BaseViewController.swift in Sources */,
 				2E7BEEAC2BEFF33800A798D9 /* ViewCertainPostModel.swift in Sources */,
+				2E6D047D2C49015F00548BD1 /* SubmitButton.swift in Sources */,
 				2E7703252C3F0A9C0061D6F1 /* ChatRepository.swift in Sources */,
 				2E1B91E22BE632FA00751288 /* UploadPostQuery.swift in Sources */,
 				2E5980002BD426CD00AAAFA7 /* SignUpModel.swift in Sources */,
