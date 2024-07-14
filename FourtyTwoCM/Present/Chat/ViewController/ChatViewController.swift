@@ -66,7 +66,7 @@ final class ChatViewController: BaseViewController {
         
         output.error
             .drive(onNext: { [weak self] errorMessage in
-                print("채팅 페치 에러: \(errorMessage)")
+                self?.view.makeToast(errorMessage, duration: 2.0, position: .center)
             })
             .disposed(by: disposeBag)
     }
