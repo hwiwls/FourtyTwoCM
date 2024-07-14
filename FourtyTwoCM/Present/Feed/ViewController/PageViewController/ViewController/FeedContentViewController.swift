@@ -125,7 +125,6 @@ final class FeedContentViewController: BaseViewController {
         output.profileImageUrl
             .compactMap { URL(string: $0 ?? "") }
             .drive(onNext: { [weak self] url in
-                print("feed url: \(url)")
                 self?.userProfileImageView.loadImage(from: url)
             })
             .disposed(by: disposeBag)
@@ -209,7 +208,7 @@ final class FeedContentViewController: BaseViewController {
         output.chatParticipantInfo
             .drive(onNext: { [weak self] participantId, participantNick in
                 let chatVC = ChatViewController()
-                chatVC.viewModel = ChatViewModel(chatRoomId: "", participantId: participantId, participantNick: participantNick)
+                chatVC.viewModel = ChatViewModel(participantId: participantId, participantNick: participantNick)
                 chatVC.modalPresentationStyle = .pageSheet
                 self?.present(chatVC, animated: true, completion: nil)
             })

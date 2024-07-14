@@ -93,4 +93,13 @@ class ChatRepository {
                 }
             })
     }
+    
+    // 특정 roomId의 모든 메시지를 가져오는 함수
+    func fetchMessages(for roomId: String) -> [ChatMessage] {
+        let results = realm.objects(ChatMessage.self)
+            .filter("roomId == %@", roomId)
+            .sorted(byKeyPath: "createdAt", ascending: true)
+        
+        return Array(results)
+    }
 }
