@@ -51,7 +51,7 @@ class ChatMessageCell: BaseTableViewCell {
     
     override func configLayout() {
         bubbleBackgroundView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(12)
+            $0.top.bottom.equalToSuperview().inset(4)
             $0.width.lessThanOrEqualTo(300)
         }
         
@@ -67,13 +67,13 @@ class ChatMessageCell: BaseTableViewCell {
         if isOutgoing {
             bubbleBackgroundView.snp.remakeConstraints {
                 $0.trailing.equalToSuperview().inset(24)
-                $0.top.bottom.equalToSuperview().inset(12)
+                $0.top.bottom.equalToSuperview().inset(4)
                 $0.width.lessThanOrEqualTo(300)
             }
         } else {
             bubbleBackgroundView.snp.remakeConstraints {
                 $0.leading.equalToSuperview().inset(24)
-                $0.top.bottom.equalToSuperview().inset(12)
+                $0.top.bottom.equalToSuperview().inset(4)
                 $0.width.lessThanOrEqualTo(300)
             }
         }
