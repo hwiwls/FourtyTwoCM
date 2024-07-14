@@ -50,7 +50,15 @@ final class ChatViewModel: ViewModelType {
                         }
                         .asObservable()
                 } else {
-                    return self.fetchChatRoomListAndMessages()
+                    return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
+                        .map { $0.data }
+                        .flatMap { chatRoomList -> Single<[ChatMessage]> in
+                            guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
+                                return .just([])
+                            }
+                            return self.updateAndFetchMessages(roomId: chatRoom.roomID)
+                        }
+                        .asObservable()
                         .catch { error in
                             self.handleError(error, errorRelay: errorRelay)
                             return .just([])
@@ -71,22 +79,6 @@ final class ChatViewModel: ViewModelType {
             .flatMap { _ in
                 Single.just(self.chatRepository.fetchMessages(for: roomId))
             }
-    }
-    
-    private func fetchChatRoomList() -> Single<[ChatRoomModel]> {
-        return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
-            .map { $0.data }
-    }
-    
-    private func fetchChatRoomListAndMessages() -> Observable<[ChatMessage]> {
-        return fetchChatRoomList()
-            .flatMap { chatRoomList -> Single<[ChatMessage]> in
-                guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
-                    return .just([])
-                }
-                return self.updateAndFetchMessages(roomId: chatRoom.roomID)
-            }
-            .asObservable()
     }
     
     private func handleError(_ error: Error, errorRelay: PublishRelay<String>) {
