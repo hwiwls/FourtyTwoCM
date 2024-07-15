@@ -56,13 +56,14 @@ final class ChatViewModel: ViewModelType {
                             guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
                                 return .just([])
                             }
+                            
                             return self.updateAndFetchMessages(roomId: chatRoom.roomID)
                         }
-                        .asObservable()
                         .catch { error in
                             self.handleError(error, errorRelay: errorRelay)
                             return .just([])
                         }
+                        .asObservable()
                 }
             }
             .bind(to: messagesRelay)
@@ -75,7 +76,15 @@ final class ChatViewModel: ViewModelType {
     }
     
     private func updateAndFetchMessages(roomId: String) -> Single<[ChatMessage]> {
-        return chatRepository.updateChatHistory(roomId: roomId)
+        let lastMessageDate = chatRepository.fetchLastMessageTimestamp(for: roomId)
+        let cursorDate = lastMessageDate?.toISO8601String()
+        let query = ChatHistoryQuery(cursor_date: cursorDate)
+        
+        return NetworkManager.performRequest(route: .getChatHistory(roomId: roomId, query: query), dataType: ChatMessageModel.self)
+            .map { $0.data }
+            .do(onSuccess: { chatDetails in
+                self.chatRepository.saveMessages(chatDetails)
+            })
             .flatMap { _ in
                 Single.just(self.chatRepository.fetchMessages(for: roomId))
             }

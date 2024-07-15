@@ -28,13 +28,6 @@ class ChatRepository {
             .createdAt
     }
 
-    // 특정 roomId에 대해 서버로부터 온 채팅 내역 응답값(배열)을 저장할 함수
-    func saveMessages(_ messages: [ChatMessage]) {
-        try! realm.write {
-            realm.add(messages, update: .modified)
-        }
-    }
-
     // 특정 유저와의 채팅방이 존재하는지 확인하는 함수
     func isChatRoomExists(with userId: String) -> Bool {
         return !realm.objects(ChatRoom.self)
@@ -64,34 +57,21 @@ class ChatRepository {
         return Array(results)
     }
     
-    // 서버와 통신하여 최신 채팅 내역을 받아오는 함수
-    func updateChatHistory(roomId: String) -> Single<[ChatDetail]> {
-        let lastMessageDate = fetchLastMessageTimestamp(for: roomId)
-        let dateFormatter = ISO8601DateFormatter()
-        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        var cursorDate: String? = nil
-        if let lastDate = lastMessageDate {
-            cursorDate = dateFormatter.string(from: lastDate)
+    // 특정 roomId에 대해 서버로부터 온 채팅 내역 응답값(배열)을 저장할 함수
+    func saveMessages(_ chatDetails: [ChatDetail]) {
+        try! realm.write {
+            for detail in chatDetails {
+                let sender = ChatSender(userId: detail.sender.userId, nick: detail.sender.nick)
+                let message = ChatMessage(
+                    chatId: detail.chatID,
+                    roomId: detail.roomID,
+                    content: detail.content,
+                    createdAt: detail.createdAt.toISO8601Date()!,
+                    sender: sender
+                )
+                realm.add(message, update: .modified)
+            }
         }
-        let query = ChatHistoryQuery(cursor_date: cursorDate)
-        
-        return NetworkManager.performRequest(route: .getChatHistory(roomId: roomId, query: query), dataType: ChatMessageModel.self)
-            .map { $0.data }
-            .do(onSuccess: { chatDetails in
-                try! self.realm.write {
-                    for detail in chatDetails {
-                        let sender = ChatSender(userId: detail.sender.userId, nick: detail.sender.nick)
-                        let message = ChatMessage(
-                            chatId: detail.chatID,
-                            roomId: detail.roomID,
-                            content: detail.content,
-                            createdAt: dateFormatter.date(from: detail.createdAt)!,
-                            sender: sender
-                        )
-                        self.realm.add(message, update: .modified)
-                    }
-                }
-            })
     }
     
     // 특정 roomId의 모든 메시지를 가져오는 함수
