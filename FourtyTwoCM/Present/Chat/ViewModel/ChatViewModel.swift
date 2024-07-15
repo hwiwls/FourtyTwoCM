@@ -51,7 +51,11 @@ final class ChatViewModel: ViewModelType {
                         .asObservable()
                 } else {
                     return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
+                        .asObservable()
                         .map { $0.data }
+                        .do(onNext: { chatRoomList in
+                            chatRoomList.forEach { self.chatRepository.saveChatRoom($0) }
+                        })
                         .flatMap { chatRoomList -> Single<[ChatMessage]> in
                             guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
                                 return .just([])
