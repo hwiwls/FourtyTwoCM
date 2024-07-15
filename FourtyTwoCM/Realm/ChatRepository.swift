@@ -13,7 +13,16 @@ class ChatRepository {
     private let realm = try! Realm()
     
     // 채팅방 저장 함수
-    func saveChatRoom(_ chatRoom: ChatRoom) {
+    func saveChatRoom(_ chatRoomModel: ChatRoomModel) {
+        let participants = List<ChatParticipant>()
+        participants.append(objectsIn: chatRoomModel.participants.map {
+            ChatParticipant(userId: $0.userID, nick: $0.nick)
+        })
+        
+        let chatRoom = ChatRoom()
+        chatRoom.roomId = chatRoomModel.roomID
+        chatRoom.participants = participants
+        
         try! realm.write {
             realm.add(chatRoom, update: .modified)
         }
