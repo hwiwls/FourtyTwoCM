@@ -32,7 +32,6 @@ final class ChatRoomListViewModel: ViewModelType {
         
         let chatRoomsRelay = BehaviorRelay<[ChatRoomModel]>(value: [])
         
-        // Initial load
         let initialLoad = input.viewDidLoadTrigger
             .flatMapLatest {
                 NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
@@ -52,7 +51,6 @@ final class ChatRoomListViewModel: ViewModelType {
             .map { _ in chatRoomsRelay.value }
             .asDriver(onErrorJustReturn: [])
         
-        // Refresh load
         let refreshLoad = input.refreshTrigger
             .do(onNext: { _ in isRefreshingRelay.accept(true) })
             .flatMapLatest {

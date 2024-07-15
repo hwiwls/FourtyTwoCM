@@ -52,7 +52,8 @@ final class ChatViewController: BaseViewController {
     
     override func bind() {
         let input = ChatViewModel.Input(
-            loadMessage: self.rx.viewWillAppear.map { _ in }
+            loadMessage: self.rx.viewWillAppear.map { _ in },
+            messageSent: sendMessageBtn.rx.tap.withLatestFrom(messageTextField.rx.text.orEmpty)
         )
         
         let output = viewModel.transform(input: input)

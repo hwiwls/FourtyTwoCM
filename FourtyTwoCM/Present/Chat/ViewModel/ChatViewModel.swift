@@ -24,6 +24,7 @@ final class ChatViewModel: ViewModelType {
     
     struct Input {
         let loadMessage: Observable<Void>
+        let messageSent: Observable<String>
     }
     
     struct Output {
@@ -60,7 +61,6 @@ final class ChatViewModel: ViewModelType {
                             guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
                                 return .just([])
                             }
-                            
                             return self.updateAndFetchMessages(roomId: chatRoom.roomID)
                         }
                         .catch { error in
@@ -71,6 +71,47 @@ final class ChatViewModel: ViewModelType {
                 }
             }
             .bind(to: messagesRelay)
+            .disposed(by: disposeBag)
+        
+        input.messageSent
+            .flatMapLatest { [weak self] message -> Observable<Void> in
+                guard let self = self else { return .just(()) }
+                
+                if self.chatRepository.isChatRoomExists(with: self.participantId) {
+                    guard let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) else {
+                        return .just(())
+                    }
+                    return self.sendMessage(roomId: roomId, content: message)
+                        .flatMap { chatDetail -> Single<Void> in
+                            self.chatRepository.saveMessages([chatDetail])
+                            messagesRelay.accept(self.chatRepository.fetchMessages(for: roomId))
+                            return .just(())
+                        }
+                        .catch { error in
+                            self.handleError(error, errorRelay: errorRelay)
+                            return .just(())
+                        }
+                        .asObservable()
+                } else {
+                    let query = CreateChatRoomQuery(opponentId: self.participantId)
+                    return NetworkManager.performRequest(route: .createChatRoom(query: query), dataType: ChatRoomModel.self)
+                        .flatMap { chatRoomModel in
+                            self.chatRepository.saveChatRoom(chatRoomModel)
+                            return self.sendMessage(roomId: chatRoomModel.roomID, content: message)
+                        }
+                        .flatMap { chatDetail -> Single<Void> in
+                            self.chatRepository.saveMessages([chatDetail])
+                            messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
+                            return .just(())
+                        }
+                        .catch { error in
+                            self.handleError(error, errorRelay: errorRelay)
+                            return .just(())
+                        }
+                        .asObservable()
+                }
+            }
+            .subscribe()
             .disposed(by: disposeBag)
         
         return Output(
@@ -92,6 +133,15 @@ final class ChatViewModel: ViewModelType {
             .flatMap { _ in
                 Single.just(self.chatRepository.fetchMessages(for: roomId))
             }
+    }
+    
+    private func sendMessage(roomId: String, content: String) -> Single<ChatDetail> {
+        let query = MessageToSendQuery(content: content)
+        
+        return NetworkManager.performRequest(route: .sendMessage(roomId: roomId, query: query), dataType: ChatDetail.self)
+            .do(onSuccess: { chatDetail in
+                self.chatRepository.saveMessages([chatDetail])
+            })
     }
     
     private func handleError(_ error: Error, errorRelay: PublishRelay<String>) {
