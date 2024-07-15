@@ -29,7 +29,7 @@ enum Router {
     case getChatRoomList
     case getChatHistory(roomId: String, query: ChatHistoryQuery)
     case createChatRoom(query: CreateChatRoomQuery)
-    case sendMessage(roomId: String)
+    case sendMessage(roomId: String, query: MessageToSendQuery)
 }
 
 extension Router: TargetType {
@@ -90,7 +90,7 @@ extension Router: TargetType {
             return "chats/\(roomId)"
         case .createChatRoom:
             return "chats"
-        case .sendMessage(let roomId):
+        case .sendMessage(let roomId, query: _):
             return "chats/\(roomId)"
         }
     }
@@ -218,7 +218,7 @@ extension Router: TargetType {
             return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
             return encodeQuery(query)
-        case .sendMessage(let query):
+        case .sendMessage(roomId: _, query: let query):
             return encodeQuery(query)
         case .createChatRoom(let query):
             return encodeQuery(query)

@@ -80,7 +80,7 @@ class ChatRepository {
             .do(onSuccess: { chatDetails in
                 try! self.realm.write {
                     for detail in chatDetails {
-                        let sender = ChatSender(userId: detail.sender.userID, nick: detail.sender.nick)
+                        let sender = ChatSender(userId: detail.sender.userId, nick: detail.sender.nick)
                         let message = ChatMessage(
                             chatId: detail.chatID,
                             roomId: detail.roomID,
