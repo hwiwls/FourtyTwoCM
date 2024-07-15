@@ -53,7 +53,10 @@ final class ChatViewController: BaseViewController {
     override func bind() {
         let input = ChatViewModel.Input(
             loadMessage: self.rx.viewWillAppear.map { _ in },
-            messageSent: sendMessageBtn.rx.tap.withLatestFrom(messageTextField.rx.text.orEmpty)
+            messageSent: sendMessageBtn.rx.tap
+                            .withLatestFrom(messageTextField.rx.text.orEmpty)
+                            .filter { !$0.isEmpty }
+                            .asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -63,6 +66,12 @@ final class ChatViewController: BaseViewController {
                 let isOutgoing = (message.sender?.userId ?? "") == self.userId
                 cell.configure(with: message, isOutgoing: isOutgoing)
             }
+            .disposed(by: disposeBag)
+        
+        output.messageSentSuccess
+            .emit(onNext: { [weak self] in
+                self?.messageTextField.text = ""
+            })
             .disposed(by: disposeBag)
         
         output.error

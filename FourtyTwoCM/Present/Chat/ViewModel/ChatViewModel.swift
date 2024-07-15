@@ -30,11 +30,13 @@ final class ChatViewModel: ViewModelType {
     struct Output {
         let messages: Driver<[ChatMessage]>
         let error: Driver<String>
+        let messageSentSuccess: Signal<Void>
     }
     
     func transform(input: Input) -> Output {
         let messagesRelay = BehaviorRelay(value: [ChatMessage]())
         let errorRelay = PublishRelay<String>()
+        let messageSentSuccessRelay = PublishRelay<Void>()
         
         input.loadMessage
             .flatMapLatest { [weak self] _ -> Observable<[ChatMessage]> in
@@ -85,6 +87,7 @@ final class ChatViewModel: ViewModelType {
                         .flatMap { chatDetail -> Single<Void> in
                             self.chatRepository.saveMessages([chatDetail])
                             messagesRelay.accept(self.chatRepository.fetchMessages(for: roomId))
+                            messageSentSuccessRelay.accept(())
                             return .just(())
                         }
                         .catch { error in
@@ -102,6 +105,7 @@ final class ChatViewModel: ViewModelType {
                         .flatMap { chatDetail -> Single<Void> in
                             self.chatRepository.saveMessages([chatDetail])
                             messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
+                            messageSentSuccessRelay.accept(())
                             return .just(())
                         }
                         .catch { error in
@@ -116,7 +120,8 @@ final class ChatViewModel: ViewModelType {
         
         return Output(
             messages: messagesRelay.asDriver(),
-            error: errorRelay.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다.")
+            error: errorRelay.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다."),
+            messageSentSuccess: messageSentSuccessRelay.asSignal()
         )
     }
     
