@@ -56,6 +56,7 @@
 		2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38402BCA7FF800A006FB /* BaseView.swift */; };
 		2E5C38432BCA800800A006FB /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5C38422BCA800800A006FB /* BaseCollectionViewCell.swift */; };
 		2E5D7B932BD82C2200E25B26 /* UIImageView+loadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5D7B922BD82C2200E25B26 /* UIImageView+loadImage.swift */; };
+		2E63AFD02C4A545E0098AF7F /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 2E63AFCF2C4A545E0098AF7F /* SocketIO */; };
 		2E6C96872C49F79C007F9935 /* Date + toISO8601String().swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C96862C49F79C007F9935 /* Date + toISO8601String().swift */; };
 		2E6C96892C49F7AF007F9935 /* String + toISO8601Date().swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C96882C49F7AF007F9935 /* String + toISO8601Date().swift */; };
 		2E6C968B2C49FA76007F9935 /* MessageToSendQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6C968A2C49FA76007F9935 /* MessageToSendQuery.swift */; };
@@ -271,6 +272,7 @@
 				2E5C382F2BCA7E0100A006FB /* SnapKit in Frameworks */,
 				2E5C382C2BCA7DD100A006FB /* Kingfisher in Frameworks */,
 				2E5C38352BCA7E2400A006FB /* RxCocoa in Frameworks */,
+				2E63AFD02C4A545E0098AF7F /* SocketIO in Frameworks */,
 				2E5C38292BCA7DAF00A006FB /* Alamofire in Frameworks */,
 				2E7703212C3F075F0061D6F1 /* Realm in Frameworks */,
 				2E7198372BE7925600C8F334 /* iamport-ios in Frameworks */,
@@ -940,6 +942,7 @@
 				2EEAC02D2BF0DEF400F56645 /* Tabman */,
 				2E7703202C3F075F0061D6F1 /* Realm */,
 				2E7703222C3F075F0061D6F1 /* RealmSwift */,
+				2E63AFCF2C4A545E0098AF7F /* SocketIO */,
 			);
 			productName = FourtyTwoCM;
 			productReference = 2E5C38012BCA72CF00A006FB /* FourtyTwoCM.app */;
@@ -978,6 +981,7 @@
 				2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */,
 				2EEAC02C2BF0DEF400F56645 /* XCRemoteSwiftPackageReference "Tabman" */,
 				2E77031F2C3F075F0061D6F1 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				2E63AFCE2C4A545E0098AF7F /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 2E5C38022BCA72CF00A006FB /* Products */;
 			projectDirPath = "";
@@ -1389,6 +1393,14 @@
 				minimumVersion = 6.6.0;
 			};
 		};
+		2E63AFCE2C4A545E0098AF7F /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		2E7198352BE7925600C8F334 /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iamport/iamport-ios";
@@ -1448,6 +1460,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5C38332BCA7E2400A006FB /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		2E63AFCF2C4A545E0098AF7F /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E63AFCE2C4A545E0098AF7F /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
 		};
 		2E7198362BE7925600C8F334 /* iamport-ios */ = {
 			isa = XCSwiftPackageProductDependency;
