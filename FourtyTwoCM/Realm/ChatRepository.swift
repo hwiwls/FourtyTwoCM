@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import RxSwift
 
 class ChatRepository {
     private let realm = try! Realm()
@@ -61,6 +62,32 @@ class ChatRepository {
             .sorted(byKeyPath: "createdAt", ascending: true)
         
         return Array(results)
+    }
+    
+    // 서버와 통신하여 최신 채팅 내역을 받아오는 함수
+    func updateChatHistory(roomId: String) -> Single<[ChatDetail]> {
+        let lastMessageDate = fetchLastMessageTimestamp(for: roomId)
+        let dateFormatter = ISO8601DateFormatter()
+        let cursorDate = lastMessageDate != nil ? dateFormatter.string(from: lastMessageDate!) : nil
+        let query = ChatHistoryQuery(cursor_date: cursorDate)
+        
+        return NetworkManager.performRequest(route: .getChatHistory(roomId: roomId, query: query), dataType: ChatMessageModel.self)
+            .map { $0.data }
+            .do(onSuccess: { chatDetails in
+                try! self.realm.write {
+                    for detail in chatDetails {
+                        let sender = ChatSender(userId: detail.sender.userID, nick: detail.sender.nick)
+                        let message = ChatMessage(
+                            chatId: detail.chatID,
+                            roomId: detail.roomID,
+                            content: detail.content,
+                            createdAt: dateFormatter.date(from: detail.createdAt)!,
+                            sender: sender
+                        )
+                        self.realm.add(message, update: .modified)
+                    }
+                }
+            })
     }
     
 }
