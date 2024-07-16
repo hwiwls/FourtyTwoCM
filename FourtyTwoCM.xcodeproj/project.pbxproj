@@ -125,6 +125,7 @@
 		2EE00AC62BF24B7B003297A9 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE00AC52BF24B7B003297A9 /* PostCollectionViewCell.swift */; };
 		2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE34D572BCE725900DE3EF7 /* KeyChain.swift */; };
 		2EE486932BCEE3DD00D40682 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 2EE486922BCEE3DD00D40682 /* Toast */; };
+		2EE61F212C4A7A70002B9F4B /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE61F202C4A7A70002B9F4B /* SocketIOManager.swift */; };
 		2EEAC02E2BF0DEF400F56645 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 2EEAC02D2BF0DEF400F56645 /* Tabman */; };
 		2EEAC0322BF0DF5B00F56645 /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0312BF0DF5B00F56645 /* MyPostsViewController.swift */; };
 		2EEAC0342BF0DF7B00F56645 /* MyLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEAC0332BF0DF7B00F56645 /* MyLikesViewController.swift */; };
@@ -250,6 +251,7 @@
 		2ED643012BD52A1A00722299 /* IconBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBtn.swift; sourceTree = "<group>"; };
 		2EE00AC52BF24B7B003297A9 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EE34D572BCE725900DE3EF7 /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		2EE61F202C4A7A70002B9F4B /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		2EEAC0312BF0DF5B00F56645 /* MyPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsViewController.swift; sourceTree = "<group>"; };
 		2EEAC0332BF0DF7B00F56645 /* MyLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLikesViewController.swift; sourceTree = "<group>"; };
 		2EEAC03A2BF0DFEE00F56645 /* MyLikesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLikesViewModel.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				2E8F98592BCD7EDA00E9A79A /* HTTPHeader.swift */,
 				2E8F98572BCD7ECD00E9A79A /* NetworkManager.swift */,
 				2E38D54E2BE4DB430028A172 /* Interceptor.swift */,
+				2EE61F1F2C4A7A48002B9F4B /* Socket */,
 				2E5980052BD42FAA00AAAFA7 /* Query */,
 				2EE34D552BCE6EDD00DE3EF7 /* DataModel */,
 			);
@@ -871,6 +874,14 @@
 			path = KeyChain;
 			sourceTree = "<group>";
 		};
+		2EE61F1F2C4A7A48002B9F4B /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				2EE61F202C4A7A70002B9F4B /* SocketIOManager.swift */,
+			);
+			path = Socket;
+			sourceTree = "<group>";
+		};
 		2EEAC02F2BF0DF4100F56645 /* MyPost */ = {
 			isa = PBXGroup;
 			children = (
@@ -1073,6 +1084,7 @@
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
 				2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */,
 				2ED397F12BDA485A0064CD71 /* LikeModel.swift in Sources */,
+				2EE61F212C4A7A70002B9F4B /* SocketIOManager.swift in Sources */,
 				2E8F984D2BCD74A100E9A79A /* MyPageViewController.swift in Sources */,
 				2EE34D582BCE725900DE3EF7 /* KeyChain.swift in Sources */,
 				2E8F98552BCD74B700E9A79A /* FeedPageViewController.swift in Sources */,

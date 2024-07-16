@@ -8,12 +8,12 @@
 import Foundation
 
 // MARK: - ChatRoomListModel
-struct ChatRoomListModel: Codable {
+struct ChatRoomListModel: Decodable {
     let data: [ChatRoomModel]
 }
 
 // MARK: - ChatRoomModel
-struct ChatRoomModel: Codable {
+struct ChatRoomModel: Decodable {
     let roomID, createdAt, updatedAt: String
     let participants: [Participant]
     let lastChat: LastChat?
@@ -25,7 +25,7 @@ struct ChatRoomModel: Codable {
 }
 
 // MARK: - LastChat
-struct LastChat: Codable {
+struct LastChat: Decodable {
     let chatID, roomID, content, createdAt: String
     let sender: Sender
     let files: [String]?
@@ -38,7 +38,7 @@ struct LastChat: Codable {
 }
 
 // MARK: - Sender
-struct Sender: Codable {
+struct Sender: Decodable {
     let userId, nick: String
     let profileImage: String?
     
@@ -50,7 +50,7 @@ struct Sender: Codable {
 }
 
 // MARK: - Participant
-struct Participant: Codable {
+struct Participant: Decodable {
     let userID, nick: String
     let profileImage: String?
 

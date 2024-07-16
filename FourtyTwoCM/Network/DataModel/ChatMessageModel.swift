@@ -26,4 +26,13 @@ struct ChatDetail: Decodable {
         case roomID = "room_id"
         case content, createdAt, sender, files
     }
+    
+    init(chatID: String, roomID: String, content: String, createdAt: String, sender: Sender, files: [String?]) {
+        self.chatID = chatID
+        self.roomID = roomID
+        self.content = content
+        self.createdAt = createdAt
+        self.sender = sender
+        self.files = files
+    }
 }
