@@ -25,6 +25,8 @@ final class ChatViewModel: ViewModelType {
     struct Input {
         let loadMessage: Observable<Void>
         let messageSent: Observable<String>
+        let viewWillAppear: Observable<Void>
+        let viewWillDisappear: Observable<Void>
     }
     
     struct Output {
@@ -37,6 +39,23 @@ final class ChatViewModel: ViewModelType {
         let messagesRelay = BehaviorRelay(value: [ChatMessage]())
         let errorRelay = PublishRelay<String>()
         let messageSentSuccessRelay = PublishRelay<Void>()
+        
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                guard let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) else {
+                    return errorRelay.accept("채팅방을 불러오는 중 오류가 발생했습니다.")
+                }
+                SocketIOManager.shared.configureSocket(with: roomId)
+                SocketIOManager.shared.establishConnection()
+            })
+            .disposed(by: disposeBag)
+        
+        input.viewWillDisappear
+            .subscribe(onNext: {
+                SocketIOManager.shared.leaveConnection()
+            })
+            .disposed(by: disposeBag)
         
         input.loadMessage
             .flatMapLatest { [weak self] _ -> Observable<[ChatMessage]> in

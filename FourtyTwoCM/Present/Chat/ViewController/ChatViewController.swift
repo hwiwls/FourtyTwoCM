@@ -51,12 +51,18 @@ final class ChatViewController: BaseViewController {
     }
     
     override func bind() {
+        guard let viewModel = viewModel else {
+            fatalError("viewModel is not initialized")
+        }
+        
         let input = ChatViewModel.Input(
             loadMessage: self.rx.viewWillAppear.map { _ in },
             messageSent: sendMessageBtn.rx.tap
                             .withLatestFrom(messageTextField.rx.text.orEmpty)
                             .filter { !$0.isEmpty }
-                            .asObservable()
+                            .asObservable(),
+            viewWillAppear: self.rx.viewWillAppear.map { _ in },
+            viewWillDisappear: self.rx.viewWillDisappear.map { _ in }
         )
         
         let output = viewModel.transform(input: input)
