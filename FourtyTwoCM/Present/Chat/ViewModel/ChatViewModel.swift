@@ -48,6 +48,18 @@ final class ChatViewModel: ViewModelType {
                 }
                 SocketIOManager.shared.configureSocket(with: roomId)
                 SocketIOManager.shared.establishConnection()
+                
+                SocketIOManager.shared.receiveChatData
+                    .subscribe(onNext: { result in
+                        switch result {
+                        case .success(let chatDetail):
+                            self.chatRepository.saveMessages([chatDetail])
+                            messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
+                        case .failure(let error):
+                            errorRelay.accept(error.errorMessage)
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
             })
             .disposed(by: disposeBag)
         
