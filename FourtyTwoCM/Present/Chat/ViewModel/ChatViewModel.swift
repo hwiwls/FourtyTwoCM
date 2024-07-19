@@ -41,26 +41,29 @@ final class ChatViewModel: ViewModelType {
         let messageSentSuccessRelay = PublishRelay<Void>()
         
         input.viewWillAppear
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                guard let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) else {
-                    return errorRelay.accept("채팅방을 불러오는 중 오류가 발생했습니다.")
-                }
-                SocketIOManager.shared.configureSocket(with: roomId)
-                SocketIOManager.shared.establishConnection()
+            .flatMapLatest { [weak self] _ -> Observable<Void> in
+                guard let self = self else { return .just(()) }
                 
-                SocketIOManager.shared.receiveChatData
-                    .subscribe(onNext: { result in
-                        switch result {
-                        case .success(let chatDetail):
-                            self.chatRepository.saveMessages([chatDetail])
-                            messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
-                        case .failure(let error):
-                            errorRelay.accept(error.errorMessage)
+                if let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) {
+                    self.configureSocket(with: roomId, messagesRelay: messagesRelay, errorRelay: errorRelay)
+                    return .just(())
+                } else {
+                    return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
+                        .asObservable()
+                        .map { $0.data }
+                        .do(onNext: { chatRoomList in
+                            chatRoomList.forEach { self.chatRepository.saveChatRoom($0) }
+                        })
+                        .flatMap { chatRoomList -> Observable<Void> in
+                            guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
+                                return .just(())
+                            }
+                            self.configureSocket(with: chatRoom.roomID, messagesRelay: messagesRelay, errorRelay: errorRelay)
+                            return .just(())
                         }
-                    })
-                    .disposed(by: self.disposeBag)
-            })
+                }
+            }
+            .subscribe()
             .disposed(by: disposeBag)
         
         input.viewWillDisappear
@@ -154,6 +157,23 @@ final class ChatViewModel: ViewModelType {
             error: errorRelay.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다."),
             messageSentSuccess: messageSentSuccessRelay.asSignal()
         )
+    }
+    
+    private func configureSocket(with roomId: String, messagesRelay: BehaviorRelay<[ChatMessage]>, errorRelay: PublishRelay<String>) {
+        SocketIOManager.shared.configureSocket(with: roomId)
+        SocketIOManager.shared.establishConnection()
+        
+        SocketIOManager.shared.receiveChatData
+            .subscribe(onNext: { result in
+                switch result {
+                case .success(let chatDetail):
+                    self.chatRepository.saveMessages([chatDetail])
+                    messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
+                case .failure(let error):
+                    errorRelay.accept(error.errorMessage)
+                }
+            })
+            .disposed(by: self.disposeBag)
     }
     
     private func updateAndFetchMessages(roomId: String) -> Single<[ChatMessage]> {
