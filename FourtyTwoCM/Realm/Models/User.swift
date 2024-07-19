@@ -1,15 +1,15 @@
 //
-//  ChatSender.swift
+//  User.swift
 //  FourtyTwoCM
 //
-//  Created by hwijinjeong on 7/11/24.
+//  Created by hwijinjeong on 7/22/24.
 //
 
 import Foundation
 import RealmSwift
 
-class ChatSender: EmbeddedObject {
-    @Persisted var userId: String
+class User: Object {
+    @Persisted(primaryKey: true) var userId: String
     @Persisted var nick: String
 
     convenience init(userId: String, nick: String) {

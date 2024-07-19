@@ -14,13 +14,12 @@ class ChatRepository {
     
     // 채팅방 저장 함수
     func saveChatRoom(_ chatRoomModel: ChatRoomModel) {
-        let participants = List<ChatParticipant>()
+        let participants = List<User>()
         participants.append(objectsIn: chatRoomModel.participants.map {
-            ChatParticipant(userId: $0.userID, nick: $0.nick)
+            User(userId: $0.userID, nick: $0.nick)
         })
         
-        let chatRoom = ChatRoom()
-        chatRoom.roomId = chatRoomModel.roomID
+        let chatRoom = ChatRoom(roomId: chatRoomModel.roomID)
         chatRoom.participants = participants
         
         try! realm.write {
@@ -52,25 +51,11 @@ class ChatRepository {
             .roomId
     }
     
-    // 특정 유저의 participantId와 일치하는 채팅방의 모든 메시지를 가져오는 함수
-    func fetchMessagesUsingRoomId(for participantId: String) -> [ChatMessage] {
-        guard let roomId = fetchChatRoomId(with: participantId) else {
-            print("해당 participantId로 채팅방을 찾을 수 없습니다: \(participantId)")
-            return []
-        }
-        
-        let results = realm.objects(ChatMessage.self)
-            .filter("roomId == %@", roomId)
-            .sorted(byKeyPath: "createdAt", ascending: true)
-        
-        return Array(results)
-    }
-    
     // 특정 roomId에 대해 서버로부터 온 채팅 내역 응답값(배열)을 저장할 함수
     func saveMessages(_ chatDetails: [ChatDetail]) {
         try! realm.write {
             for detail in chatDetails {
-                let sender = ChatSender(userId: detail.sender.userId, nick: detail.sender.nick)
+                let sender = User(userId: detail.sender.userId, nick: detail.sender.nick)
                 let message = ChatMessage(
                     chatId: detail.chatID,
                     roomId: detail.roomID,

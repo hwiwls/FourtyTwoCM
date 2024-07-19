@@ -13,9 +13,9 @@ class ChatMessage: Object {
     @Persisted var roomId: String
     @Persisted var content: String
     @Persisted var createdAt: Date
-    @Persisted var sender: ChatSender?
+    @Persisted var sender: User?
 
-    convenience init(chatId: String, roomId: String, content: String, createdAt: Date, sender: ChatSender?) {
+    convenience init(chatId: String, roomId: String, content: String, createdAt: Date, sender: User?) {
         self.init()
         self.chatId = chatId
         self.roomId = roomId
@@ -24,3 +24,4 @@ class ChatMessage: Object {
         self.sender = sender
     }
 }
+

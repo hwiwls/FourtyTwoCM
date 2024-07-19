@@ -69,14 +69,13 @@
 		2E71983E2BE7BBB300C8F334 /* PaymentsValidationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */; };
 		2E7703182C3EFF240061D6F1 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7703172C3EFF240061D6F1 /* ChatRoom.swift */; };
 		2E77031A2C3EFF2E0061D6F1 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */; };
-		2E77031C2C3EFF370061D6F1 /* ChatParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */; };
-		2E77031E2C3EFF3F0061D6F1 /* ChatSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */; };
 		2E7703212C3F075F0061D6F1 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7703202C3F075F0061D6F1 /* Realm */; };
 		2E7703232C3F075F0061D6F1 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2E7703222C3F075F0061D6F1 /* RealmSwift */; };
 		2E7703252C3F0A9C0061D6F1 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7703242C3F0A9C0061D6F1 /* ChatRepository.swift */; };
 		2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */; };
 		2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */; };
 		2E7BEEAC2BEFF33800A798D9 /* ViewCertainPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */; };
+		2E8BA0442C4E73BB00E45774 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8BA0432C4E73BB00E45774 /* User.swift */; };
 		2E8DF6982BF14077009C0022 /* ViewMyPostsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8DF6972BF14077009C0022 /* ViewMyPostsQuery.swift */; };
 		2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */; };
 		2E8F98222BCD4D0B00E9A79A /* SB 어그로OTF L.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */; };
@@ -198,12 +197,11 @@
 		2E71983D2BE7BBB300C8F334 /* PaymentsValidationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsValidationModel.swift; sourceTree = "<group>"; };
 		2E7703172C3EFF240061D6F1 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
-		2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParticipant.swift; sourceTree = "<group>"; };
-		2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSender.swift; sourceTree = "<group>"; };
 		2E7703242C3F0A9C0061D6F1 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentQuery.swift; sourceTree = "<group>"; };
 		2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCertainPostModel.swift; sourceTree = "<group>"; };
+		2E8BA0432C4E73BB00E45774 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2E8DF6972BF14077009C0022 /* ViewMyPostsQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyPostsQuery.swift; sourceTree = "<group>"; };
 		2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF B.otf"; sourceTree = "<group>"; };
 		2E8F981E2BCD4D0B00E9A79A /* SB 어그로OTF L.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF L.otf"; sourceTree = "<group>"; };
@@ -655,10 +653,9 @@
 		2E7703162C3EFF180061D6F1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2E8BA0432C4E73BB00E45774 /* User.swift */,
 				2E7703172C3EFF240061D6F1 /* ChatRoom.swift */,
 				2E7703192C3EFF2E0061D6F1 /* ChatMessage.swift */,
-				2E77031B2C3EFF370061D6F1 /* ChatParticipant.swift */,
-				2E77031D2C3EFF3F0061D6F1 /* ChatSender.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1072,7 +1069,6 @@
 				2E71983A2BE798EF00C8F334 /* UserCode.swift in Sources */,
 				2E597FFC2BD3AD8700AAAFA7 /* SignUpViewController.swift in Sources */,
 				2E2E99862C240DBA0035D50E /* PostMapViewController.swift in Sources */,
-				2E77031C2C3EFF370061D6F1 /* ChatParticipant.swift in Sources */,
 				2E8F985E2BCD7EE800E9A79A /* TargetType.swift in Sources */,
 				2E2E998D2C2410F00035D50E /* ChatRoomListViewModel.swift in Sources */,
 				2E38D55F2BE55B550028A172 /* CustomTabBar.swift in Sources */,
@@ -1080,6 +1076,7 @@
 				2E6C96872C49F79C007F9935 /* Date + toISO8601String().swift in Sources */,
 				2E1B91E82BE64EB300751288 /* UploadImageQuery.swift in Sources */,
 				2E8F98412BCD73FA00E9A79A /* TabBarViewController.swift in Sources */,
+				2E8BA0442C4E73BB00E45774 /* User.swift in Sources */,
 				2E5C38052BCA72CF00A006FB /* AppDelegate.swift in Sources */,
 				2E5C383D2BCA7F9700A006FB /* UIColor+CustomColor.swift in Sources */,
 				2E38D5532BE4FF5E0028A172 /* ViewModelErrorProtocol.swift in Sources */,
@@ -1121,7 +1118,6 @@
 				2E25E1932BFC2BBA00462F8C /* UIImage+Compression.swift in Sources */,
 				2E8F983D2BCD65D100E9A79A /* UILabel+addCharacterSpacing.swift in Sources */,
 				2EC88D502BF293D10024DF30 /* LightGradientView.swift in Sources */,
-				2E77031E2C3EFF3F0061D6F1 /* ChatSender.swift in Sources */,
 				2E5C38412BCA7FF800A006FB /* BaseView.swift in Sources */,
 				2E1390A52C43EFB900AB303C /* ChatMessageModel.swift in Sources */,
 				2E8F98712BCD940700E9A79A /* SignInViewModel.swift in Sources */,

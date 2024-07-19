@@ -10,12 +10,10 @@ import RealmSwift
 
 class ChatRoom: Object {
     @Persisted(primaryKey: true) var roomId: String
-    @Persisted var participants: List<ChatParticipant>
+    @Persisted var participants: List<User>
 
     convenience init(roomId: String) {
         self.init()
         self.roomId = roomId
     }
 }
-
-
