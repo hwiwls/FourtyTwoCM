@@ -81,10 +81,6 @@ final class ChatViewModel: ViewModelType {
                         return .just([])
                     }
                     return self.updateAndFetchMessages(roomId: roomId)
-                        .catch { error in
-                            self.handleError(error, errorRelay: errorRelay)
-                            return .just([])
-                        }
                         .asObservable()
                 } else {
                     return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
@@ -99,35 +95,25 @@ final class ChatViewModel: ViewModelType {
                             }
                             return self.updateAndFetchMessages(roomId: chatRoom.roomID)
                         }
-                        .catch { error in
-                            self.handleError(error, errorRelay: errorRelay)
-                            return .just([])
-                        }
                         .asObservable()
                 }
             }
-            .bind(to: messagesRelay)
+            .subscribe(with: self) { owner, messages in
+                messagesRelay.accept(messages)
+            } onError: { owner, error in
+                owner.handleError(error, errorRelay: errorRelay)
+            }
             .disposed(by: disposeBag)
         
         input.messageSent
-            .flatMapLatest { [weak self] message -> Observable<Void> in
-                guard let self = self else { return .just(()) }
+            .flatMapLatest { [weak self] message -> Observable<ChatDetail> in
+                guard let self = self else { return .empty() }
                 
                 if self.chatRepository.isChatRoomExists(with: self.participantId) {
                     guard let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) else {
-                        return .just(())
+                        return .empty()
                     }
                     return self.sendMessage(roomId: roomId, content: message)
-                        .flatMap { chatDetail -> Single<Void> in
-                            self.chatRepository.saveMessages([chatDetail])
-                            messagesRelay.accept(self.chatRepository.fetchMessages(for: roomId))
-                            messageSentSuccessRelay.accept(())
-                            return .just(())
-                        }
-                        .catch { error in
-                            self.handleError(error, errorRelay: errorRelay)
-                            return .just(())
-                        }
                         .asObservable()
                 } else {
                     let query = CreateChatRoomQuery(opponentId: self.participantId)
@@ -136,20 +122,16 @@ final class ChatViewModel: ViewModelType {
                             self.chatRepository.saveChatRoom(chatRoomModel)
                             return self.sendMessage(roomId: chatRoomModel.roomID, content: message)
                         }
-                        .flatMap { chatDetail -> Single<Void> in
-                            self.chatRepository.saveMessages([chatDetail])
-                            messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
-                            messageSentSuccessRelay.accept(())
-                            return .just(())
-                        }
-                        .catch { error in
-                            self.handleError(error, errorRelay: errorRelay)
-                            return .just(())
-                        }
                         .asObservable()
                 }
             }
-            .subscribe()
+            .subscribe(with: self) { owner, chatDetail in
+                owner.chatRepository.saveMessages([chatDetail])
+                messagesRelay.accept(owner.chatRepository.fetchMessages(for: chatDetail.roomID))
+                messageSentSuccessRelay.accept(())
+            } onError: { owner, error in
+                owner.handleError(error, errorRelay: errorRelay)
+            }
             .disposed(by: disposeBag)
         
         return Output(
