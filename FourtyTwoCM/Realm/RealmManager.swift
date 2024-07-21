@@ -5,25 +5,6 @@
 //  Created by hwijinjeong on 7/23/24.
 //
 
-//import RealmSwift
-//
-//final class RealmManager {
-//    static let shared = RealmManager()
-//    private init() {}
-//
-//    func configureRealm(for userId: String) {
-//        var config = Realm.Configuration()
-//        
-//        config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(userId).realm")
-//        
-//        Realm.Configuration.defaultConfiguration = config
-//        if let fileURL = config.fileURL {
-//                print("Realm file path for user \(userId): \(fileURL)")
-//            }
-//       
-//    }
-//}
-
 import Foundation
 import RealmSwift
 
@@ -34,7 +15,6 @@ final class RealmManager {
     private let cacheLimit = 5  // 메모리에 유지할 최대 사용자 수
 
     private init() {
-        // 앱이 시작될 때, UserDefaults에서 최근 사용자 리스트를 복원합니다.
         if let savedUsers = UserDefaults.standard.array(forKey: "recentUsers") as? [String] {
             recentUsers = savedUsers
         }
@@ -44,6 +24,7 @@ final class RealmManager {
         var config = Realm.Configuration()
         let fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(userId).realm")
         config.fileURL = fileURL
+        
         return config
     }
 
@@ -76,7 +57,7 @@ final class RealmManager {
             recentUsers.remove(at: index)
         }
         recentUsers.append(userId)
-        // 최근 사용자 리스트를 UserDefaults에 저장합니다.
+        // 최근 사용자 리스트를 UserDefaults에 저장
         UserDefaults.standard.set(recentUsers, forKey: "recentUsers")
     }
 

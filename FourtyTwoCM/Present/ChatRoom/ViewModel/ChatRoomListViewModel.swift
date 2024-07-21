@@ -43,7 +43,7 @@ final class ChatRoomListViewModel: ViewModelType {
                         if let apiError = error as? APIError {
                             errorMessageRelay.accept(apiError.errorMessage)
                         } else {
-                            errorMessageRelay.accept("알 수 없는 네트워크 오류")
+                            errorMessageRelay.accept("네트워크가 연결되지 않았거나 알 수 없는 네트워크 오류입니다.")
                         }
                         return .empty()
                     }
@@ -63,7 +63,7 @@ final class ChatRoomListViewModel: ViewModelType {
                         if let apiError = error as? APIError {
                             errorMessageRelay.accept(apiError.errorMessage)
                         } else {
-                            errorMessageRelay.accept("알 수 없는 네트워크 오류")
+                            errorMessageRelay.accept("네트워크가 연결되지 않았거나 알 수 없는 네트워크 오류입니다.")
                         }
                         return .empty()
                     }
@@ -72,7 +72,7 @@ final class ChatRoomListViewModel: ViewModelType {
             .map { _ in chatRoomsRelay.value }
             .asDriver(onErrorJustReturn: [])
         
-        let errorMessage = errorMessageRelay.asDriver(onErrorJustReturn: "알 수 없는 네트워크 오류")
+        let errorMessage = errorMessageRelay.asDriver(onErrorJustReturn: "네트워크가 연결되지 않았거나 알 수 없는 네트워크 오류입니다.")
         let isRefreshing = isRefreshingRelay.asDriver(onErrorJustReturn: false)
         
         let moveToChat = input.chatRoomClicked
