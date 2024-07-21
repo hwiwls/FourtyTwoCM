@@ -17,7 +17,7 @@ final class ChatViewController: BaseViewController {
     
     let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
     
-    let chatRepository = ChatRepository()
+    let chatRepository = ChatRepository(userId: UserDefaults.standard.string(forKey: "userID") ?? "")
     
     private lazy var chatMessageTableView = UITableView().then {
         $0.separatorStyle = .none
@@ -45,9 +45,6 @@ final class ChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupToolbar()
-        
-        let realm = try! Realm()
-        print("realm url: \(String(describing: realm.configuration.fileURL))")
     }
     
     override func bind() {

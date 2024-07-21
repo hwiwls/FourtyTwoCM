@@ -10,7 +10,15 @@ import RealmSwift
 import RxSwift
 
 class ChatRepository {
-    private let realm = try! Realm()
+    private var realm: Realm
+
+    init(userId: String) {
+        if let realm = RealmManager.shared.configureRealm(for: userId) {
+            self.realm = realm
+        } else {
+            fatalError("Failed to configure Realm for user: \(userId)")
+        }
+    }
     
     // 채팅방 저장 함수
     func saveChatRoom(_ chatRoomModel: ChatRoomModel) {

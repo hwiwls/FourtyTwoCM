@@ -12,7 +12,7 @@ import RxCocoa
 final class ChatViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
-    let chatRepository = ChatRepository()
+    let chatRepository = ChatRepository(userId: UserDefaults.standard.string(forKey: "userID") ?? "")
     
     let participantId: String
     let participantNick: String
