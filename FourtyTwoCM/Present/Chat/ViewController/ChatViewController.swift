@@ -53,13 +53,12 @@ final class ChatViewController: BaseViewController {
         }
         
         let input = ChatViewModel.Input(
-            loadMessage: self.rx.viewWillAppear.map { _ in },
+            viewWillAppear: self.rx.viewWillAppear.map { _ in },
+            viewWillDisappear: self.rx.viewWillDisappear.map { _ in },
             messageSent: sendMessageBtn.rx.tap
                             .withLatestFrom(messageTextField.rx.text.orEmpty)
                             .filter { !$0.isEmpty }
-                            .asObservable(),
-            viewWillAppear: self.rx.viewWillAppear.map { _ in },
-            viewWillDisappear: self.rx.viewWillDisappear.map { _ in }
+                            .asObservable()
         )
         
         let output = viewModel.transform(input: input)

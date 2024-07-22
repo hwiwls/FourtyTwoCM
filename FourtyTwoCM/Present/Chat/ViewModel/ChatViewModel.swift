@@ -23,10 +23,9 @@ final class ChatViewModel: ViewModelType {
     }
     
     struct Input {
-        let loadMessage: Observable<Void>
-        let messageSent: Observable<String>
         let viewWillAppear: Observable<Void>
         let viewWillDisappear: Observable<Void>
+        let messageSent: Observable<String>
     }
     
     struct Output {
@@ -41,46 +40,14 @@ final class ChatViewModel: ViewModelType {
         let messageSentSuccessRelay = PublishRelay<Void>()
         
         input.viewWillAppear
-            .flatMapLatest { [weak self] _ -> Observable<Void> in
-                guard let self = self else { return .just(()) }
-                
-                if let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) {
-                    self.configureSocket(with: roomId, messagesRelay: messagesRelay, errorRelay: errorRelay)
-                    return .just(())
-                } else {
-                    return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
-                        .asObservable()
-                        .map { $0.data }
-                        .do(onNext: { chatRoomList in
-                            chatRoomList.forEach { self.chatRepository.saveChatRoom($0) }
-                        })
-                        .flatMap { chatRoomList -> Observable<Void> in
-                            guard let chatRoom = chatRoomList.first(where: { $0.participants.contains(where: { $0.userID == self.participantId }) }) else {
-                                return .just(())
-                            }
-                            self.configureSocket(with: chatRoom.roomID, messagesRelay: messagesRelay, errorRelay: errorRelay)
-                            return .just(())
-                        }
-                }
-            }
-            .subscribe()
-            .disposed(by: disposeBag)
-        
-        input.viewWillDisappear
-            .subscribe(onNext: {
-                SocketIOManager.shared.leaveConnection()
-            })
-            .disposed(by: disposeBag)
-        
-        input.loadMessage
             .flatMapLatest { [weak self] _ -> Observable<[ChatMessage]> in
                 guard let self = self else { return .just([]) }
                 
-                if self.chatRepository.isChatRoomExists(with: self.participantId) {
-                    guard let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) else {
-                        return .just([])
-                    }
+                if let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) {
                     return self.updateAndFetchMessages(roomId: roomId)
+                        .do(onSuccess: { _ in
+                            self.configureSocket(with: roomId, messagesRelay: messagesRelay, errorRelay: errorRelay)
+                        })
                         .asObservable()
                 } else {
                     return NetworkManager.performRequest(route: .getChatRoomList, dataType: ChatRoomListModel.self)
@@ -94,6 +61,9 @@ final class ChatViewModel: ViewModelType {
                                 return .just([])
                             }
                             return self.updateAndFetchMessages(roomId: chatRoom.roomID)
+                                .do(onSuccess: { _ in
+                                    self.configureSocket(with: chatRoom.roomID, messagesRelay: messagesRelay, errorRelay: errorRelay)
+                                })
                         }
                         .asObservable()
                 }
@@ -103,6 +73,12 @@ final class ChatViewModel: ViewModelType {
             } onError: { owner, error in
                 owner.handleError(error, errorRelay: errorRelay)
             }
+            .disposed(by: disposeBag)
+        
+        input.viewWillDisappear
+            .subscribe(onNext: {
+                SocketIOManager.shared.leaveConnection()
+            })
             .disposed(by: disposeBag)
         
         input.messageSent
