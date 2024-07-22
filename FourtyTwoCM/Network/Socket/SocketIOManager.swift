@@ -69,5 +69,6 @@ final class SocketIOManager {
 
     func leaveConnection() {
         socket.disconnect()
+        socket.removeAllHandlers()
     }
 }
