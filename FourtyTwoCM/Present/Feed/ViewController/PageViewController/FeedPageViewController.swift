@@ -190,6 +190,33 @@ final class FeedPageViewController: UIPageViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func preloadNextPagesIfNeeded(currentIndex: Int) {
+        // 현재 인덱스가 3의 배수일 때와 다음 페이지가 로딩 중이 아닐 때에만 사전 로드를 수행
+        guard (currentIndex + 1) % 3 == 0, !isLoadingNextPage else { return }
+        isLoadingNextPage = true
+
+        let fetchNextPage = Observable.just(())
+        let input = FeedPageViewModel.Input(trigger: Observable.never(), fetchNextPage: fetchNextPage)
+        let output = viewModel.transform(input: input)
+
+        output.posts
+            .asObservable()
+            .subscribe(onNext: { [weak self] newPosts in
+                guard let self = self else { return }
+                // 새로운 게시물 데이터를 추가
+                self.addNewViewControllers(newPosts: newPosts)
+                self.isLoadingNextPage = false
+            }, onError: { [weak self] error in
+                // 오류 발생 시 로딩 상태 해제
+                self?.isLoadingNextPage = false
+            }, onCompleted: { [weak self] in
+                // 작업 완료 시 로딩 상태 해제
+                self?.isLoadingNextPage = false
+            })
+            .disposed(by: disposeBag)
+    }
+
 
     private func addNewViewControllers(newPosts: [Post]) {
         let newViewControllers = newPosts.map { post -> FeedContentViewController in
@@ -203,14 +230,7 @@ final class FeedPageViewController: UIPageViewController {
             return vc
         }
 
-        let previousCount = contentViewControllers.count
         contentViewControllers.append(contentsOf: newViewControllers)
-
-        if previousCount == contentViewControllers.count - newViewControllers.count && !newViewControllers.isEmpty {
-            currentIndex = previousCount
-            setViewControllers([contentViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
-            resetTimerAndProgress()
-        }
     }
     
     private func resetTimer() {
@@ -259,15 +279,12 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
 extension FeedPageViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let viewController = pageViewController.viewControllers?.first as? FeedContentViewController {
-            if let index = contentViewControllers.firstIndex(of: viewController) {
-                currentIndex = index
-                lastViewedIndex = index
-                resetTimerAndProgress()
-
-                if currentIndex == contentViewControllers.count - 1 {
-                    loadNextPage()
+                if let index = contentViewControllers.firstIndex(of: viewController) {
+                    currentIndex = index
+                    lastViewedIndex = index
+                    resetTimerAndProgress()
+                    preloadNextPagesIfNeeded(currentIndex: currentIndex)
                 }
             }
-        }
     }
 }
