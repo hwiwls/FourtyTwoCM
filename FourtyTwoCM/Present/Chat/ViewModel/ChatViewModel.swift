@@ -16,10 +16,24 @@ final class ChatViewModel: ViewModelType {
     
     let participantId: String
     let participantNick: String
-    
+    let messagesRelay = BehaviorRelay(value: [ChatMessage]())
+    let errorRelay = PublishRelay<String>()
+
     init(participantId: String, participantNick: String) {
         self.participantId = participantId
         self.participantNick = participantNick
+        
+        NotificationCenter.default.rx.notification(.appDidBecomeActive)
+            .subscribe(onNext: { [weak self] _ in
+                self?.reconnectSocket()
+            })
+            .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx.notification(.appDidEnterBackground)
+            .subscribe(onNext: { [weak self] _ in
+                self?.disconnectSocket()
+            })
+            .disposed(by: disposeBag)
     }
     
     struct Input {
@@ -35,8 +49,6 @@ final class ChatViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        let messagesRelay = BehaviorRelay(value: [ChatMessage]())
-        let errorRelay = PublishRelay<String>()
         let messageSentSuccessRelay = PublishRelay<Void>()
         
         input.viewWillAppear
@@ -46,7 +58,7 @@ final class ChatViewModel: ViewModelType {
                 if let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) {
                     return self.updateAndFetchMessages(roomId: roomId)
                         .do(onSuccess: { _ in
-                            self.configureSocket(with: roomId, messagesRelay: messagesRelay, errorRelay: errorRelay)
+                            self.configureSocket(with: roomId)
                         })
                         .asObservable()
                 } else {
@@ -62,16 +74,16 @@ final class ChatViewModel: ViewModelType {
                             }
                             return self.updateAndFetchMessages(roomId: chatRoom.roomID)
                                 .do(onSuccess: { _ in
-                                    self.configureSocket(with: chatRoom.roomID, messagesRelay: messagesRelay, errorRelay: errorRelay)
+                                    self.configureSocket(with: chatRoom.roomID)
                                 })
                         }
                         .asObservable()
                 }
             }
             .subscribe(with: self) { owner, messages in
-                messagesRelay.accept(messages)
+                owner.messagesRelay.accept(messages)
             } onError: { owner, error in
-                owner.handleError(error, errorRelay: errorRelay)
+                owner.handleError(error)
             }
             .disposed(by: disposeBag)
         
@@ -103,10 +115,10 @@ final class ChatViewModel: ViewModelType {
             }
             .subscribe(with: self) { owner, chatDetail in
                 owner.chatRepository.saveMessages([chatDetail])
-                messagesRelay.accept(owner.chatRepository.fetchMessages(for: chatDetail.roomID))
+                owner.messagesRelay.accept(owner.chatRepository.fetchMessages(for: chatDetail.roomID))
                 messageSentSuccessRelay.accept(())
             } onError: { owner, error in
-                owner.handleError(error, errorRelay: errorRelay)
+                owner.handleError(error)
             }
             .disposed(by: disposeBag)
         
@@ -117,21 +129,21 @@ final class ChatViewModel: ViewModelType {
         )
     }
     
-    private func configureSocket(with roomId: String, messagesRelay: BehaviorRelay<[ChatMessage]>, errorRelay: PublishRelay<String>) {
+    private func configureSocket(with roomId: String) {
         SocketIOManager.shared.configureSocket(with: roomId)
         SocketIOManager.shared.establishConnection()
         
         SocketIOManager.shared.receiveChatData
-            .subscribe(onNext: { result in
+            .subscribe(onNext: { [weak self] result in
                 switch result {
                 case .success(let chatDetail):
-                    self.chatRepository.saveMessages([chatDetail])
-                    messagesRelay.accept(self.chatRepository.fetchMessages(for: chatDetail.roomID))
+                    self?.chatRepository.saveMessages([chatDetail])
+                    self?.messagesRelay.accept(self?.chatRepository.fetchMessages(for: chatDetail.roomID) ?? [])
                 case .failure(let error):
-                    errorRelay.accept(error.errorMessage)
+                    self?.errorRelay.accept(error.errorMessage)
                 }
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     private func updateAndFetchMessages(roomId: String) -> Single<[ChatMessage]> {
@@ -158,11 +170,28 @@ final class ChatViewModel: ViewModelType {
             })
     }
     
-    private func handleError(_ error: Error, errorRelay: PublishRelay<String>) {
+    private func handleError(_ error: Error) {
         if let apiError = error as? APIError {
             errorRelay.accept(apiError.errorMessage)
         } else {
             errorRelay.accept("알 수 없는 오류가 발생했습니다.")
         }
+    }
+
+    private func reconnectSocket() {
+        if let roomId = self.chatRepository.fetchChatRoomId(with: self.participantId) {
+            updateAndFetchMessages(roomId: roomId)
+                .subscribe(onSuccess: { [weak self] messages in
+                    self?.messagesRelay.accept(messages)
+                    self?.configureSocket(with: roomId)
+                }, onFailure: { [weak self] error in
+                    self?.handleError(error)
+                })
+                .disposed(by: disposeBag)
+        }
+    }
+
+    private func disconnectSocket() {
+        SocketIOManager.shared.leaveConnection()
     }
 }

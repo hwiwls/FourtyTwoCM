@@ -150,5 +150,4 @@ final class ChatViewController: BaseViewController {
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
-
 }
