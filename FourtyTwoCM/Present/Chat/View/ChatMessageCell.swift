@@ -16,6 +16,7 @@ class ChatMessageCell: BaseTableViewCell {
     static let identifier = "ChatMessageCell"
     
     let bubbleBackgroundView = UIView().then {
+        $0.backgroundColor = .systemIndigo
         $0.layer.cornerRadius = 18
         $0.clipsToBounds = true
     }
@@ -62,7 +63,7 @@ class ChatMessageCell: BaseTableViewCell {
     }
     
     private func updateUI(isOutgoing: Bool) {
-        bubbleBackgroundView.backgroundColor = isOutgoing ? .systemBlue : .superDarkGray
+        bubbleBackgroundView.backgroundColor = isOutgoing ? .systemIndigo : .superDarkGray
         
         if isOutgoing {
             bubbleBackgroundView.snp.remakeConstraints {
