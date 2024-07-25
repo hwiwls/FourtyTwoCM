@@ -79,6 +79,7 @@ final class ChatViewController: BaseViewController {
         output.messageSentSuccess
             .emit(onNext: { [weak self] in
                 self?.messageTextField.text = ""
+                self?.sendMessageBtn.isHidden = true
             })
             .disposed(by: disposeBag)
         
@@ -91,21 +92,30 @@ final class ChatViewController: BaseViewController {
         self.rx.viewWillDisappear
             .subscribe(onNext: { [weak self] _ in
                 if let tabBarController = self?.tabBarController {
-                    // 현재 선택된 탭이 '채팅'이 아닐 때만 타이머를 리셋하도록 알림
-                    if tabBarController.selectedIndex != 3 { 
+                    if tabBarController.selectedIndex != 3 {
                         NotificationCenter.default.post(name: .didDismissModalViewController, object: nil)
                     }
                 }
             })
             .disposed(by: disposeBag)
+        
+        messageTextField.rx.text.orEmpty
+            .map { $0.isEmpty }
+            .bind(to: sendMessageBtn.rx.isHidden)
+            .disposed(by: disposeBag)
+    }
+    
+    override func configView() {
+        messageTextField.rightView = sendMessageBtn
+        messageTextField.rightViewMode = .always
+        sendMessageBtn.isHidden = true
     }
     
     override func configHierarchy() {
         view.addSubviews([
             chatMessageTableView,
             messageTextFieldBackgroundView,
-            messageTextField,
-            sendMessageBtn
+            messageTextField
         ])
     }
     
@@ -124,12 +134,6 @@ final class ChatViewController: BaseViewController {
             $0.height.equalTo(42)
             $0.leading.trailing.equalTo(messageTextFieldBackgroundView).inset(16)
             $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-8)
-        }
-        
-        sendMessageBtn.snp.makeConstraints {
-            $0.trailing.equalTo(messageTextField).inset(8)
-            $0.top.bottom.equalTo(messageTextField).inset(4)
-            $0.width.equalTo(52)
         }
     }
     
