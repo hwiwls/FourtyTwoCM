@@ -1,30 +1,38 @@
 //
-//  CommentTableViewCell.swift
+//  GenericTableViewCell.swift
 //  FourtyTwoCM
 //
 //  Created by hwijinjeong on 5/11/24.
 //
 
 import UIKit
-import SnapKit
 
-final class CommentTableViewCell: UITableViewCell {
-    
+class GenericTableViewCell: UITableViewCell {
+
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
+        $0.image = UIImage(named: "defaultprofile")
     }
     
     private let nicknameLabel = UILabel().then {
         $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.textColor = .offWhite
+        $0.text = "알 수 없음"
     }
     
     private let contentLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textColor = .offWhite
         $0.numberOfLines = 0
+        $0.text = "알 수 없음"
+    }
+    
+    private let timeLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 9)
+        $0.textColor = .offWhite
+        $0.text = "n시간 전"
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,7 +49,8 @@ final class CommentTableViewCell: UITableViewCell {
         addSubviews([
             profileImageView,
             nicknameLabel,
-            contentLabel
+            contentLabel,
+            timeLabel
         ])
         
         profileImageView.snp.makeConstraints {
@@ -62,11 +71,17 @@ final class CommentTableViewCell: UITableViewCell {
             $0.leading.equalTo(profileImageView.snp.trailing).offset(8)
             $0.bottom.equalToSuperview().inset(12)
         }
+        
+        timeLabel.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(profileImageView.snp.top)
+        }
     }
     
     func configure(with comment: Comment) {
         nicknameLabel.text = comment.creator.nick
         contentLabel.text = comment.content
+        timeLabel.text = comment.createdAt
         if let profileImageUrl = comment.creator.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
             profileImageView.loadImage(from: url)
             print("댓글창 프로필 이미지 url: \(url)")
@@ -74,4 +89,22 @@ final class CommentTableViewCell: UITableViewCell {
             profileImageView.image = UIImage(named: "defaultprofile")
         }
     }
+    
+    func configure(with participants: [Participant], lastChat: LastChat?, updatedAt: String) {
+        let userID = UserDefaults.standard.string(forKey: "userID") ?? ""
+        
+        // userID와 다른 participant 찾기
+        let otherParticipant = participants.first { $0.userID != userID }
+        
+        nicknameLabel.text = otherParticipant?.nick ?? "알 수 없음"
+        contentLabel.text = lastChat?.content ?? "알 수 없음"
+        timeLabel.text = updatedAt
+        
+        if let profileImageUrl = otherParticipant?.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
+            profileImageView.loadImage(from: url)
+        } else {
+            profileImageView.image = UIImage(named: "defaultprofile")
+        }
+    }
 }
+

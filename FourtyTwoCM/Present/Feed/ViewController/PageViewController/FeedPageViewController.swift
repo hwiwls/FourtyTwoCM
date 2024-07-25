@@ -63,6 +63,7 @@ final class FeedPageViewController: UIPageViewController {
         self.rx.viewDidDisappear
             .subscribe(onNext: { [weak self] _ in
                 self?.invalidateTimer() // 화면이 사라질 때 타이머 중지 및 해제
+                
             })
             .disposed(by: disposeBag)
     }

@@ -34,20 +34,14 @@ final class CommentViewController: BaseViewController {
         $0.layer.borderColor = UIColor.placeHolderGray.cgColor
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
-        $0.textInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 72)
+        $0.textInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 68)
     }
     
-    private lazy var submitButton = UIButton(type: .system).then {
-        $0.setImage(UIImage(systemName: "arrow.up")?.withRenderingMode(.alwaysOriginal).withTintColor(.black), for: .normal)
-        $0.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        $0.backgroundColor = .offWhite
-        $0.layer.cornerRadius = 15
-        $0.clipsToBounds = true
-    }
+    private lazy var submitButton = SubmitButton()
     
     private lazy var commentTableView = UITableView().then {
         $0.backgroundColor = .clear
-        $0.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentTableViewCell")
+        $0.register(GenericTableViewCell.self, forCellReuseIdentifier: "GenericTableViewCell")
     }
     
     override func viewDidLoad() {
@@ -86,7 +80,7 @@ final class CommentViewController: BaseViewController {
         
         
         comments.asObservable()
-            .bind(to: commentTableView.rx.items(cellIdentifier: "CommentTableViewCell", cellType: CommentTableViewCell.self)) { _, comment, cell in
+            .bind(to: commentTableView.rx.items(cellIdentifier: "GenericTableViewCell", cellType: GenericTableViewCell.self)) { _, comment, cell in
                 cell.configure(with: comment)
                 cell.selectionStyle = .none
             }

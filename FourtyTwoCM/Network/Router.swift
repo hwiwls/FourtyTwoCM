@@ -26,6 +26,10 @@ enum Router {
     case viewCertainPost(postId: String)
     case viewMyPosts(userID: String, query: ViewMyPostsQuery)
     case viewMyLikes(query: ViewMyLikesQuery)
+    case getChatRoomList
+    case getChatHistory(roomId: String, query: ChatHistoryQuery)
+    case createChatRoom(query: CreateChatRoomQuery)
+    case sendMessage(roomId: String, query: MessageToSendQuery)
 }
 
 extension Router: TargetType {
@@ -35,40 +39,12 @@ extension Router: TargetType {
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .login:
-            return .post
-        case .signUp:
-            return .post
-        case .emailValidation:
-            return .post
-        case .viewPost:
+        case .viewPost, .refresh, .myProfile, .viewCertainPost, .viewMyPosts, .viewMyLikes, .getChatRoomList, .getChatHistory:
             return .get
-        case .likePost:
-            return .post
-        case .deletePost:
+        case .deletePost, .unfollowUser:
             return .delete
-        case .refresh:
-            return .get
-        case .uploadFile:
+        case .login, .signUp, .emailValidation, .likePost, .uploadFile, .uploadPost, .paymentValidation, .followUser, .writeComment, .sendMessage, .createChatRoom:
             return .post
-        case .uploadPost:
-            return .post
-        case .myProfile:
-            return .get
-        case .paymentValidation:
-            return .post
-        case .followUser:
-            return .post
-        case .unfollowUser:
-            return .delete
-        case .writeComment:
-            return .post
-        case .viewCertainPost:
-            return .get
-        case .viewMyPosts:
-            return .get
-        case .viewMyLikes:
-            return .get
         }
     }
     
@@ -98,354 +74,82 @@ extension Router: TargetType {
             return "payments/validation"
         case .followUser(let userId):
             return "follow/\(userId)"
-        case .unfollowUser(userId: let userId):
+        case .unfollowUser(let userId):
             return "follow/\(userId)"
-        case .writeComment(postId: let postId, query: _):
+        case .writeComment(let postId, query: _):
             return "posts/\(postId)/comments"
-        case .viewCertainPost(postId: let postId):
+        case .viewCertainPost(let postId):
             return "posts/\(postId)"
         case .viewMyPosts(let userID, _):
             return "posts/users/\(userID)"
         case .viewMyLikes:
             return "posts/likes/me"
+        case .getChatRoomList:
+            return "chats"
+        case .getChatHistory(let roomId, query: _):
+            return "chats/\(roomId)"
+        case .createChatRoom:
+            return "chats"
+        case .sendMessage(let roomId, query: _):
+            return "chats/\(roomId)"
         }
     }
     
     var header: [String : String] {
-        switch self {
-        case .login:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            return [
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .signUp:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            return [
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .emailValidation:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            return [
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .viewPost:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
+        guard let sesacKey = Bundle.main.sesacKey else {
+            print("sesacKey를 로드하지 못했습니다.")
+            return [:]
+        }
+        
+        func getAccessToken() -> String {
             do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
+                return try Keychain.shared.getToken(kind: .accessToken)
             } catch {
                 print("Error retrieving access token: \(error)")
+                return ""
             }
-            
+        }
+        
+        func getRefreshToken() -> String {
+            do {
+                return try Keychain.shared.getToken(kind: .refreshToken)
+            } catch {
+                print("Error retrieving refresh token: \(error)")
+                return ""
+            }
+        }
+        
+        switch self {
+        case .login, .signUp, .emailValidation:
             return [
-                HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .likePost:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("게시글 좋아요에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .deletePost:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("게시글 삭제에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .refresh:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            var refreshToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("리프레시에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            do {
-                refreshToken = try Keychain.shared.getToken(kind: .refreshToken)
-            } catch {
-                print("리프레스에서 리프레시 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.sesacKey.rawValue: sesacKey,
-                HTTPHeader.refresh.rawValue: refreshToken
             ]
         case .uploadFile:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("파일 업로드에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
+            let accessToken = getAccessToken()
             return [
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.contentType.rawValue: HTTPHeader.multipart.rawValue,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
-        case .uploadPost:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("파일 업로드에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .myProfile:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("Error retrieving access token: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .paymentValidation:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("Error retrieving access token: \(error)")
-            }
-            
+        case .refresh:
+            let accessToken = getAccessToken()
+            let refreshToken = getRefreshToken()
             return [
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey,
-                HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue
+                HTTPHeader.refresh.rawValue: refreshToken
             ]
-        case .followUser:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("Error retrieving access token: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .unfollowUser:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("Error retrieving access token: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .writeComment:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("writeCommen에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
+        default:
+            let accessToken = getAccessToken()
             return [
                 HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.contentType.rawValue: HTTPHeader.json.rawValue,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .viewCertainPost:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("viewCertainPost의 access token을 가져오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .viewMyPosts:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("게시글 좋아요에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
-                HTTPHeader.sesacKey.rawValue: sesacKey
-            ]
-        case .viewMyLikes:
-            guard let sesacKey = Bundle.main.sesacKey else {
-                print("sesacKey를 로드하지 못했습니다.")
-                return [:]
-            }
-            
-            print("sesacKey: \(sesacKey)")
-            
-            var accessToken: String = ""
-            
-            do {
-                accessToken = try Keychain.shared.getToken(kind: .accessToken)
-            } catch {
-                print("게시글 좋아요에서 액세스 토큰을 가지고 오지 못함: \(error)")
-            }
-            
-            return [
-                HTTPHeader.authorization.rawValue: accessToken,
                 HTTPHeader.sesacKey.rawValue: sesacKey
             ]
         }
     }
+
     
     var parameter: String? {
         nil
@@ -479,6 +183,13 @@ extension Router: TargetType {
                 items.append(URLQueryItem(name: "next", value: next))
             }
             return items
+            
+        case .getChatHistory(_, let query):
+            var items = [URLQueryItem]()
+            if let cursorDate = query.cursor_date {
+                items.append(URLQueryItem(name: "cursor_date", value: cursorDate))
+            }
+            return items
         default:
             return nil
         }
@@ -486,51 +197,32 @@ extension Router: TargetType {
     
     
     var body: Data? {
+        func encodeQuery<T: Encodable>(_ query: T) -> Data? {
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            return try? encoder.encode(query)
+        }
+
         switch self {
         case .login(let query):
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            return try? encoder.encode(query)   
+            return encodeQuery(query)
         case .signUp(let query):
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            return try? encoder.encode(query)
+            return encodeQuery(query)
         case .emailValidation(let query):
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            return try? encoder.encode(query)
-        case .viewPost:
-            return nil
+            return encodeQuery(query)
         case .likePost(postId: _, query: let query):
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            return try? encoder.encode(query)
-        case .deletePost(postId: _):
-            return nil
-        case .refresh:
-            return nil
-        case .uploadFile:
-            return nil
+            return encodeQuery(query)
         case .uploadPost(let query):
-            let encoder = JSONEncoder()
-            return try? encoder.encode(query)
-        case .myProfile:
-            return nil
+            return encodeQuery(query)
         case .paymentValidation(query: let query):
-            let encoder = JSONEncoder()
-            return try? encoder.encode(query)
-        case .followUser:
-            return nil
-        case .unfollowUser:
-            return nil
+            return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
-            let encoder = JSONEncoder()
-            return try? encoder.encode(query)
-        case .viewCertainPost(postId: _):
-            return nil
-        case .viewMyPosts:
-            return nil
-        case .viewMyLikes:
+            return encodeQuery(query)
+        case .sendMessage(roomId: _, query: let query):
+            return encodeQuery(query)
+        case .createChatRoom(let query):
+            return encodeQuery(query)
+        default:
             return nil
         }
     }

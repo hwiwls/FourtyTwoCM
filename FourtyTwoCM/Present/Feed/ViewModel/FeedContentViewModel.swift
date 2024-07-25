@@ -29,6 +29,7 @@ class FeedContentViewModel: ViewModelType {
         let ellipsisBtnTapped: Observable<Void>
         let followBtnTapped: Observable<Void>
         let commentPostBtnTapped: Observable<Void>
+        let chatBtnTapped: Observable<Void>
     }
     
     struct Output {
@@ -46,6 +47,7 @@ class FeedContentViewModel: ViewModelType {
         let followState: Driver<Bool>
         let isFollowButtonHidden: Driver<Bool>
         let comments: Driver<[Comment]>
+        let chatParticipantInfo: Driver<(String, String)>
     }
     
     init(post: Post) {
@@ -153,6 +155,11 @@ class FeedContentViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [])
 
+        let chatParticipantInfo = input.chatBtnTapped
+            .withLatestFrom(post)
+            .map { ($0.creator.userID, $0.creator.nick) }
+            .asDriver(onErrorJustReturn: ("", ""))
+        
         return Output(
             content: content,
             nickname: nickname,
@@ -167,7 +174,8 @@ class FeedContentViewModel: ViewModelType {
             imageUrls: imageUrls,
             followState: followState,
             isFollowButtonHidden: isFollowButtonHidden,
-            comments: comments
+            comments: comments, 
+            chatParticipantInfo: chatParticipantInfo
         )
     }
     

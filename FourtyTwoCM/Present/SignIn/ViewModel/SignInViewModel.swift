@@ -52,11 +52,13 @@ final class SignInViewModel: ViewModelType {
             .subscribe(onNext: { event in
                 switch event {
                 case .next(let signInModel):
-                    // 토큰 저장 로직
                     do {
                         try Keychain.shared.saveToken(kind: .accessToken, token: signInModel.accessToken)
                         try Keychain.shared.saveToken(kind: .refreshToken, token: signInModel.refreshToken)
                         UserDefaults.standard.set(signInModel.user_id, forKey: "userID")
+                        
+                        _ = RealmManager.shared.configureRealm(for: signInModel.user_id)
+                        
                         signInSuccessTrigger.accept(())
                     } catch {
                         print("토큰 저장 실패: \(error)")

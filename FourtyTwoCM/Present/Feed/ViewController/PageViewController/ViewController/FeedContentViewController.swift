@@ -56,7 +56,7 @@ final class FeedContentViewController: BaseViewController {
     
     private let likePostBtn = IconButton(image: "heart")
     
-    private let savePostBtn = IconButton(image: "bookmark")
+    private let chatBtn = IconButton(image: "paperplane")
     
     private let commentPostBtn = IconButton(image: "message")
     
@@ -82,28 +82,6 @@ final class FeedContentViewController: BaseViewController {
         goReservationBtn.addTarget(self, action: #selector(goReservationButtonTapped), for: .touchUpInside)
     }
     
-    @objc func goReservationButtonTapped() {
-        guard let post = try? viewModel.post.value() else { return }
-
-        
-        let reservationVC = ReservationViewController()
-        reservationVC.modalPresentationStyle = .overFullScreen
-        
-        reservationVC.storeName = post.creator.nick
-        reservationVC.productDetail = post.content
-        reservationVC.productName = post.content4
-        reservationVC.priceValue = post.content5
-        reservationVC.imageUrls = post.files
-        reservationVC.postID = post.postID
-        if let tabBar = self.tabBarController {
-            
-            tabBar.present(reservationVC, animated: true, completion: nil)
-        } else {
-            self.present(reservationVC, animated: true, completion: nil)
-        }
-    }
-
-    
     override func viewDidLayoutSubviews() {
         userProfileImageView.layer.cornerRadius = userProfileImageView.frame.height / 2
         userProfileImageView.clipsToBounds = true
@@ -123,7 +101,8 @@ final class FeedContentViewController: BaseViewController {
             likeBtnTapped: likePostBtn.rx.tap.asObservable(),
             ellipsisBtnTapped: ellipsisPostBtn.rx.tap.asObservable(),
             followBtnTapped: followBtn.rx.tap.asObservable(),
-            commentPostBtnTapped: commentPostBtn.rx.tap.asObservable()
+            commentPostBtnTapped: commentPostBtn.rx.tap.asObservable(),
+            chatBtnTapped: chatBtn.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -146,7 +125,6 @@ final class FeedContentViewController: BaseViewController {
         output.profileImageUrl
             .compactMap { URL(string: $0 ?? "") }
             .drive(onNext: { [weak self] url in
-                print("feed url: \(url)")
                 self?.userProfileImageView.loadImage(from: url)
             })
             .disposed(by: disposeBag)
@@ -226,6 +204,15 @@ final class FeedContentViewController: BaseViewController {
                 self.present(commentsVC, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
+        
+        output.chatParticipantInfo
+            .drive(onNext: { [weak self] participantId, participantNick in
+                let chatVC = ChatViewController()
+                chatVC.viewModel = ChatViewModel(participantId: participantId, participantNick: participantNick)
+                chatVC.modalPresentationStyle = .pageSheet
+                self?.present(chatVC, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func showToast(message: String) {
@@ -267,6 +254,27 @@ final class FeedContentViewController: BaseViewController {
         }
     }
     
+    @objc func goReservationButtonTapped() {
+        guard let post = try? viewModel.post.value() else { return }
+
+        
+        let reservationVC = ReservationViewController()
+        reservationVC.modalPresentationStyle = .overFullScreen
+        
+        reservationVC.storeName = post.creator.nick
+        reservationVC.productDetail = post.content
+        reservationVC.productName = post.content4
+        reservationVC.priceValue = post.content5
+        reservationVC.imageUrls = post.files
+        reservationVC.postID = post.postID
+        if let tabBar = self.tabBarController {
+            
+            tabBar.present(reservationVC, animated: true, completion: nil)
+        } else {
+            self.present(reservationVC, animated: true, completion: nil)
+        }
+    }
+    
     override func configHierarchy() {
         view.addSubviews([
             postImageView,
@@ -282,7 +290,7 @@ final class FeedContentViewController: BaseViewController {
         
         btnStackView.addArrangedSubviews([
             likePostBtn,
-            savePostBtn,
+            chatBtn,
             commentPostBtn,
             ellipsisPostBtn
         ])
@@ -319,7 +327,7 @@ final class FeedContentViewController: BaseViewController {
             $0.size.equalTo(40)
         }
         
-        savePostBtn.snp.makeConstraints {
+        chatBtn.snp.makeConstraints {
             $0.size.equalTo(40)
         }
         

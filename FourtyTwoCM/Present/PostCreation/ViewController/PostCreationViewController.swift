@@ -39,7 +39,7 @@ final class PostCreationViewController: BaseViewController {
     
     private let postTextView = UITextView().then {
         $0.backgroundColor = .clear
-        $0.textColor = .placeHolderGray
+        $0.textColor = .tabBarBorderGray
         $0.font = .systemFont(ofSize: 15)
         $0.text = "내용, 해시태그를 입력해주세요"
     }

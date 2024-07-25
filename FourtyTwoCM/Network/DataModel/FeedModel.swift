@@ -86,13 +86,6 @@ struct CommentCreator: Decodable {
         case nick
         case profileImage
     }
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.userID = try container.decode(String.self, forKey: .userID)
-        self.nick = try container.decode(String.self, forKey: .nick)
-        self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage) ?? "defaultimage"
-    }
 }
 
 // MARK: - DatumCreator

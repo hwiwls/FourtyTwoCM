@@ -104,8 +104,6 @@ extension CustomButton {
         }
 
     func updateIconImageView(with url: URL) {
-        print("iconimageurl: \(url)")
-        
         iconImageView.loadImage(from: url)
     }
 }

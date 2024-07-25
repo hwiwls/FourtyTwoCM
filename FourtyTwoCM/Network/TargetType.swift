@@ -31,6 +31,7 @@ extension TargetType {
         urlRequest.allHTTPHeaderFields = header
         urlRequest.httpBody = body  
 
+        print("======================================================")
         print("Request URL: \(urlRequest.url?.absoluteString ?? "Invalid URL")")
         print("Headers: \(String(describing: urlRequest.allHTTPHeaderFields))")
         print("HTTP Body: \(String(data: urlRequest.httpBody ?? Data(), encoding: .utf8) ?? "No body data")")

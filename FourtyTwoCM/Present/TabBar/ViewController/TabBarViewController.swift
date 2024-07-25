@@ -11,42 +11,27 @@ import PhotosUI
 
 final class TabBarController: UITabBarController, PHPickerViewControllerDelegate {
     
-    private let topBorder = UIView().then {
-        $0.backgroundColor = .tabBarBorderGray
-    }
-    
-    private let middleButton = UIButton().then {
-        $0.backgroundColor = .offWhite
-        $0.layer.cornerRadius = 26
-        $0.setImage(UIImage(systemName: "plus")?.withTintColor(UIColor.customColor.backgroundBlack, renderingMode: .alwaysOriginal), for: .normal)
-    }
+    private let customTabBar = CustomTabBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarConfig()
-        setupMiddleButton()
         view.backgroundColor = .backgroundBlack
     }
     
     private func tabBarConfig() {
+        setValue(customTabBar, forKey: "tabBar")
+        
         tabBar.barTintColor = .black
         tabBar.backgroundColor = .black
         tabBar.tintColor = .offWhite
         tabBar.isTranslucent = false
         
-        tabBar.addSubview(topBorder)
-        
-        topBorder.snp.makeConstraints {
-            $0.leading.top.trailing.equalToSuperview()
-            $0.height.equalTo(1)
-        }
-        
         let feedViewController = UINavigationController(rootViewController: FeedPageViewController())
         let myPageViewController = UINavigationController(rootViewController: MyPageViewController())
         let postMapViewController = UINavigationController(rootViewController: PostMapViewController())
-        let chattingViewController = UINavigationController(rootViewController: ChattingViewController())
+        let chattingViewController = UINavigationController(rootViewController: ChatRoomListViewController())
 
-        
         let connectActive = resizeImage(image: UIImage(named: "connect_active")!, targetSize: CGSize(width: 32, height: 32))
         let connectUnactive = resizeImage(image: UIImage(named: "connect_unactive")!, targetSize: CGSize(width: 32, height: 32))
         
@@ -68,17 +53,8 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
         setViewControllers(tabItems, animated: true)
         
         tabBar.items?[2].isEnabled = false
-    }
-    
-    private func setupMiddleButton() {
-        middleButton.addTarget(self, action: #selector(middleButtonAction), for: .touchUpInside)
-        view.addSubview(middleButton)
         
-        middleButton.snp.makeConstraints {
-            $0.centerX.equalTo(tabBar.snp.centerX)
-            $0.top.equalTo(tabBar.snp.top).offset(-20)
-            $0.width.height.equalTo(52)
-        }
+        customTabBar.middleButton.addTarget(self, action: #selector(middleButtonAction), for: .touchUpInside)
     }
     
     @objc private func middleButtonAction() {
@@ -116,26 +92,24 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-            let size = image.size
-            
-            let widthRatio  = targetSize.width  / size.width
-            let heightRatio = targetSize.height / size.height
-            
-            // 새 이미지 크기 결정
-            var newSize: CGSize
-            if widthRatio > heightRatio {
-                newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-            } else {
-                newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-            }
-
-            // 이미지 렌더링
-            let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            image.draw(in: rect)
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            return newImage!
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        var newSize: CGSize
+        if widthRatio > heightRatio {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
+
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
 }
