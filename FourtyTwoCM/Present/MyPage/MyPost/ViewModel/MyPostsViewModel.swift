@@ -12,7 +12,7 @@ import RxCocoa
 final class MyPostsViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     private let currentPage = BehaviorRelay<String?>(value: nil)
-    let errorMessage = PublishRelay<String>()
+    private let errorMessage = PublishRelay<String>()
     
     struct Input {
         let trigger: Observable<Void>

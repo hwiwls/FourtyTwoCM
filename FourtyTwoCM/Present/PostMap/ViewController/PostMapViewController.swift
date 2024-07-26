@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-class PostMapViewController: BaseViewController {
+final class PostMapViewController: BaseViewController {
 
     private lazy var postMapView = MKMapView().then {
         $0.preferredConfiguration = MKStandardMapConfiguration()
@@ -89,7 +89,7 @@ class PostMapViewController: BaseViewController {
         locationManager.startUpdatingLocation()
     }
 
-    func registerMapAnnotationViews() {
+    private func registerMapAnnotationViews() {
         postMapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
     }
 

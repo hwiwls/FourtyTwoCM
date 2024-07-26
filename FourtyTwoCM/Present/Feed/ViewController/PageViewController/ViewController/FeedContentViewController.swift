@@ -19,7 +19,7 @@ final class FeedContentViewController: BaseViewController {
         $0.progress = 0.0
     }
     
-    let postImageView = UIImageView().then {
+    private let postImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "SampleImg1")
         $0.backgroundColor = .white
@@ -62,7 +62,7 @@ final class FeedContentViewController: BaseViewController {
     
     private let ellipsisPostBtn = IconButton(image: "ellipsis")
     
-    let goReservationBtn = CustomButton()
+    private let goReservationBtn = CustomButton()
     
     private let followBtn = UIButton().then {
         $0.setTitle("팔로우", for: .normal)

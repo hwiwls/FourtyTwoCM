@@ -10,7 +10,7 @@ import SnapKit
 import Tabman
 import Pageboy
 
-class MyPageTabmanViewController: TabmanViewController {
+final class MyPageTabmanViewController: TabmanViewController {
     
     private var viewControllers: [UIViewController] = []
     

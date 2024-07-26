@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-class ChatRepository {
+final class ChatRepository {
     private var realm: Realm
 
     init(userId: String) {

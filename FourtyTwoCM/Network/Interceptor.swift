@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class APIInterceptor: RequestInterceptor {
+final class APIInterceptor: RequestInterceptor {
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
         

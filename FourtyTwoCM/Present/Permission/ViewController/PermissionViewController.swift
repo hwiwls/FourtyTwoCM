@@ -7,12 +7,11 @@
 
 import UIKit
 import SnapKit
-//import Then
 import RxSwift
 import RxCocoa
 
 final class PermissionsViewController: BaseViewController {
-    var viewModel = PermissionsViewModel()
+    private var viewModel = PermissionsViewModel()
     
     private let titleLabel = UILabel().then {
         $0.text = "Welcome!👋🏻"

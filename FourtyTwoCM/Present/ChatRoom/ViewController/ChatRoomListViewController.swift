@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Toast
 
-class ChatRoomListViewController: BaseViewController {
+final class ChatRoomListViewController: BaseViewController {
     
     private lazy var chatRoomListTableView = UITableView().then {
         $0.backgroundColor = .clear

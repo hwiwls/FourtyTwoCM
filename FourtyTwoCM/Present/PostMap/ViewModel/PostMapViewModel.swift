@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class PostMapViewModel: ViewModelType {
+final class PostMapViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     private let postsSubject = BehaviorRelay<[Post]>(value: [])

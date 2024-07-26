@@ -11,7 +11,7 @@ import AVFoundation
 import Photos
 import RxSwift
 
-class Permissions: NSObject, CLLocationManagerDelegate {
+final class Permissions: NSObject, CLLocationManagerDelegate {
     static let shared = Permissions()
 
     let locationManager = CLLocationManager()

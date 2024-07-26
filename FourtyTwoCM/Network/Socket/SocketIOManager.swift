@@ -14,8 +14,8 @@ import Foundation
 final class SocketIOManager {
     static let shared = SocketIOManager()
     
-    var manager: SocketManager!
-    var socket: SocketIOClient!
+    private var manager: SocketManager!
+    private var socket: SocketIOClient!
     
     let receiveChatData = PublishSubject<Result<ChatDetail, APIError>>()
     

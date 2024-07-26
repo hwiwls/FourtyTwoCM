@@ -11,8 +11,8 @@ import RxCocoa
 import SnapKit
 
 final class MyPostsViewController: BaseViewController {
-    var viewModel = MyPostsViewModel()
-    var initialLoadCompleted = false
+    private var viewModel = MyPostsViewModel()
+    private var initialLoadCompleted = false
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
     

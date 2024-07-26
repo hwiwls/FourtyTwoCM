@@ -14,7 +14,7 @@ final class MyPageViewController: BaseViewController {
     
     private let viewModel = MyPageViewModel()
     
-    var myPageTabmanController: MyPageTabmanViewController!
+    private var myPageTabmanController: MyPageTabmanViewController!
     
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill

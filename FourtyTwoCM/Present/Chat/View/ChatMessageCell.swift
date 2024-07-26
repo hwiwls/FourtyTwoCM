@@ -11,17 +11,17 @@ import Then
 import RxSwift
 import RxCocoa
 
-class ChatMessageCell: BaseTableViewCell {
+final class ChatMessageCell: BaseTableViewCell {
     
     static let identifier = "ChatMessageCell"
     
-    let bubbleBackgroundView = UIView().then {
+    private let bubbleBackgroundView = UIView().then {
         $0.backgroundColor = .systemIndigo
         $0.layer.cornerRadius = 18
         $0.clipsToBounds = true
     }
     
-    let messageLabel = UILabel().then {
+    private let messageLabel = UILabel().then {
         $0.numberOfLines = 0
         $0.font = .systemFont(ofSize: 17)
         $0.textColor = .offWhite

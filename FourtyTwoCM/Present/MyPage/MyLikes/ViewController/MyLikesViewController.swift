@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Toast
 
-class MyLikesViewController: BaseViewController {
+final class MyLikesViewController: BaseViewController {
     var viewModel = MyLikesViewModel()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())

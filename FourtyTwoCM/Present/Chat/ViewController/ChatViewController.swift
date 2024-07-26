@@ -21,7 +21,7 @@ final class ChatViewController: BaseViewController {
     var entryType: EntryType = .chatList
     var viewModel: ChatViewModel!
     
-    let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
+    private let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
     
     let chatRepository = ChatRepository(userId: UserDefaults.standard.string(forKey: "userID") ?? "")
     

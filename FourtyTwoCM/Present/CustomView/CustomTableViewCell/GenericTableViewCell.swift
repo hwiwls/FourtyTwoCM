@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GenericTableViewCell: UITableViewCell {
+final class GenericTableViewCell: UITableViewCell {
 
     private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill

@@ -91,7 +91,7 @@ final class TabBarController: UITabBarController, PHPickerViewControllerDelegate
         present(postCreationVC, animated: true)
     }
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
         
         let widthRatio  = targetSize.width  / size.width

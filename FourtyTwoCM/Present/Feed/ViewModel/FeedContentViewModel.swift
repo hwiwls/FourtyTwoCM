@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Alamofire
 
-class FeedContentViewModel: ViewModelType {
+final class FeedContentViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     var post: BehaviorSubject<Post>

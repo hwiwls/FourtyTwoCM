@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class PermissionsViewModel: ViewModelType {
+final class PermissionsViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: Observable<Void>
         let agreeButtonTapped: Observable<Void>

@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 import CoreLocation
 
-class CustomAnnotation: NSObject, MKAnnotation {
+final class CustomAnnotation: NSObject, MKAnnotation {
     @objc dynamic var coordinate: CLLocationCoordinate2D
     var imageName: String?
     var post: Post?

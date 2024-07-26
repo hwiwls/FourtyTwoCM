@@ -34,7 +34,7 @@ final class CustomAnnotationView: MKAnnotationView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configLayout() {
+    private func configLayout() {
         addSubview(backgroundView)
         backgroundView.addSubview(customImageView)
         

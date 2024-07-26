@@ -11,7 +11,7 @@ import RxCocoa
 final class MyLikesViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     private let currentPage = BehaviorSubject<String?>(value: nil)
-    let errorMessage = PublishRelay<String>()
+    private let errorMessage = PublishRelay<String>()
     
     struct Input {
         let trigger: Observable<Void>
