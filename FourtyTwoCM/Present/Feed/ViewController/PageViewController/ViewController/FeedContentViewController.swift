@@ -51,7 +51,7 @@ final class FeedContentViewController: BaseViewController {
     private let btnStackView = UIStackView().then {
         $0.distribution = .fillEqually
         $0.axis = .vertical
-        $0.spacing = 20
+        $0.spacing = 16
     }
     
     private let likePostBtn = IconButton(image: "heart")
@@ -317,13 +317,13 @@ final class FeedContentViewController: BaseViewController {
         
         postContentLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(28)
+            $0.bottom.equalToSuperview().inset(36)
             $0.trailing.equalTo(btnStackView.snp.leading).offset(-12)
         }
         
         btnStackView.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalTo(postContentLabel.snp.bottom).offset(-4)
+            $0.trailing.equalToSuperview().inset(12)
+            $0.bottom.equalTo(postContentLabel.snp.bottom).offset(8)
             $0.width.equalTo(40)
         }
         
