@@ -103,7 +103,7 @@ final class PostDetailView: BaseView {
     func configure(with post: Post) {
         postContentLabel.text = post.content
         postContentLabel.setLineSpacing(lineSpacing: 2)
-        createdAtLabel.text = post.createdAt
+        createdAtLabel.text = post.createdAt.toISO8601Date()?.toRelativeString()
         creatorLabel.text = "by @\(post.creator.nick)"
 
         if let imageUrlString = post.files.first, let imageUrl = URL(string: "\(BaseURL.baseURL.rawValue)/\(imageUrlString)") {
