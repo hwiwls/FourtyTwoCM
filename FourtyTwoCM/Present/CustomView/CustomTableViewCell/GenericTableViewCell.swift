@@ -30,7 +30,7 @@ class GenericTableViewCell: UITableViewCell {
     }
     
     private let timeLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 9)
+        $0.font = UIFont.systemFont(ofSize: 11)
         $0.textColor = .offWhite
         $0.text = "n시간 전"
     }
@@ -81,7 +81,7 @@ class GenericTableViewCell: UITableViewCell {
     func configure(with comment: Comment) {
         nicknameLabel.text = comment.creator.nick
         contentLabel.text = comment.content
-        timeLabel.text = comment.createdAt
+        timeLabel.text = comment.createdAt.toISO8601Date()?.toRelativeString()
         if let profileImageUrl = comment.creator.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
             profileImageView.loadImage(from: url)
             print("댓글창 프로필 이미지 url: \(url)")
@@ -98,7 +98,7 @@ class GenericTableViewCell: UITableViewCell {
         
         nicknameLabel.text = otherParticipant?.nick ?? "알 수 없음"
         contentLabel.text = lastChat?.content ?? "알 수 없음"
-        timeLabel.text = updatedAt
+        timeLabel.text = updatedAt.toISO8601Date()?.toRelativeString()
         
         if let profileImageUrl = otherParticipant?.profileImage, let url = URL(string: BaseURL.baseURL.rawValue + "/" + profileImageUrl) {
             profileImageView.loadImage(from: url)
