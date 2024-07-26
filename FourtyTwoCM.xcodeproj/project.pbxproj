@@ -75,6 +75,7 @@
 		2E7BEEA82BEFD9C700A798D9 /* WriteCommentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */; };
 		2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */; };
 		2E7BEEAC2BEFF33800A798D9 /* ViewCertainPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */; };
+		2E7FB7752C53EACA00BD9925 /* Date + toRelativeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7FB7742C53EACA00BD9925 /* Date + toRelativeString.swift */; };
 		2E8BA0442C4E73BB00E45774 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8BA0432C4E73BB00E45774 /* User.swift */; };
 		2E8DF6982BF14077009C0022 /* ViewMyPostsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8DF6972BF14077009C0022 /* ViewMyPostsQuery.swift */; };
 		2E8F98212BCD4D0B00E9A79A /* SB 어그로OTF B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */; };
@@ -202,6 +203,7 @@
 		2E7BEEA72BEFD9C700A798D9 /* WriteCommentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCommentQuery.swift; sourceTree = "<group>"; };
 		2E7BEEA92BEFDAC300A798D9 /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		2E7BEEAB2BEFF33800A798D9 /* ViewCertainPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCertainPostModel.swift; sourceTree = "<group>"; };
+		2E7FB7742C53EACA00BD9925 /* Date + toRelativeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + toRelativeString.swift"; sourceTree = "<group>"; };
 		2E8BA0432C4E73BB00E45774 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2E8DF6972BF14077009C0022 /* ViewMyPostsQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyPostsQuery.swift; sourceTree = "<group>"; };
 		2E8F981D2BCD4D0B00E9A79A /* SB 어그로OTF B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SB 어그로OTF B.otf"; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 				2ECD93E02C3C50DF0030CDAC /* UILabel+setLineSpacing.swift */,
 				2E6C96862C49F79C007F9935 /* Date + toISO8601String().swift */,
 				2E6C96882C49F7AF007F9935 /* String + toISO8601Date().swift */,
+				2E7FB7742C53EACA00BD9925 /* Date + toRelativeString.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1099,6 +1102,7 @@
 				2E2E99842C240DA60035D50E /* PostMapViewModel.swift in Sources */,
 				2E1592D52C46834C00255C9F /* ChatHistoryQuery.swift in Sources */,
 				2E8F986A2BCD85F300E9A79A /* SignTextField.swift in Sources */,
+				2E7FB7752C53EACA00BD9925 /* Date + toRelativeString.swift in Sources */,
 				2E1B91E62BE63F5200751288 /* UploadPostModel.swift in Sources */,
 				2EEAC03B2BF0DFEE00F56645 /* MyLikesViewModel.swift in Sources */,
 				2E7BEEAA2BEFDAC300A798D9 /* CommentModel.swift in Sources */,
