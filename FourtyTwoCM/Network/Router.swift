@@ -214,14 +214,16 @@ extension Router: TargetType {
             return encodeQuery(query)
         case .uploadPost(let query):
             return encodeQuery(query)
-        case .paymentValidation(query: let query):
-            return encodeQuery(query)
         case .writeComment(postId: _, query: let query):
             return encodeQuery(query)
         case .sendMessage(roomId: _, query: let query):
             return encodeQuery(query)
         case .createChatRoom(let query):
             return encodeQuery(query)
+        case .paymentValidation(let query):
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .useDefaultKeys
+            return try? encoder.encode(query)
         default:
             return nil
         }

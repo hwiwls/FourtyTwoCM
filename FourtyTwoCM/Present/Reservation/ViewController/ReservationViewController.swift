@@ -161,10 +161,9 @@ final class ReservationViewController: BaseViewController {
                         return
                     }
                     let validationQuery = PaymentsValidationQuery(imp_uid: impUid, post_id: postID, productName: productName, price: priceInt)
-                    let router = Router.paymentValidation(query: validationQuery)
                     
                     // 결제 검증 요청
-                    NetworkManager.performRequest(route: router, dataType: PaymentsValidationModel.self)
+                    NetworkManager.performRequest(route: .paymentValidation(query: validationQuery))
                         .subscribe(onSuccess: { validationResponse in
                             // 결제 및 검증 성공 시 Alert 표시
                             let alert = UIAlertController(title: "결제 성공", message: "결제 및 검증에 성공했습니다.", preferredStyle: .alert)
