@@ -142,10 +142,6 @@ final class FeedContentViewController: BaseViewController {
                 self?.updateLikeButton(isLiked: isLiked)
             })
             .disposed(by: disposeBag)
-
-        output.ellipsisVisibility
-            .drive(ellipsisPostBtn.rx.isHidden)
-            .disposed(by: disposeBag)
         
         output.likeButtonImage
             .drive(onNext: { [weak self] imageName in
@@ -154,8 +150,8 @@ final class FeedContentViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.showActionSheet
-            .drive(onNext: { [weak self] _ in
-                self?.showActionSheet()
+            .drive(onNext: { [weak self] isMyPost in
+                self?.showActionSheet(isMyPost: isMyPost)
             })
             .disposed(by: disposeBag)
         
@@ -224,16 +220,24 @@ final class FeedContentViewController: BaseViewController {
         }
     }
     
-    private func showActionSheet() {
+    private func showActionSheet(isMyPost: Bool) {
         guard let postID = viewModel.currentPostId else { return }
 
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
-            self?.viewModel.confirmDeletion(postID: postID)
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
-        alert.addAction(deleteAction)
+        if isMyPost {
+            let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+                self?.viewModel.confirmDeletion(postID: postID)
+            }
+            alert.addAction(deleteAction)
+        } else {
+            let reportAction = UIAlertAction(title: "신고", style: .default) { [weak self] _ in
+                self?.showToast(message: "신고가 접수되었습니다.")
+            }
+            alert.addAction(reportAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)

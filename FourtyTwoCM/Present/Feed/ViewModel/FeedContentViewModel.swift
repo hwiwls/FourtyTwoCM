@@ -39,9 +39,9 @@ class FeedContentViewModel: ViewModelType {
         let postImageUrl: Driver<String?>
         let likeStatus: Driver<Bool>
         let likeButtonImage: Driver<String>
-        let ellipsisVisibility: Driver<Bool>
+        let ellipsisAction: Driver<Bool>
         let goReservationVisibility: Driver<Bool>
-        let showActionSheet: Driver<Void>
+        let showActionSheet: Driver<Bool>
         let formattedPrice: Driver<String>
         let imageUrls: Driver<[String]>
         let followState: Driver<Bool>
@@ -76,10 +76,14 @@ class FeedContentViewModel: ViewModelType {
             .map { $0 ? "heart.fill" : "heart" }
             .asDriver(onErrorJustReturn: "heart")
 
-        let ellipsisVisibility = post
-            .map { $0.creator.userID != userID }
+        let ellipsisAction = post
+            .map { $0.creator.userID == userID }
             .asDriver(onErrorJustReturn: false)
         
+        let showActionSheet = input.ellipsisBtnTapped
+            .withLatestFrom(ellipsisAction)
+            .asDriver(onErrorJustReturn: false)
+
         let content = post.map { $0.content }.asDriver(onErrorJustReturn: "")
         let nickname = post.map { $0.creator.nick }.asDriver(onErrorJustReturn: "")
         let profileImageUrl = post
@@ -88,9 +92,6 @@ class FeedContentViewModel: ViewModelType {
         let postImageUrl = post
             .map { $0.files.first?.prependBaseURL() }
             .asDriver(onErrorJustReturn: nil)
-
-        let showActionSheet = input.ellipsisBtnTapped
-            .asDriver(onErrorJustReturn: ())
 
         let goReservationVisibility = post
             .map { $0.content3 != "2" }
@@ -167,7 +168,7 @@ class FeedContentViewModel: ViewModelType {
             postImageUrl: postImageUrl,
             likeStatus: likeStatus,
             likeButtonImage: likeButtonImage,
-            ellipsisVisibility: ellipsisVisibility,
+            ellipsisAction: ellipsisAction,
             goReservationVisibility: goReservationVisibility,
             showActionSheet: showActionSheet,
             formattedPrice: formattedPrice,
