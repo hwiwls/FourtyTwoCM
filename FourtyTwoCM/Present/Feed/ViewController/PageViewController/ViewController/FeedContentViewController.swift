@@ -252,7 +252,7 @@ final class FeedContentViewController: BaseViewController {
         if progress == 0 {
             postProgressbar.progress = 0
         } else {
-            UIView.animate(withDuration: 7.0, animations: { [weak self] in
+            UIView.animate(withDuration: 5.0, animations: { [weak self] in
                 self?.postProgressbar.setProgress(1.0, animated: true)
             })
         }

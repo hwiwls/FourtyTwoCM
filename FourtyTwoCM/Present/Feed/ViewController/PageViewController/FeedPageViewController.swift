@@ -18,7 +18,7 @@ final class FeedPageViewController: UIPageViewController {
     
     private var currentIndex: Int = 0 // 현재 페이지 관리
     private var timer: Timer? // 프로그레스 바와 페이지 전환 제어
-    private let progressBarMaxValue: Float = 7.0 // 7초. 프로그레스 바의 최대 값
+    private let progressBarMaxValue: Float = 5.0 // 5초. 프로그레스 바의 최대 값
     private var elapsedTime: Float = 0.0 // 경과 시간
     private var isLastPageReached = false // 마지막 페이지에 도달했는지
     private var isLoadingNextPage = false // 다음 페이지 로드 중인지
