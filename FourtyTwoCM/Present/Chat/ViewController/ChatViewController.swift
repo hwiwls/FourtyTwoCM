@@ -13,6 +13,12 @@ import RealmSwift
 
 final class ChatViewController: BaseViewController {
     
+    enum EntryType {
+        case feedContent
+        case chatList
+    }
+    
+    var entryType: EntryType = .chatList
     var viewModel: ChatViewModel!
     
     let userId = UserDefaults.standard.string(forKey: "userID") ?? ""
@@ -159,6 +165,11 @@ final class ChatViewController: BaseViewController {
     }
 
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        switch entryType {
+        case .feedContent:
+            dismiss(animated: true, completion: nil)
+        case .chatList:
+            navigationController?.popViewController(animated: true)
+        }
     }
 }

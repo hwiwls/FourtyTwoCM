@@ -207,9 +207,17 @@ final class FeedContentViewController: BaseViewController {
             .drive(onNext: { [weak self] participantId, participantNick in
                 let chatVC = ChatViewController()
                 chatVC.viewModel = ChatViewModel(participantId: participantId, participantNick: participantNick)
-                chatVC.modalPresentationStyle = .pageSheet
-                self?.present(chatVC, animated: true) {
-                    NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+                chatVC.entryType = .feedContent
+                let navController = UINavigationController(rootViewController: chatVC)
+                navController.modalPresentationStyle = .fullScreen
+                if let tabBar = self?.tabBarController {
+                    tabBar.present(navController, animated: true) {
+                        NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+                    }
+                } else {
+                    self?.present(navController, animated: true) {
+                        NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+                    }
                 }
             })
             .disposed(by: disposeBag)
@@ -265,9 +273,9 @@ final class FeedContentViewController: BaseViewController {
     @objc func goReservationButtonTapped() {
         guard let post = try? viewModel.post.value() else { return }
 
-        
         let reservationVC = ReservationViewController()
-        reservationVC.modalPresentationStyle = .overFullScreen
+        let navController = UINavigationController(rootViewController: reservationVC)
+        navController.modalPresentationStyle = .fullScreen
         
         reservationVC.storeName = post.creator.nick
         reservationVC.productDetail = post.content
@@ -275,6 +283,7 @@ final class FeedContentViewController: BaseViewController {
         reservationVC.priceValue = post.content5
         reservationVC.imageUrls = post.files
         reservationVC.postID = post.postID
+        
         if let tabBar = self.tabBarController {
             tabBar.present(reservationVC, animated: true) {
                 NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
