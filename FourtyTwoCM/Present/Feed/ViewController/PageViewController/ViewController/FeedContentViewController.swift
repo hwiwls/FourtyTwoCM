@@ -274,8 +274,7 @@ final class FeedContentViewController: BaseViewController {
         guard let post = try? viewModel.post.value() else { return }
 
         let reservationVC = ReservationViewController()
-        let navController = UINavigationController(rootViewController: reservationVC)
-        navController.modalPresentationStyle = .fullScreen
+        reservationVC.modalPresentationStyle = .overFullScreen
         
         reservationVC.storeName = post.creator.nick
         reservationVC.productDetail = post.content
