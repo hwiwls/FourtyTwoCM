@@ -8,38 +8,53 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import CoreLocation
-import ImageIO
 
 final class PostCreationViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     private let imageSubject: BehaviorSubject<UIImage>
-    private let postTextViewSubject = BehaviorSubject<String>(value: "")
+    private let postTextRelay = BehaviorRelay<String>(value: "내용, 해시태그를 입력해주세요")
     private let postSubmittedSubject = PublishRelay<Void>()
     private let errorMessageSubject = PublishRelay<String>()
     
     struct Input {
         let submitTap: Observable<Void>
+        let textChanged: Observable<String>
+        let editingBegan: Observable<Void>
+        let editingEnded: Observable<Void>
     }
     
     struct Output {
         let postSubmitted: Driver<Void>
         let image: Driver<UIImage>
         let errorMessage: Driver<String>
+        let postText: Driver<String>
     }
     
     init(image: UIImage) {
         self.imageSubject = BehaviorSubject(value: image)
     }
     
-    func updatePostText(_ text: String) {
-        postTextViewSubject.onNext(text)
-    }
-    
     func transform(input: Input) -> Output {
-        let postSubmittedRelay = PublishRelay<Void>()
-        let errorMessageRelay = PublishRelay<String>()
+        input.textChanged
+            .bind(to: postTextRelay)
+            .disposed(by: disposeBag)
+        
+        input.editingBegan
+            .subscribe(onNext: { [weak self] in
+                if self?.postTextRelay.value == "내용, 해시태그를 입력해주세요" {
+                    self?.postTextRelay.accept("")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        input.editingEnded
+            .subscribe(onNext: { [weak self] in
+                if self?.postTextRelay.value.isEmpty ?? true {
+                    self?.postTextRelay.accept("내용, 해시태그를 입력해주세요")
+                }
+            })
+            .disposed(by: disposeBag)
 
         input.submitTap
             .flatMapLatest { [weak self] _ -> Observable<[String]> in
@@ -51,17 +66,18 @@ final class PostCreationViewModel: ViewModelType {
                 return self.submitPost(with: files)
             }
             .subscribe(onNext: {
-                postSubmittedRelay.accept(())
+                self.postSubmittedSubject.accept(())
             }, onError: { error in
                 let errorMessage = (error as? APIError)?.errorMessage ?? "알 수 없는 오류가 발생했습니다."
-                errorMessageRelay.accept(errorMessage)
+                self.errorMessageSubject.accept(errorMessage)
             })
             .disposed(by: disposeBag)
 
         return Output(
-            postSubmitted: postSubmittedRelay.asDriver(onErrorJustReturn: ()),
+            postSubmitted: postSubmittedSubject.asDriver(onErrorJustReturn: ()),
             image: imageSubject.asDriver(onErrorDriveWith: .empty()),
-            errorMessage: errorMessageRelay.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다.")
+            errorMessage: errorMessageSubject.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다."),
+            postText: postTextRelay.asDriver()
         )
     }
 
@@ -70,8 +86,8 @@ final class PostCreationViewModel: ViewModelType {
             return Observable.just([])
         }
         
-        let targetSize = CGSize(width: 2556, height: 1179) // 해상도
-        guard let resizedImage = image.resizedImage(targetSize: targetSize), let compressedData = resizedImage.compressedData(targetSizeInKB: 3000) else {   // 용량. 3000KB
+        let targetSize = CGSize(width: 2556, height: 1179)
+        guard let resizedImage = image.resizedImage(targetSize: targetSize), let compressedData = resizedImage.compressedData(targetSizeInKB: 3000) else {
             print("이미지 압축 실패")
             errorMessageSubject.accept("이미지 압축 실패")
             return Observable.just([])
@@ -90,7 +106,7 @@ final class PostCreationViewModel: ViewModelType {
     }
 
     private func submitPost(with files: [String]) -> Observable<Void> {
-        guard let text = try? postTextViewSubject.value() else {
+        guard let text = try? postTextRelay.value else {
             return Observable.just(())
         }
         return Permissions.shared.currentLocationObservable()

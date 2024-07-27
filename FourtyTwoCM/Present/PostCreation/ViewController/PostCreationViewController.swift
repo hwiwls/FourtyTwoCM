@@ -50,33 +50,40 @@ final class PostCreationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("post creation view controller loaded")
-        postTextView.delegate = self
         setupToolbar()
     }
     
     override func bind() {
         let input = PostCreationViewModel.Input(
-            submitTap: uploadBtn.rx.tap.asObservable()
-        )
-        
-        let output = viewModel.transform(input: input)
-
-        output.image
-            .drive(postImageView.rx.image)
-            .disposed(by: disposeBag)
-
-        output.postSubmitted
-            .drive(onNext: { [weak self] _ in
-                self?.dismissAndSwitchToMyPage()
-            })
-            .disposed(by: disposeBag)
-        
-        output.errorMessage
-            .drive(onNext: { [weak self] message in
-                self?.view.makeToast(message, duration: 2.0, position: .top)
-            })
-            .disposed(by: disposeBag)
-    }
+                    submitTap: uploadBtn.rx.tap.asObservable(),
+                    textChanged: postTextView.rx.text.orEmpty.asObservable(),
+                    editingBegan: postTextView.rx.didBeginEditing.asObservable(),
+                    editingEnded: postTextView.rx.didEndEditing.asObservable()
+                )
+                
+                let output = viewModel.transform(input: input)
+                
+                output.postText
+                    .drive(postTextView.rx.text)
+                    .disposed(by: disposeBag)
+                
+                output.image
+                    .drive(postImageView.rx.image)
+                    .disposed(by: disposeBag)
+                
+                output.postSubmitted
+                    .drive(onNext: { [weak self] _ in
+                        self?.dismissAndSwitchToMyPage()
+                    })
+                    .disposed(by: disposeBag)
+                
+                output.errorMessage
+                    .drive(onNext: { [weak self] message in
+                        self?.view.makeToast(message, duration: 2.0, position: .top)
+                    })
+                    .disposed(by: disposeBag)
+            }
+            
     
     private func dismissAndSwitchToMyPage() {
         dismiss(animated: true) {
@@ -157,24 +164,4 @@ final class PostCreationViewController: BaseViewController {
         
     }
     
-}
-
-extension PostCreationViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        viewModel.updatePostText(textView.text)  // ViewModel에 텍스트 업데이트 함수 추가 필요
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .placeHolderGray {
-            textView.text = nil
-            textView.textColor = .offWhite
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "내용, 해시태그를 입력해주세요"
-            textView.textColor = .placeHolderGray
-        }
-    }
 }
