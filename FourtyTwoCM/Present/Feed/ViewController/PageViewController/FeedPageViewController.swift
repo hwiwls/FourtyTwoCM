@@ -14,7 +14,7 @@ final class FeedPageViewController: UIPageViewController {
 
     private var contentViewControllers: [FeedContentViewController] = []
     private let viewModel = FeedPageViewModel()
-    private let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag() 
     
     private var currentIndex: Int = 0 // 현재 페이지 관리
     private var timer: Timer? // 프로그레스 바와 페이지 전환 제어
@@ -32,9 +32,12 @@ final class FeedPageViewController: UIPageViewController {
         setupTimer()
         setupNotifications()
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
+        invalidateTimer()
+        self.dataSource = nil
+        self.delegate = nil
     }
 
     private func bind() {
