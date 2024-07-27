@@ -117,7 +117,14 @@ final class CommentViewController: BaseViewController {
                 self?.showError(error as! Error)
             })
             .disposed(by: disposeBag)
-
+        
+        self.rx.viewWillDisappear
+            .subscribe(onNext: { [weak self] _ in
+                if self?.isBeingDismissed ?? false || self?.isMovingFromParent ?? false {
+                    NotificationCenter.default.post(name: .didDismissModalViewController, object: nil)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func showError(_ error: Error) {

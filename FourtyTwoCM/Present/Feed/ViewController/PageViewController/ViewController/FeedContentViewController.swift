@@ -197,7 +197,9 @@ final class FeedContentViewController: BaseViewController {
                 commentsVC.viewModel = CommentViewModel(postId: self.viewModel.currentPostId ?? "") 
                 commentsVC.comments.onNext(comments)
                 commentsVC.modalPresentationStyle = .overFullScreen
-                self.present(commentsVC, animated: true, completion: nil)
+                self.present(commentsVC, animated: true) {
+                    NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -206,7 +208,9 @@ final class FeedContentViewController: BaseViewController {
                 let chatVC = ChatViewController()
                 chatVC.viewModel = ChatViewModel(participantId: participantId, participantNick: participantNick)
                 chatVC.modalPresentationStyle = .pageSheet
-                self?.present(chatVC, animated: true, completion: nil)
+                self?.present(chatVC, animated: true) {
+                    NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -272,10 +276,13 @@ final class FeedContentViewController: BaseViewController {
         reservationVC.imageUrls = post.files
         reservationVC.postID = post.postID
         if let tabBar = self.tabBarController {
-            
-            tabBar.present(reservationVC, animated: true, completion: nil)
+            tabBar.present(reservationVC, animated: true) {
+                NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+            }
         } else {
-            self.present(reservationVC, animated: true, completion: nil)
+            self.present(reservationVC, animated: true) {
+                NotificationCenter.default.post(name: .willPresentModalViewController, object: nil)
+            }
         }
     }
     
@@ -368,4 +375,9 @@ final class FeedContentViewController: BaseViewController {
             $0.height.equalTo(24)
         }
     }
+}
+
+extension Notification.Name {
+    static let willPresentModalViewController = Notification.Name("willPresentModalViewController")
+    static let didDismissModalViewController = Notification.Name("didDismissModalViewController")
 }

@@ -81,6 +81,17 @@ final class ChatViewController: BaseViewController {
                 self?.view.makeToast(errorMessage, duration: 2.0, position: .center)
             })
             .disposed(by: disposeBag)
+        
+        self.rx.viewWillDisappear
+            .subscribe(onNext: { [weak self] _ in
+                if let tabBarController = self?.tabBarController {
+                    // 현재 선택된 탭이 '채팅'이 아닐 때만 타이머를 리셋하도록 알림
+                    if tabBarController.selectedIndex != 3 { 
+                        NotificationCenter.default.post(name: .didDismissModalViewController, object: nil)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {

@@ -191,9 +191,16 @@ final class ReservationViewController: BaseViewController {
                 print ("결제에 성공했나요? \(String(describing: success))")
                 print("결제 고유 번호: \(String(describing: impUid))")
             }
-
-        
-        
+    }
+    
+    override func bind() {
+        self.rx.viewWillDisappear
+            .subscribe(onNext: { [weak self] _ in
+                if self?.isBeingDismissed ?? false || self?.isMovingFromParent ?? false {
+                    NotificationCenter.default.post(name: .didDismissModalViewController, object: nil)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func configHierarchy() {

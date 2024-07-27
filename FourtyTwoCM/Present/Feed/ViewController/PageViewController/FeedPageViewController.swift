@@ -30,8 +30,13 @@ final class FeedPageViewController: UIPageViewController {
         self.delegate = self
         bind()
         setupTimer()
+        setupNotifications()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     private func bind() {
         let trigger = Observable.just(())
         
@@ -63,13 +68,28 @@ final class FeedPageViewController: UIPageViewController {
         self.rx.viewDidDisappear
             .subscribe(onNext: { [weak self] _ in
                 self?.invalidateTimer() // 화면이 사라질 때 타이머 중지 및 해제
-                
             })
             .disposed(by: disposeBag)
     }
-}
 
-extension FeedPageViewController {
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(willPresentModalViewController), name: .willPresentModalViewController, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didDismissModalViewController), name: .didDismissModalViewController, object: nil)
+    }
+    
+    @objc private func willPresentModalViewController() {
+        invalidateTimer()
+        print("willPresentModalViewController")
+    }
+    
+    @objc private func didDismissModalViewController() {
+        if lastViewedIndex < contentViewControllers.count {
+            print("didDismissModalViewController")
+            setViewControllers([contentViewControllers[lastViewedIndex]], direction: .forward, animated: false, completion: nil)
+            resetTimerAndProgress()
+        }
+    }
+
     private func setupTimer() {
         invalidateTimer()
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
@@ -78,6 +98,7 @@ extension FeedPageViewController {
     private func invalidateTimer() {
         timer?.invalidate()
         timer = nil
+        elapsedTime = 0.0
     }
 
     private func setupViewControllers(posts: [Post]) {
