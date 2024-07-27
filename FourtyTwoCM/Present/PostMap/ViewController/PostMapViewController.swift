@@ -14,7 +14,7 @@ import Kingfisher
 
 class PostMapViewController: BaseViewController {
 
-    private let postMapView = MKMapView().then {
+    private lazy var postMapView = MKMapView().then {
         $0.preferredConfiguration = MKStandardMapConfiguration()
         $0.isZoomEnabled = true
         $0.isScrollEnabled = true
