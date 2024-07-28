@@ -14,6 +14,7 @@ final class PostCreationViewModel: ViewModelType {
     
     private let imageSubject: BehaviorSubject<UIImage>
     private let postTextRelay = BehaviorRelay<String>(value: "내용, 해시태그를 입력해주세요")
+    private let textColorRelay = BehaviorRelay<UIColor>(value: .tabBarBorderGray)
     private let postSubmittedSubject = PublishRelay<Void>()
     private let errorMessageSubject = PublishRelay<String>()
     
@@ -29,6 +30,7 @@ final class PostCreationViewModel: ViewModelType {
         let image: Driver<UIImage>
         let errorMessage: Driver<String>
         let postText: Driver<String>
+        let textColor: Driver<UIColor>
     }
     
     init(image: UIImage) {
@@ -36,26 +38,38 @@ final class PostCreationViewModel: ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        input.textChanged
-            .bind(to: postTextRelay)
-            .disposed(by: disposeBag)
-        
         input.editingBegan
             .subscribe(onNext: { [weak self] in
-                if self?.postTextRelay.value == "내용, 해시태그를 입력해주세요" {
-                    self?.postTextRelay.accept("")
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        input.editingEnded
-            .subscribe(onNext: { [weak self] in
-                if self?.postTextRelay.value.isEmpty ?? true {
-                    self?.postTextRelay.accept("내용, 해시태그를 입력해주세요")
+                guard let self = self else { return }
+                if self.postTextRelay.value == "내용, 해시태그를 입력해주세요" {
+                    self.postTextRelay.accept("")
+                    self.textColorRelay.accept(.white)
                 }
             })
             .disposed(by: disposeBag)
 
+        input.textChanged
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if text == "내용, 해시태그를 입력해주세요" {
+                    self.textColorRelay.accept(.tabBarBorderGray)
+                } else {
+                    self.textColorRelay.accept(.white)
+                }
+                self.postTextRelay.accept(text)
+            })
+            .disposed(by: disposeBag)
+
+        input.editingEnded
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                if self.postTextRelay.value.isEmpty {
+                    self.postTextRelay.accept("내용, 해시태그를 입력해주세요")
+                    self.textColorRelay.accept(.tabBarBorderGray)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         input.submitTap
             .flatMapLatest { [weak self] _ -> Observable<[String]> in
                 guard let self = self else { return Observable.just([]) }
@@ -77,7 +91,8 @@ final class PostCreationViewModel: ViewModelType {
             postSubmitted: postSubmittedSubject.asDriver(onErrorJustReturn: ()),
             image: imageSubject.asDriver(onErrorDriveWith: .empty()),
             errorMessage: errorMessageSubject.asDriver(onErrorJustReturn: "알 수 없는 오류가 발생했습니다."),
-            postText: postTextRelay.asDriver()
+            postText: postTextRelay.asDriver(),
+            textColor: textColorRelay.asDriver()
         )
     }
 

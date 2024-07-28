@@ -39,7 +39,6 @@ final class PostCreationViewController: BaseViewController {
     
     private let postTextView = UITextView().then {
         $0.backgroundColor = .clear
-        $0.textColor = .tabBarBorderGray
         $0.font = .systemFont(ofSize: 15)
         $0.text = "내용, 해시태그를 입력해주세요"
     }
@@ -55,34 +54,53 @@ final class PostCreationViewController: BaseViewController {
     
     override func bind() {
         let input = PostCreationViewModel.Input(
-                    submitTap: uploadBtn.rx.tap.asObservable(),
-                    textChanged: postTextView.rx.text.orEmpty.asObservable(),
-                    editingBegan: postTextView.rx.didBeginEditing.asObservable(),
-                    editingEnded: postTextView.rx.didEndEditing.asObservable()
-                )
+            submitTap: uploadBtn.rx.tap.asObservable(),
+            textChanged: postTextView.rx.text.orEmpty.asObservable(),
+            editingBegan: postTextView.rx.didBeginEditing.asObservable(),
+            editingEnded: postTextView.rx.didEndEditing.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.postText
+            .drive(postTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.textColor
+            .drive(onNext: { [weak self] color in
+                self?.postTextView.textColor = color
+            })
+            .disposed(by: disposeBag)
+        
+        output.image
+            .drive(postImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        output.postSubmitted
+            .drive(onNext: { [weak self] _ in
+                self?.dismissAndSwitchToMyPage()
+            })
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .drive(onNext: { [weak self] message in
+                self?.view.makeToast(message, duration: 2.0, position: .top)
+            })
+            .disposed(by: disposeBag)
+        
+        postTextView.rx.didEndEditing
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                    self.postTextView.text = "내용, 해시태그를 입력해주세요"
+                    self.postTextView.textColor = .tabBarBorderGray
                 
-                let output = viewModel.transform(input: input)
-                
-                output.postText
-                    .drive(postTextView.rx.text)
-                    .disposed(by: disposeBag)
-                
-                output.image
-                    .drive(postImageView.rx.image)
-                    .disposed(by: disposeBag)
-                
-                output.postSubmitted
-                    .drive(onNext: { [weak self] _ in
-                        self?.dismissAndSwitchToMyPage()
-                    })
-                    .disposed(by: disposeBag)
-                
-                output.errorMessage
-                    .drive(onNext: { [weak self] message in
-                        self?.view.makeToast(message, duration: 2.0, position: .top)
-                    })
-                    .disposed(by: disposeBag)
-            }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func configView() {
+        postTextView.textColor = .tabBarBorderGray
+    }
             
     
     private func dismissAndSwitchToMyPage() {
