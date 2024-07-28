@@ -41,6 +41,7 @@ final class PostCreationViewController: BaseViewController {
         $0.backgroundColor = .clear
         $0.font = .systemFont(ofSize: 15)
         $0.text = "내용, 해시태그를 입력해주세요"
+        $0.textColor = .tabBarBorderGray
     }
     
     private let uploadBtn = PointButton(title: "Upload")
@@ -87,21 +88,7 @@ final class PostCreationViewController: BaseViewController {
                 self?.view.makeToast(message, duration: 2.0, position: .top)
             })
             .disposed(by: disposeBag)
-        
-        postTextView.rx.didEndEditing
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                    self.postTextView.text = "내용, 해시태그를 입력해주세요"
-                    self.postTextView.textColor = .tabBarBorderGray
-                
-            })
-            .disposed(by: disposeBag)
     }
-    
-    override func configView() {
-        postTextView.textColor = .tabBarBorderGray
-    }
-            
     
     private func dismissAndSwitchToMyPage() {
         dismiss(animated: true) {

@@ -71,6 +71,7 @@ final class PostCreationViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         input.submitTap
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .flatMapLatest { [weak self] _ -> Observable<[String]> in
                 guard let self = self else { return Observable.just([]) }
                 return self.uploadImage()
