@@ -1,6 +1,6 @@
 <img width="937" alt="스크린샷 2024-08-04 오후 9 47 36" src="https://github.com/user-attachments/assets/2ac30939-53b5-49cf-9961-b271edc034bf">
 
-[42CM 개발 및 학습일지(Click.ᐟ)]([https://velog.io/@hwyjj/series/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-42CM](https://velog.io/@hwyjj/42CM-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EB%B0%8F-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95))
+[42CM 개발 및 학습일지(Click.ᐟ)](https://velog.io/@hwyjj/42CM-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EB%B0%8F-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95)
 
 <br/>
 
