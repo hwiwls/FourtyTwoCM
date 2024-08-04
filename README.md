@@ -127,16 +127,14 @@
 <br/><br/>
 
 ## 학습
-
-- [민감한 유저 정보를 **KeyChain**에 담아보자](https://velog.io/@hwyjj/42CM-%EB%AF%BC%EA%B0%90%ED%95%9C-%EC%9C%A0%EC%A0%80%EC%A0%95%EB%B3%B4%EB%8A%94-KeyChain%EC%97%90-%EB%8B%B4%EC%95%84%EB%B3%B4%EC%9E%90)
-- [Observable 대신 Single 사용해보기](https://velog.io/@hwyjj/42CM-Observable-%EB%8C%80%EC%8B%A0-Single-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
-- [오프셋 기반 페이지네이션 vs 커서 기반 페이지네이션](https://velog.io/@hwyjj/42CM-%EC%98%A4%ED%94%84%EC%85%8B-%EA%B8%B0%EB%B0%98-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98-vs-%EC%BB%A4%EC%84%9C-%EA%B8%B0%EB%B0%98-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98)
-- [싱글톤 패턴의 장단점](https://velog.io/@hwyjj/42CM-%EC%8B%B1%EA%B8%80%ED%86%A4-%ED%8C%A8%ED%84%B4%EC%9D%98-%EC%9E%A5%EB%8B%A8%EC%A0%90)
 - [로컬 DB에 채팅을 저장하는 이유(feat. Realm, Core Data)](https://velog.io/@hwyjj/%EB%A1%9C%EC%BB%AC-DB%EC%97%90-%EC%B1%84%ED%8C%85%EC%9D%84-%EC%A0%80%EC%9E%A5%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0feat.RealmCoreData)
 - [Network Protocol과 소켓 통신](https://velog.io/@hwyjj/Network-Protocol%EA%B3%BC-%EC%86%8C%EC%BC%93-%ED%86%B5%EC%8B%A0)
 - [소켓은 언제 연결하고 끊어야 할까? 1편 (feat. App의 생명주기)](https://velog.io/@hwyjj/42CM-%EC%86%8C%EC%BC%93%EC%9D%80-%EC%96%B8%EC%A0%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B3%A0-%EB%81%8A%EC%96%B4%EC%95%BC-%ED%95%A0%EA%B9%8C-1%ED%8E%B8)
 - [소켓은 언제 연결하고 끊어야 할까? 2편 (feat. ViewController의 생명주기)](https://velog.io/@hwyjj/%EC%86%8C%EC%BC%93%EC%9D%80-%EC%96%B8%EC%A0%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B3%A0-%EB%81%8A%EC%96%B4%EC%95%BC-%ED%95%A0%EA%B9%8C-2%ED%8E%B8)
-
+- [민감한 유저 정보를 **KeyChain**에 담아보자](https://velog.io/@hwyjj/42CM-%EB%AF%BC%EA%B0%90%ED%95%9C-%EC%9C%A0%EC%A0%80%EC%A0%95%EB%B3%B4%EB%8A%94-KeyChain%EC%97%90-%EB%8B%B4%EC%95%84%EB%B3%B4%EC%9E%90)
+- [Observable 대신 Single 사용해보기](https://velog.io/@hwyjj/42CM-Observable-%EB%8C%80%EC%8B%A0-Single-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
+- [오프셋 기반 페이지네이션 vs 커서 기반 페이지네이션](https://velog.io/@hwyjj/42CM-%EC%98%A4%ED%94%84%EC%85%8B-%EA%B8%B0%EB%B0%98-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98-vs-%EC%BB%A4%EC%84%9C-%EA%B8%B0%EB%B0%98-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98)
+- [싱글톤 패턴의 장단점](https://velog.io/@hwyjj/42CM-%EC%8B%B1%EA%B8%80%ED%86%A4-%ED%8C%A8%ED%84%B4%EC%9D%98-%EC%9E%A5%EB%8B%A8%EC%A0%90)
 <br/><br/>
 
 
