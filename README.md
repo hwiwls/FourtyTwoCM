@@ -4,7 +4,7 @@
 
 <br/>
 
-# 목차
+## 목차
 - [프로젝트 소개](#프로젝트-소개)
 - [팀 구성 및 역할](#팀-구성-및-역할)
 - [기술 스택](#기술-스택)
@@ -15,9 +15,10 @@
 - [일정 관리](#일정-관리)
 - [회고](#회고)
 - [유지보수 계획](#유지보수-계획)
+
 <br/><br/>
 
-# 프로젝트 소개
+## 프로젝트 소개
 
 ### **42CM**
 
@@ -45,19 +46,15 @@
 
 <br/><br/>
 
-# 팀 구성 및 역할
+## 팀 구성 및 역할
 
-### **구성원**
+**구성원:** iOS Developer(1), Server Developer(1)
 
-iOS 개발자(1), Server 개발자(1)
-
-### **담당 역할(휘진)**
-
-기획, 디자인, iOS 개발
+**담당 역할(휘진):** 기획, 디자인, iOS 개발
 
 <br/><br/>
 
-# 기술 스택
+## 기술 스택
 
 - **언어:** `Swift`
 - **프레임워크:** `UIKit`
@@ -78,27 +75,27 @@ iOS 개발자(1), Server 개발자(1)
 
 <br/><br/>
 
-# 주요 기능 실행 화면
+## 주요 기능 실행 화면
 
 | 로그인          | 회원가입         | 게시글 조회      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/94e1ab64-1ef6-406a-a021-ac613be1cb94" width="200"/> | <img src="https://github.com/user-attachments/assets/739a0356-79d8-477b-9d58-24306ffd0b04" width="200"/> | <img src="https://github.com/user-attachments/assets/9c48140d-46ac-41ee-bd34-01009385bbba" width="200"/> |
+| <img src="https://github.com/user-attachments/assets/94e1ab64-1ef6-406a-a021-ac613be1cb94" width="360"/> | <img src="https://github.com/user-attachments/assets/739a0356-79d8-477b-9d58-24306ffd0b04" width="360"/> | <img src="https://github.com/user-attachments/assets/9c48140d-46ac-41ee-bd34-01009385bbba" width="360"/> |
 
 | 지도 기반 게시글 조회          | 상품 결제         | 채팅      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/0123bbc3-2ef0-40ca-b6d1-8cd25d0da304" width="200"/> | <img src="https://github.com/user-attachments/assets/49a7037a-1ba5-40aa-b5c0-efcb961a3ed4" width="200"/> | <img src="https://github.com/user-attachments/assets/8650c67c-addf-4488-8d4a-28328ceea9b6" width="200"/> |
+| <img src="https://github.com/user-attachments/assets/0123bbc3-2ef0-40ca-b6d1-8cd25d0da304" width="360"/> | <img src="https://github.com/user-attachments/assets/49a7037a-1ba5-40aa-b5c0-efcb961a3ed4" width="360"/> | <img src="https://github.com/user-attachments/assets/8650c67c-addf-4488-8d4a-28328ceea9b6" width="360"/> |
 
 | 게시글 업로드          | 게시글 삭제         | 댓글 조회 및 작성      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/f8fcde28-2553-4024-96ea-d4bee155bf50" width="200"/> | <img src="https://github.com/user-attachments/assets/6a84c038-5fdf-4641-a879-6baa52e3ed1c" width="200"/> | <img src="https://github.com/user-attachments/assets/53f60fcc-a948-4edf-8b50-04812f955364" width="200"/> |
+| <img src="https://github.com/user-attachments/assets/f8fcde28-2553-4024-96ea-d4bee155bf50" width="360"/> | <img src="https://github.com/user-attachments/assets/6a84c038-5fdf-4641-a879-6baa52e3ed1c" width="360"/> | <img src="https://github.com/user-attachments/assets/53f60fcc-a948-4edf-8b50-04812f955364" width="360"/> |
 
 | 팔로우 / 언팔로우          | 게시글 좋아요         | 마이페이지      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/8c1d9f48-dc24-4b20-bf70-44f64c1d534a" width="200"/> | <img src="https://github.com/user-attachments/assets/bacaaee0-986d-429a-a9a1-bbac7b2b50bf" width="200"/> | <img src="https://github.com/user-attachments/assets/d14c221f-ff10-49b9-956d-692b589df7b8" width="200"/> |
+| <img src="https://github.com/user-attachments/assets/8c1d9f48-dc24-4b20-bf70-44f64c1d534a" width="360"/> | <img src="https://github.com/user-attachments/assets/bacaaee0-986d-429a-a9a1-bbac7b2b50bf" width="360"/> | <img src="https://github.com/user-attachments/assets/d14c221f-ff10-49b9-956d-692b589df7b8" width="360"/> |
 
 <br/><br/>
 
-# 주요 기술
+## 주요 기술
 
 **디자인 패턴**
 
@@ -129,7 +126,7 @@ iOS 개발자(1), Server 개발자(1)
 
 <br/><br/>
 
-# 학습
+## 학습
 
 - [민감한 유저 정보를 **KeyChain**에 담아보자](https://velog.io/@hwyjj/42CM-%EB%AF%BC%EA%B0%90%ED%95%9C-%EC%9C%A0%EC%A0%80%EC%A0%95%EB%B3%B4%EB%8A%94-KeyChain%EC%97%90-%EB%8B%B4%EC%95%84%EB%B3%B4%EC%9E%90)
 - [Observable 대신 Single 사용해보기](https://velog.io/@hwyjj/42CM-Observable-%EB%8C%80%EC%8B%A0-Single-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
@@ -143,7 +140,7 @@ iOS 개발자(1), Server 개발자(1)
 <br/><br/>
 
 
-# 트러블슈팅
+## 트러블슈팅
 
 ### 의도적으로 PageViewController를 빠르게 넘길시, UI 렌더링 지연 및 Memory Leak 발생
 
@@ -151,7 +148,7 @@ iOS 개발자(1), Server 개발자(1)
 
 UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습니다. 이 기능은 5개씩 커서 기반 페이지네이션 방식으로 동작합니다. 그러나 사용자가 페이지를 의도적으로 빠르게 넘길 경우 UI가 제대로 렌더링되지 않는 문제가 있었습니다. 또한, Instrument를 통해 확인한 결과, 해당 기능에서 메모리 누수가 발생하고 있어 앱의 성능 저하와 비정상 종료 가능성이 있었습니다.
 
-<img width="1058" alt="스크린샷 2024-08-04 오후 10 21 27" src="https://github.com/user-attachments/assets/df23e338-3fe6-4ccc-8a6b-78837ced2ff4">
+<img width="1161" alt="스크린샷 2024-08-04 오후 10 21 27" src="https://github.com/user-attachments/assets/df23e338-3fe6-4ccc-8a6b-78837ced2ff4">
 
 
 **문제 원인**
@@ -165,7 +162,7 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 현재 페이지의 마지막 게시글에 도달했을 때가 아니라, 3개의 단위로 데이터를 사전 로드하는 로직을 추가하였습니다. PageViewController의 인덱스가 3의 배수일 때마다 다음 페이지 데이터를 미리 로드하도록 처리하여, UI가 제대로 렌더링되지 않는 문제와 메모리 누수 문제를 해결할 수 있었습니다.
 
 
-<img width="873" alt="스크린샷 2024-08-04 오후 10 22 05" src="https://github.com/user-attachments/assets/6b55306e-b869-454b-8218-564da7516268">
+<img width="1161" alt="스크린샷 2024-08-04 오후 10 22 05" src="https://github.com/user-attachments/assets/6b55306e-b869-454b-8218-564da7516268">
 
 <img width="1161" alt="스크린샷 2024-08-04 오후 10 24 11" src="https://github.com/user-attachments/assets/f1af4fa2-ceae-423e-a2f6-1cbe8e97a354">
 
@@ -187,12 +184,12 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 채팅방을 나갈 때 소켓 연결을 끊는 함수에 기존 핸들러를 제거하는 코드(socket.removeAllHandlers())를 추가했습니다. 이 코드는 채팅방이 사라질 때 호출되며, 이를 통해 이전 채팅방에서 등록된 이벤트 핸들러들이 새 채팅방에서 중복 호출되지 않도록 했습니다.
 
-<img width="1077" alt="스크린샷 2024-08-04 오후 10 22 53" src="https://github.com/user-attachments/assets/e6c9d989-3ede-4366-86b4-747e14b639e6">
+<img width="333" alt="스크린샷 2024-08-04 오후 10 22 53" src="https://github.com/user-attachments/assets/e6c9d989-3ede-4366-86b4-747e14b639e6">
 
 
 <br/><br/>
 
-# 일정 관리
+## 일정 관리
 
 Jira를 활용하여 프로젝트 일정 및 작업 관리를 효율적으로 수행했습니다. 특히, 개인 프로젝트에서 스케줄 관리와 작업 추적을 위해 Jira의 이슈 트래킹 기능을 적극적으로 활용했습니다. 이를 통해 개발 과정에서 발생할 수 있는 혼란을 최소화하고, 일정을 효율적으로 조율할 수 있었습니다.
 
@@ -202,7 +199,7 @@ Jira를 활용하여 프로젝트 일정 및 작업 관리를 효율적으로 �
 
 <br/><br/>
 
-# 회고
+## 회고
 
 이번 프로젝트에서는 기존의 커스텀 Observable 구현에서 RxSwift로 전환하여 비동기 작업의 가독성과 유지보수성을 크게 향상시켰습니다. 또한, `Router` 패턴을 도입하여 네트워크 요청 관련 코드를 모듈화하고, 반복되는 코드를 줄이는 데 성공했습니다. 이러한 시도들은 코드의 일관성을 높이고, 개발 속도를 향상시켰다는 점에서 굉장히 뿌듯했습니다. 하지만 프로젝트를 진행하면서 몇 가지 아쉬운 점들도 있었습니다.<br/>
 
@@ -214,9 +211,9 @@ Jira를 활용하여 프로젝트 일정 및 작업 관리를 효율적으로 �
 
 저는 `ViewController`가 `ViewModel`을 직접 생성하여 사용했습니다. 이로 인해 네트워크 요청을 테스트할 때, 실제 네트워크 호출을 피하고 모의 객체를 사용하고자 할 때 문제가 발생했습니다.
 
-<br/><br/>
+<br/>
 
-### 생각해본 해결방안
+**생각해본 해결방안**
 
 문제들을 해결하기 위해 여러 방안을 고민하던 중, 클린 아키텍처의 필요성을 깨달았습니다. 실제로 적용하지는 않았지만, 다음과 같은 방법들이 해결책이 될 수 있겠다고 생각했습니다.
 
@@ -232,7 +229,7 @@ Jira를 활용하여 프로젝트 일정 및 작업 관리를 효율적으로 �
 
 <br/><br/>
 
-# 유지보수 계획
+## 유지보수 계획
 
 - 클린 아키텍처 적용
 - DI 적용
