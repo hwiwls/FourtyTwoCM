@@ -135,6 +135,7 @@
 - [Observable 대신 Single 사용해보기](https://velog.io/@hwyjj/42CM-Observable-%EB%8C%80%EC%8B%A0-Single-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0)
 - [오프셋 기반 페이지네이션 vs 커서 기반 페이지네이션](https://velog.io/@hwyjj/42CM-%EC%98%A4%ED%94%84%EC%85%8B-%EA%B8%B0%EB%B0%98-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98-vs-%EC%BB%A4%EC%84%9C-%EA%B8%B0%EB%B0%98-%ED%8E%98%EC%9D%B4%EC%A7%80%EB%84%A4%EC%9D%B4%EC%85%98)
 - [싱글톤 패턴의 장단점](https://velog.io/@hwyjj/42CM-%EC%8B%B1%EA%B8%80%ED%86%A4-%ED%8C%A8%ED%84%B4%EC%9D%98-%EC%9E%A5%EB%8B%A8%EC%A0%90)
+
 <br/><br/>
 
 
