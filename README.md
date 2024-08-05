@@ -113,19 +113,19 @@
 
 | 로그인          | 회원가입         | 게시글 조회      |
 |----------------|----------------|----------------|
-| <img width="200" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signin.gif?raw=true"> | <img width="200" alt="42CM Sign Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signup.gif?raw=true"> | <img width="200" alt="42CM View Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42CM_view_post.gif?raw=true"> |
+| <img width="252" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signin.gif?raw=true"> | <img width="252" alt="42CM Sign Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signup.gif?raw=true"> | <img width="252" alt="42CM View Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42CM_view_post.gif?raw=true"> |
 
 | 지도 기반 게시글 조회          | 상품 결제         | 채팅      |
 |----------------|----------------|----------------|
-| <img width="200" alt="42CM View Map" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42CM_view_map.gif?raw=true"> | <img width="200" alt="42CM Payment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_payment.gif?raw=true"> | <img width="200" alt="42CM Chat" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_chat.gif?raw=true"> |
+| <img width="252" alt="42CM View Map" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42CM_view_map.gif?raw=true"> | <img width="252" alt="42CM Payment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_payment.gif?raw=true"> | <img width="252" alt="42CM Chat" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_chat.gif?raw=true"> |
 
 | 게시글 업로드          | 게시글 삭제         | 댓글 조회 및 작성      |
 |----------------|----------------|----------------|
-| <img width="200" alt="42CM Upload Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_upload_post.gif?raw=true"> | <img width="200" alt="42CM Delete Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42cm_delete_post%20(1).gif?raw=true"> | <img width="200" alt="42CM Comment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_comment.gif?raw=true"> |
+| <img width="252" alt="42CM Upload Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_upload_post.gif?raw=true"> | <img width="252" alt="42CM Delete Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42cm_delete_post%20(1).gif?raw=true"> | <img width="252" alt="42CM Comment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_comment.gif?raw=true"> |
 
 | 팔로우 / 언팔로우          | 게시글 좋아요         | 마이페이지      |
 |----------------|----------------|----------------|
-| <img width="200" alt="42CM Follow" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_follow.gif?raw=true"> | <img width="200" alt="42CM Like Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_like_post.gif?raw=true"> | <img width="200" alt="42CM My Page" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_mypage.gif?raw=true"> |
+| <img width="252" alt="42CM Follow" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_follow.gif?raw=true"> | <img width="252" alt="42CM Like Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_like_post.gif?raw=true"> | <img width="252" alt="42CM My Page" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_mypage.gif?raw=true"> |
 
 <br/><br/>
 
@@ -183,11 +183,13 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 <img width="937" alt="Memory Leak" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/memoryleak.png?raw=true">
 
+<br/>
+
 **문제 원인**
 
 기존 로직에서는 현재 페이지의 마지막(5번째) 게시글에 도달했을 때만 다음 페이지 데이터를 요청하도록 구현하였습니다. 이로 인해 사용자가 빠르게 PageViewController를 넘길 경우, 데이터 로딩 지연이 발생했습니다. 이는 다음 페이지 데이터를 요청하고 받아오는 동안, 사용자가 이미 다음 페이지를 넘어가고 있어 로딩이 완료되기 전에 UI가 준비되지 않았기 때문에 발생했습니다.
 
-
+<br/>
 
 **해결 방법**
 
@@ -208,11 +210,13 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 채팅 앱에서 채팅방을 전환할 때마다 소켓 연결 이벤트인 connect에 대한 로그가 여러 번 출력되었고, 같은 이벤트가 중복으로 처리되는 문제가 발생했습니다. 이는 중복 데이터 처리, 성능 저하, 메모리 누수 등을 초래할 수 있었습니다.<br/>
 
-
+<br/>
 
 **문제 원인**
 
 소켓을 통한 연결을 설정할 때, 이전 채팅방에서 등록된 이벤트 핸들러들이 제거되지 않은 상태로 남아 있었습니다. 이에 따라, 새로운 채팅방으로 이동하거나 새로운 소켓을 설정할 때 기존의 이벤트 핸들러가 중복으로 호출되어 동일한 이벤트에 대해 여러 번 로그가 출력되고 이벤트가 처리되었습니다.<br/>
+
+<br/>
 
 **해결 방법**
 
