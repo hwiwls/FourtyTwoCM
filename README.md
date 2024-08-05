@@ -113,19 +113,19 @@
 
 | 로그인          | 회원가입         | 게시글 조회      |
 |----------------|----------------|----------------|
-| <img width="300" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signin.gif?raw=true"> | <img width="300" alt="42CM Sign Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signup.gif?raw=true"> | <img width="300" alt="42CM View Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42CM_view_post.gif?raw=true"> |
+| <img width="200" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signin.gif?raw=true"> | <img width="200" alt="42CM Sign Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signup.gif?raw=true"> | <img width="200" alt="42CM View Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42CM_view_post.gif?raw=true"> |
 
 | 지도 기반 게시글 조회          | 상품 결제         | 채팅      |
 |----------------|----------------|----------------|
-| <img width="300" alt="42CM View Map" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42CM_view_map.gif?raw=true"> | <img width="300" alt="42CM Payment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_payment.gif?raw=true"> | <img width="300" alt="42CM Chat" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_chat.gif?raw=true"> |
+| <img width="200" alt="42CM View Map" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42CM_view_map.gif?raw=true"> | <img width="200" alt="42CM Payment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_payment.gif?raw=true"> | <img width="200" alt="42CM Chat" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_chat.gif?raw=true"> |
 
 | 게시글 업로드          | 게시글 삭제         | 댓글 조회 및 작성      |
 |----------------|----------------|----------------|
-| <img width="300" alt="42CM Upload Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_upload_post.gif?raw=true"> | <img width="300" alt="42CM Delete Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42cm_delete_post%20(1).gif?raw=true"> | <img width="300" alt="42CM Comment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_comment.gif?raw=true"> |
+| <img width="200" alt="42CM Upload Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_upload_post.gif?raw=true"> | <img width="200" alt="42CM Delete Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42cm_delete_post%20(1).gif?raw=true"> | <img width="200" alt="42CM Comment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_comment.gif?raw=true"> |
 
 | 팔로우 / 언팔로우          | 게시글 좋아요         | 마이페이지      |
 |----------------|----------------|----------------|
-| <img width="300" alt="42CM Follow" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_follow.gif?raw=true"> | <img width="300" alt="42CM Like Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_like_post.gif?raw=true"> | <img width="300" alt="42CM My Page" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_mypage.gif?raw=true"> |
+| <img width="200" alt="42CM Follow" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_follow.gif?raw=true"> | <img width="200" alt="42CM Like Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_like_post.gif?raw=true"> | <img width="200" alt="42CM My Page" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_mypage.gif?raw=true"> |
 
 <br/><br/>
 
