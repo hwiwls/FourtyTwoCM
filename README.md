@@ -1,4 +1,4 @@
-<img width="937" alt="FTCM" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/FTCM.png?raw=true">
+<img width="1024" alt="FTCM" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/FTCM.png?raw=true">
 
 [42CM 개발 및 학습일지(Click.ᐟ)](https://velog.io/@hwyjj/42CM-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EB%B0%8F-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95)
 
@@ -110,21 +110,22 @@
 
 ## 주요 기능 실행 화면
 
+
 | 로그인          | 회원가입         | 게시글 조회      |
 |----------------|----------------|----------------|
-| <img width="360" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/1/42cm_signin.gif?raw=true"> | <img width="360" alt="42CM_Sign_Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/1/42cm_signup.gif?raw=true"> | <img width="360" alt="42CM_View_Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/1/42CM_view_post.gif?raw=true"> |
+| <img width="300" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signin.gif?raw=true"> | <img width="300" alt="42CM Sign Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42cm_signup.gif?raw=true"> | <img width="300" alt="42CM View Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/1/42CM_view_post.gif?raw=true"> |
 
 | 지도 기반 게시글 조회          | 상품 결제         | 채팅      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/0123bbc3-2ef0-40ca-b6d1-8cd25d0da304" width="360"/> | <img src="https://github.com/user-attachments/assets/49a7037a-1ba5-40aa-b5c0-efcb961a3ed4" width="360"/> | <img src="https://github.com/user-attachments/assets/8650c67c-addf-4488-8d4a-28328ceea9b6" width="360"/> |
+| <img width="300" alt="42CM View Map" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42CM_view_map.gif?raw=true"> | <img width="300" alt="42CM Payment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_payment.gif?raw=true"> | <img width="300" alt="42CM Chat" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/2/42cm_chat.gif?raw=true"> |
 
 | 게시글 업로드          | 게시글 삭제         | 댓글 조회 및 작성      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/f8fcde28-2553-4024-96ea-d4bee155bf50" width="360"/> | <img src="https://github.com/user-attachments/assets/6a84c038-5fdf-4641-a879-6baa52e3ed1c" width="360"/> | <img src="https://github.com/user-attachments/assets/53f60fcc-a948-4edf-8b50-04812f955364" width="360"/> |
+| <img width="300" alt="42CM Upload Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_upload_post.gif?raw=true"> | <img width="300" alt="42CM Delete Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42cm_delete_post%20(1).gif?raw=true"> | <img width="300" alt="42CM Comment" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/3/42CM_comment.gif?raw=true"> |
 
 | 팔로우 / 언팔로우          | 게시글 좋아요         | 마이페이지      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/8c1d9f48-dc24-4b20-bf70-44f64c1d534a" width="360"/> | <img src="https://github.com/user-attachments/assets/bacaaee0-986d-429a-a9a1-bbac7b2b50bf" width="360"/> | <img src="https://github.com/user-attachments/assets/d14c221f-ff10-49b9-956d-692b589df7b8" width="360"/> |
+| <img width="300" alt="42CM Follow" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_follow.gif?raw=true"> | <img width="300" alt="42CM Like Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_like_post.gif?raw=true"> | <img width="300" alt="42CM My Page" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/4/42CM_mypage.gif?raw=true"> |
 
 <br/><br/>
 
@@ -180,7 +181,6 @@
 
 UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습니다. 이 기능은 5개씩 커서 기반 페이지네이션 방식으로 동작합니다. 그러나 사용자가 페이지를 의도적으로 빠르게 넘길 경우 UI가 제대로 렌더링되지 않는 문제가 있었습니다. 또한, Instrument를 통해 확인한 결과, 해당 기능에서 메모리 누수가 발생하고 있어 앱의 성능 저하와 비정상 종료 가능성이 있었습니다.
 
-<img width="1161" alt="스크린샷 2024-08-04 오후 10 21 27" src="https://github.com/user-attachments/assets/df23e338-3fe6-4ccc-8a6b-78837ced2ff4">
 
 
 **문제 원인**
@@ -194,9 +194,7 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 현재 페이지의 마지막 게시글에 도달했을 때가 아니라, 3개의 단위로 데이터를 사전 로드하는 로직을 추가하였습니다. PageViewController의 인덱스가 3의 배수일 때마다 다음 페이지 데이터를 미리 로드하도록 처리하여, UI가 제대로 렌더링되지 않는 문제와 메모리 누수 문제를 해결할 수 있었습니다.
 
 
-<img width="1161" alt="스크린샷 2024-08-04 오후 10 22 05" src="https://github.com/user-attachments/assets/6b55306e-b869-454b-8218-564da7516268">
 
-<img width="1161" alt="스크린샷 2024-08-04 오후 10 24 11" src="https://github.com/user-attachments/assets/f1af4fa2-ceae-423e-a2f6-1cbe8e97a354">
 
 
 
@@ -225,7 +223,8 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 Jira를 활용하여 프로젝트 일정 및 작업 관리를 효율적으로 수행했습니다. 특히, 개인 프로젝트에서 스케줄 관리와 작업 추적을 위해 Jira의 이슈 트래킹 기능을 적극적으로 활용했습니다. 이를 통해 개발 과정에서 발생할 수 있는 혼란을 최소화하고, 일정을 효율적으로 조율할 수 있었습니다.
 
-<img width="1161" alt="스크린샷 2024-08-05 오전 12 47 57" src="https://github.com/user-attachments/assets/7b976120-9a5b-4e28-ab6b-1e649d94017b">
+<img width="1024" alt="42CM Jira" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/42CM_jira.png?raw=true">
+
 
 
 
