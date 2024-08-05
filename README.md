@@ -1,4 +1,4 @@
-<img width="937" alt="스크린샷 2024-08-04 오후 9 47 36" src="https://github.com/user-attachments/assets/2ac30939-53b5-49cf-9961-b271edc034bf">
+<img width="937" alt="FTCM" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/FTCM.png?raw=true">
 
 [42CM 개발 및 학습일지(Click.ᐟ)](https://velog.io/@hwyjj/42CM-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EB%B0%8F-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95)
 
@@ -112,7 +112,7 @@
 
 | 로그인          | 회원가입         | 게시글 조회      |
 |----------------|----------------|----------------|
-| <img src="https://github.com/user-attachments/assets/94e1ab64-1ef6-406a-a021-ac613be1cb94" width="360"/> | <img src="https://github.com/user-attachments/assets/739a0356-79d8-477b-9d58-24306ffd0b04" width="360"/> | <img src="https://github.com/user-attachments/assets/9c48140d-46ac-41ee-bd34-01009385bbba" width="360"/> |
+| <img width="360" alt="42cm_signin" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/1/42cm_signin.gif?raw=true"> | <img width="360" alt="42CM_Sign_Up" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/1/42cm_signup.gif?raw=true"> | <img width="360" alt="42CM_View_Post" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/1/42CM_view_post.gif?raw=true"> |
 
 | 지도 기반 게시글 조회          | 상품 결제         | 채팅      |
 |----------------|----------------|----------------|
