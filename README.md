@@ -181,7 +181,7 @@
 
 UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습니다. 이 기능은 5개씩 커서 기반 페이지네이션 방식으로 동작합니다. 그러나 사용자가 페이지를 의도적으로 빠르게 넘길 경우 UI가 제대로 렌더링되지 않는 문제가 있었습니다. 또한, Instrument를 통해 확인한 결과, 해당 기능에서 메모리 누수가 발생하고 있어 앱의 성능 저하와 비정상 종료 가능성이 있었습니다.
 
-
+<img width="937" alt="Memory Leak" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/memoryleak.png?raw=true">
 
 **문제 원인**
 
@@ -193,7 +193,9 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 현재 페이지의 마지막 게시글에 도달했을 때가 아니라, 3개의 단위로 데이터를 사전 로드하는 로직을 추가하였습니다. PageViewController의 인덱스가 3의 배수일 때마다 다음 페이지 데이터를 미리 로드하도록 처리하여, UI가 제대로 렌더링되지 않는 문제와 메모리 누수 문제를 해결할 수 있었습니다.
 
+<img width="937" alt="Preloading" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/preloading.png?raw=true">
 
+<img width="937" alt="Goodbye Memory Leak" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/goodbyememoryleak.png?raw=true">
 
 
 
@@ -206,6 +208,8 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 채팅 앱에서 채팅방을 전환할 때마다 소켓 연결 이벤트인 connect에 대한 로그가 여러 번 출력되었고, 같은 이벤트가 중복으로 처리되는 문제가 발생했습니다. 이는 중복 데이터 처리, 성능 저하, 메모리 누수 등을 초래할 수 있었습니다.<br/>
 
+
+
 **문제 원인**
 
 소켓을 통한 연결을 설정할 때, 이전 채팅방에서 등록된 이벤트 핸들러들이 제거되지 않은 상태로 남아 있었습니다. 이에 따라, 새로운 채팅방으로 이동하거나 새로운 소켓을 설정할 때 기존의 이벤트 핸들러가 중복으로 호출되어 동일한 이벤트에 대해 여러 번 로그가 출력되고 이벤트가 처리되었습니다.<br/>
@@ -214,7 +218,10 @@ UIPageViewController를 사용하여 게시글 조회 기능을 구현하였습�
 
 채팅방을 나갈 때 소켓 연결을 끊는 함수에 기존 핸들러를 제거하는 코드(socket.removeAllHandlers())를 추가했습니다. 이 코드는 채팅방이 사라질 때 호출되며, 이를 통해 이전 채팅방에서 등록된 이벤트 핸들러들이 새 채팅방에서 중복 호출되지 않도록 했습니다.
 
-<img width="333" alt="스크린샷 2024-08-04 오후 10 22 53" src="https://github.com/user-attachments/assets/e6c9d989-3ede-4366-86b4-747e14b639e6">
+
+<img width="332" alt="Leave Connection" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/leaveconnection.png?raw=true">
+
+
 
 
 <br/><br/>
