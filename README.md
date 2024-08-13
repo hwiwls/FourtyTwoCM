@@ -1,6 +1,6 @@
 <img width="1024" alt="FTCM" src="https://github.com/hwiwls/FourtyTwoCM/blob/main/ReadmeAssets/FTCM.png?raw=true">
 
-[42CM 개발 및 학습일지(Click.ᐟ)](https://velog.io/@hwyjj/frameworkarchitecture)
+[42CM 개발 및 학습일지(Click.ᐟ)](https://velog.io/@hwyjj/series/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-42CM)
 
 <br/>
 
@@ -104,7 +104,7 @@
     - `Toast`
     
 
-[프레임워크, 아키텍쳐 및 기술 스택 선택과정 보러가기(Click.ᐟ)](https://velog.io/@hwyjj/42CM-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EB%B0%8F-%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95)
+[프레임워크, 아키텍쳐 및 기술 스택 선택과정 보러가기(Click.ᐟ)](https://velog.io/@hwyjj/frameworkarchitecture)
 
 <br/><br/>
 
