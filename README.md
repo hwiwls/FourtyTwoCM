@@ -278,3 +278,5 @@ ViewModel에서 비즈니스 로직을 분리하여 유즈케이스 클래스로
 - Core Haptics 적용
 - 클러스터링 적용
 - SwiftUI+Combine으로 마이그레이션 해보기
+
+ㅋㅋ
